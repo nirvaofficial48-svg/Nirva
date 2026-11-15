@@ -1,0 +1,52 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/* The weights below are the ranges each variable font file covers, not interface styling. */
+/* stylelint-disable stylelint-plugin-mozilla/use-design-tokens */
+
+/* Nirva's fonts ship inside the browser. Each has its licence file next to it. */
+
+@font-face {
+  font-family: "Hanken Grotesk";
+  font-weight: 100 900;
+  src: url("chrome://browser/skin/nirva/fonts/HankenGrotesk.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Manrope";
+  font-weight: 200 800;
+  src: url("chrome://browser/skin/nirva/fonts/Manrope.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-weight: 100 800;
+  src: url("chrome://browser/skin/nirva/fonts/JetBrainsMono.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Newsreader";
+  font-weight: 200 800;
+  src: url("chrome://browser/skin/nirva/fonts/Newsreader.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Newsreader";
+  font-style: italic;
+  font-weight: 200 800;
+  src: url("chrome://browser/skin/nirva/fonts/Newsreader-Italic.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Figtree";
+  font-weight: 300 900;
+  src: url("chrome://browser/skin/nirva/fonts/Figtree.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Figtree";
+  font-style: italic;
+  font-weight: 300 900;
+  src: url("chrome://browser/skin/nirva/fonts/Figtree-Italic.ttf") format("truetype");
+}

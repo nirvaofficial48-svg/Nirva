@@ -1,0 +1,344 @@
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src chrome:; object-src 'none'"
+    />
+    <meta name="color-scheme" content="light" />
+    <title data-l10n-id="nirva-welcome-window-title"></title>
+    <link rel="localization" href="branding/brand.ftl" />
+    <link rel="localization" href="browser/nirva/welcome.ftl" />
+    <link rel="localization" href="browser/migrationWizard.ftl" />
+    <link
+      rel="stylesheet"
+      href="chrome://global/skin/design-system/tokens-brand.css"
+    />
+    <link rel="stylesheet" href="chrome://browser/skin/nirva/welcome.css" />
+    <script src="chrome://global/content/customElements.js"></script>
+    <script
+      type="module"
+      src="chrome://browser/content/migration/migration-wizard.mjs"
+    ></script>
+    <script
+      type="module"
+      src="chrome://browser/content/nirva/welcome.mjs"
+    ></script>
+  </head>
+  <body>
+    <main>
+      <header>
+        <img
+          src="chrome://branding/content/about-logo.svg"
+          alt=""
+          width="32"
+          height="32"
+        />
+        <span id="brand"></span>
+      </header>
+      <ol id="progress" aria-label="Steps">
+        <li data-step="intro" data-l10n-id="nirva-welcome-step-intro"></li>
+        <li data-step="look" data-l10n-id="nirva-welcome-step-look"></li>
+        <li data-step="privacy" data-l10n-id="nirva-welcome-step-privacy"></li>
+        <li data-step="import" data-l10n-id="nirva-welcome-step-import"></li>
+      </ol>
+
+      <section class="step" data-step="intro" aria-labelledby="intro-heading">
+        <h1 id="intro-heading" data-l10n-id="nirva-welcome-intro-heading"></h1>
+        <p class="lede" data-l10n-id="nirva-welcome-intro-lede"></p>
+        <ul class="features">
+          <li>
+            <h2 data-l10n-id="nirva-welcome-f-timetravel"></h2>
+            <p data-l10n-id="nirva-welcome-f-timetravel-text"></p>
+          </li>
+          <li>
+            <h2 data-l10n-id="nirva-welcome-f-search"></h2>
+            <p data-l10n-id="nirva-welcome-f-search-text"></p>
+          </li>
+          <li>
+            <h2 data-l10n-id="nirva-welcome-f-library"></h2>
+            <p data-l10n-id="nirva-welcome-f-library-text"></p>
+          </li>
+          <li>
+            <h2 data-l10n-id="nirva-welcome-f-clips"></h2>
+            <p data-l10n-id="nirva-welcome-f-clips-text"></p>
+          </li>
+          <li>
+            <h2 data-l10n-id="nirva-welcome-f-remix"></h2>
+            <p data-l10n-id="nirva-welcome-f-remix-text"></p>
+          </li>
+          <li>
+            <h2 data-l10n-id="nirva-welcome-f-privacy"></h2>
+            <p data-l10n-id="nirva-welcome-f-privacy-text"></p>
+          </li>
+          <li>
+            <h2 data-l10n-id="nirva-welcome-f-burner"></h2>
+            <p data-l10n-id="nirva-welcome-f-burner-text"></p>
+          </li>
+          <li>
+            <h2 data-l10n-id="nirva-welcome-f-tabs"></h2>
+            <p data-l10n-id="nirva-welcome-f-tabs-text"></p>
+          </li>
+        </ul>
+        <p class="hint" data-l10n-id="nirva-welcome-intro-hint"></p>
+      </section>
+
+      <section
+        class="step"
+        data-step="look"
+        aria-labelledby="look-heading"
+        hidden=""
+      >
+        <h1 id="look-heading" data-l10n-id="nirva-welcome-heading"></h1>
+        <p class="lede" data-l10n-id="nirva-welcome-intro"></p>
+        <fieldset id="looks">
+          <legend data-l10n-id="nirva-welcome-look-legend"></legend>
+
+          <label class="look">
+            <div class="preview preview-glass" aria-hidden="true">
+              <div class="glass-light glass-light-1"></div>
+              <div class="glass-light glass-light-2"></div>
+              <div class="glass-island"></div>
+              <div class="preview-clock">10:42</div>
+              <div class="preview-widgets">
+                <span></span><span></span><span></span>
+              </div>
+            </div>
+            <div class="look-text">
+              <input type="radio" name="look" value="glass" />
+              <div>
+                <span
+                  class="look-name"
+                  data-l10n-id="nirva-welcome-look-glass"
+                ></span>
+                <span
+                  class="look-description"
+                  data-l10n-id="nirva-welcome-look-glass-description"
+                ></span>
+              </div>
+            </div>
+          </label>
+
+          <label class="look">
+            <div class="preview preview-cockpit" aria-hidden="true">
+              <div class="cockpit-rule cockpit-rule-top"></div>
+              <div class="preview-clock">10:42</div>
+              <div class="cockpit-rule cockpit-ribbon"></div>
+              <span class="cockpit-dot"></span>
+              <span class="cockpit-dot"></span>
+              <span class="cockpit-dot"></span>
+              <span class="cockpit-dot cockpit-now"></span>
+              <div class="preview-widgets">
+                <span></span><span></span><span></span>
+              </div>
+            </div>
+            <div class="look-text">
+              <input type="radio" name="look" value="cockpit" />
+              <div>
+                <span
+                  class="look-name"
+                  data-l10n-id="nirva-welcome-look-cockpit"
+                ></span>
+                <span
+                  class="look-description"
+                  data-l10n-id="nirva-welcome-look-cockpit-description"
+                ></span>
+              </div>
+            </div>
+          </label>
+
+          <label class="look">
+            <div class="preview preview-paper" aria-hidden="true">
+              <div class="paper-sidebar"></div>
+              <div class="preview-clock">10:42</div>
+              <div class="paper-rule"></div>
+              <div class="preview-widgets">
+                <span></span><span></span><span></span>
+              </div>
+            </div>
+            <div class="look-text">
+              <input type="radio" name="look" value="paper" />
+              <div>
+                <span
+                  class="look-name"
+                  data-l10n-id="nirva-welcome-look-paper"
+                ></span>
+                <span
+                  class="look-description"
+                  data-l10n-id="nirva-welcome-look-paper-description"
+                ></span>
+              </div>
+            </div>
+          </label>
+        </fieldset>
+
+        <label id="lite" hidden="">
+          <input type="checkbox" id="lite-choice" />
+          <span>
+            <span id="lite-name" data-l10n-id="nirva-welcome-lite"></span>
+            <span
+              id="lite-description"
+              data-l10n-id="nirva-welcome-lite-description"
+            ></span>
+          </span>
+        </label>
+
+        <fieldset id="modes">
+          <legend data-l10n-id="nirva-welcome-mode-legend"></legend>
+          <div id="mode-choices">
+            <label
+              ><input type="radio" name="mode" value="bright" /><span
+                data-l10n-id="nirva-welcome-mode-bright"
+              ></span
+            ></label>
+            <label
+              ><input type="radio" name="mode" value="dark" /><span
+                data-l10n-id="nirva-welcome-mode-dark"
+              ></span
+            ></label>
+            <label
+              ><input type="radio" name="mode" value="system" /><span
+                data-l10n-id="nirva-welcome-mode-system"
+              ></span
+            ></label>
+          </div>
+          <div
+            id="mode-fixed"
+            hidden=""
+            data-l10n-id="nirva-welcome-mode-dark-only"
+          ></div>
+        </fieldset>
+      </section>
+
+      <section
+        class="step"
+        data-step="privacy"
+        aria-labelledby="privacy-heading"
+        hidden=""
+      >
+        <h1
+          id="privacy-heading"
+          data-l10n-id="nirva-welcome-privacy-heading"
+        ></h1>
+        <p class="lede" data-l10n-id="nirva-welcome-privacy-lede"></p>
+        <fieldset id="protection" class="choices">
+          <legend data-l10n-id="nirva-welcome-protection-legend"></legend>
+          <label class="choice">
+            <input type="radio" name="protection" value="standard" />
+            <span>
+              <span
+                class="choice-name"
+                data-l10n-id="nirva-welcome-protection-standard"
+              ></span>
+              <span
+                class="choice-text"
+                data-l10n-id="nirva-welcome-protection-standard-text"
+              ></span>
+            </span>
+          </label>
+          <label class="choice">
+            <input type="radio" name="protection" value="strict" />
+            <span>
+              <span
+                class="choice-name"
+                data-l10n-id="nirva-welcome-protection-strict"
+              ></span>
+              <span
+                class="choice-text"
+                data-l10n-id="nirva-welcome-protection-strict-text"
+              ></span>
+            </span>
+          </label>
+        </fieldset>
+        <ul class="switches">
+          <li>
+            <label class="switch-row">
+              <span>
+                <span
+                  class="choice-name"
+                  data-l10n-id="nirva-welcome-privacy-links"
+                ></span>
+                <span
+                  class="choice-text"
+                  data-l10n-id="nirva-welcome-privacy-links-text"
+                ></span>
+              </span>
+              <input
+                type="checkbox"
+                role="switch"
+                data-pref="nirva.linkcleaner.enabled"
+              />
+            </label>
+          </li>
+          <li>
+            <label class="switch-row">
+              <span>
+                <span
+                  class="choice-name"
+                  data-l10n-id="nirva-welcome-privacy-https"
+                ></span>
+                <span
+                  class="choice-text"
+                  data-l10n-id="nirva-welcome-privacy-https-text"
+                ></span>
+              </span>
+              <input
+                type="checkbox"
+                role="switch"
+                data-pref="dom.security.https_only_mode"
+              />
+            </label>
+          </li>
+          <li>
+            <label class="switch-row">
+              <span>
+                <span
+                  class="choice-name"
+                  data-l10n-id="nirva-welcome-privacy-gpc"
+                ></span>
+                <span
+                  class="choice-text"
+                  data-l10n-id="nirva-welcome-privacy-gpc-text"
+                ></span>
+              </span>
+              <input
+                type="checkbox"
+                role="switch"
+                data-pref="privacy.globalprivacycontrol.enabled"
+              />
+            </label>
+          </li>
+        </ul>
+        <p class="hint" data-l10n-id="nirva-welcome-privacy-hint"></p>
+      </section>
+
+      <section
+        class="step"
+        data-step="import"
+        aria-labelledby="import-heading"
+        hidden=""
+      >
+        <h1
+          id="import-heading"
+          data-l10n-id="nirva-welcome-import-heading"
+        ></h1>
+        <p class="lede" data-l10n-id="nirva-welcome-import-lede"></p>
+        <div id="importer-box"></div>
+      </section>
+
+      <div id="footer">
+        <button
+          id="back"
+          type="button"
+          data-l10n-id="nirva-welcome-back"
+        ></button>
+        <span id="step-count"></span>
+        <button id="continue" type="button"></button>
+      </div>
+    </main>
+  </body>
+</html>

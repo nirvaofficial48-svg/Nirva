@@ -1,0 +1,14 @@
+#!/bin/sh
+# Opens the latest Nirva build from any folder, exactly like `cd ~/browser/firefox && ./mach run -n`:
+# the "Who is browsing?" profile chooser comes first, then the chosen profile (default-nightly,
+# Profile 1, Profile 2, or a new one, which starts with the welcome guide).
+# The build's files link straight to the source, so it always has every finished feature;
+# -purgecaches makes sure no cached copy of older code is used.
+# Links passed in (from the dock, the app menu or other apps) open in it.
+OBJ=/home/yuvan/browser/firefox/obj-x86_64-pc-linux-gnu
+export MOZ_APP_DATA="$OBJ/tmp/AppData/Roaming"
+export MOZ_LOCAL_APP_DATA="$OBJ/tmp/Local"
+export MOZ_DEVELOPER_REPO_DIR=/home/yuvan/browser/firefox
+export MOZ_DEVELOPER_OBJ_DIR="$OBJ"
+export MOZ_CRASHREPORTER_DISABLE=1
+exec "$OBJ/dist/bin/firefox" -purgecaches "$@"

@@ -1,0 +1,1419 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/* stylelint-disable stylelint-plugin-mozilla/use-design-tokens */
+
+/* The home screen. Measurements follow designs/Home.html (Glass), Paper.html and
+   Cockpit.html; colours and fonts come from the tokens of the look in use. */
+
+:root {
+  min-height: 100%;
+  background: var(--nirva-bg);
+  color: var(--nirva-text);
+  font-family: var(--nirva-font-ui);
+  accent-color: var(--nirva-accent);
+  color-scheme: light dark;
+}
+
+:root[data-nirva-mode="bright"] {
+  color-scheme: light;
+}
+
+:root[data-nirva-mode="dark"] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+  background: var(--nirva-bg);
+  font-size: 14px;
+}
+
+/* The wallpaper chosen in Theme studio covers the whole home page, drawn stronger here
+ * than behind the sidebar, where it only tints. */
+:root {
+  --nirva-wallpaper-strength: 3;
+}
+
+:root[data-nirva-theme="true"]:not([data-nirva-wallpaper="none"], [data-nirva-look="paper"]) body {
+  background-image: var(--nirva-wallpaper-image, none);
+  background-attachment: fixed;
+}
+
+:root[data-nirva-theme="true"][data-nirva-look="paper"]:not([data-nirva-wallpaper="none"]) body {
+  background-image: url("chrome://browser/skin/nirva/paper-grain.svg"), var(--nirva-wallpaper-image, none);
+  background-size:
+    240px 240px,
+    auto,
+    auto,
+    auto,
+    auto;
+}
+
+:root[data-nirva-theme="true"][data-nirva-look="paper"][data-nirva-mode="dark"]:not([data-nirva-wallpaper="none"]) body {
+  background-image: url("chrome://browser/skin/nirva/paper-grain-light.svg"), var(--nirva-wallpaper-image, none);
+}
+
+:is(button, input, textarea, a):focus-visible {
+  outline: 2px solid var(--nirva-accent);
+  outline-offset: 2px;
+}
+
+/* Paper: a printed sheet. Fine grain, a little warm light from the top corner and edges
+ * that darken softly, like a page under a lamp. */
+:root[data-nirva-look="paper"] body {
+  background-image:
+    url("chrome://browser/skin/nirva/paper-grain.svg"),
+    radial-gradient(70% 50% at 10% 0%, color-mix(in srgb, var(--nirva-pastel-butter) 55%, transparent), transparent 70%),
+    radial-gradient(ellipse at 50% 45%, transparent 55%, color-mix(in srgb, var(--nirva-hairline) 60%, transparent) 100%);
+  background-size:
+    240px 240px,
+    auto,
+    auto;
+  background-attachment: fixed;
+}
+
+:root[data-nirva-look="paper"][data-nirva-mode="dark"] body {
+  background-image:
+    url("chrome://browser/skin/nirva/paper-grain-light.svg"),
+    radial-gradient(70% 50% at 10% 0%, color-mix(in srgb, var(--nirva-pastel-butter) 45%, transparent), transparent 70%),
+    radial-gradient(ellipse at 50% 45%, transparent 50%, color-mix(in srgb, var(--nirva-hairline) 55%, transparent) 100%);
+}
+
+/* ---------- Glass wallpaper: soft light shapes and two thin arcs ---------- */
+
+.wallpaper {
+  display: none;
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Glass always shows its light shapes; a chosen wallpaper recolours them and adds its scene.
+ * Cockpit and Paper show only the scene. */
+:root[data-nirva-look="glass"] .wallpaper,
+:root[data-nirva-theme="true"]:not([data-nirva-wallpaper="none"]) .wallpaper {
+  display: block;
+}
+
+:root:not([data-nirva-look="glass"]) :is(.light, .arc) {
+  display: none;
+}
+
+.light,
+.arc {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.light {
+  filter: blur(var(--nirva-light-blur));
+}
+
+.light-1 {
+  inset-inline-start: -260px;
+  bottom: -340px;
+  width: 860px;
+  height: 860px;
+  background: var(--nirva-light-1);
+}
+
+.light-2 {
+  inset-inline-end: -200px;
+  top: -260px;
+  width: 680px;
+  height: 680px;
+  background: var(--nirva-light-2);
+}
+
+.light-3 {
+  inset-inline-end: -160px;
+  bottom: -300px;
+  width: 640px;
+  height: 640px;
+  background: var(--nirva-light-3);
+}
+
+.arc {
+  border: 1px solid var(--nirva-arc);
+}
+
+.arc-1 {
+  inset-inline-start: calc(50% - 160px);
+  top: -520px;
+  width: 900px;
+  height: 900px;
+}
+
+.arc-2 {
+  inset-inline-start: calc(50% - 240px);
+  top: -600px;
+  width: 1060px;
+  height: 1060px;
+  opacity: 0.66;
+}
+
+@keyframes nirva-home-drift {
+  from {
+    transform: translate(0, 0);
+  }
+
+  to {
+    transform: translate(44px, -30px);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :root[data-nirva-look="glass"]:not([data-nirva-lite="true"], [data-nirva-motion="minimal"]) .light {
+    animation: nirva-home-drift 48s ease-in-out infinite alternate;
+  }
+
+  :root[data-nirva-look="glass"]:not([data-nirva-lite="true"], [data-nirva-motion="minimal"]) .light-2 {
+    animation-duration: 62s;
+    animation-direction: alternate-reverse;
+  }
+
+  :root[data-nirva-look="glass"]:not([data-nirva-lite="true"], [data-nirva-motion="minimal"]) .light-3 {
+    animation-duration: 55s;
+  }
+
+  /* The drift rests while the window is behind others. */
+  :root:-moz-window-inactive .light {
+    animation-play-state: paused;
+  }
+}
+
+/* ---------- Page frame ---------- */
+
+.home {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 104px 64px 28px 48px;
+}
+
+.strip {
+  display: none;
+}
+
+.top {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--nirva-grid-gap);
+}
+
+.clock-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.date {
+  color: var(--nirva-text-2);
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: var(--nirva-label-tracking);
+  text-transform: uppercase;
+}
+
+.clock {
+  margin-inline-start: -8px;
+  font-family: var(--nirva-font-display);
+  font-size: clamp(96px, 10.3vw, 148px);
+  font-weight: var(--nirva-display-weight);
+  font-variant-numeric: tabular-nums;
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+}
+
+/* ---------- Widgets ---------- */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-rows: 212px;
+  grid-auto-rows: 196px;
+  gap: var(--nirva-grid-gap);
+  margin-top: 52px;
+}
+
+.widget {
+  grid-column: span 3;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 22px 24px;
+  overflow: hidden;
+  border: 1px solid var(--nirva-panel-border);
+  border-radius: var(--nirva-radius-panel);
+  background: var(--nirva-panel);
+  box-shadow: var(--nirva-panel-shadow);
+  backdrop-filter: var(--nirva-panel-blur);
+}
+
+[data-widget="todo"] {
+  grid-column: span 5;
+}
+
+[data-widget="clips"],
+[data-widget="note"],
+[data-widget="energy"] {
+  grid-column: span 4;
+}
+
+h2 {
+  margin: 0 0 6px;
+  color: var(--nirva-text-2);
+  font-size: var(--nirva-label-size);
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: var(--nirva-label-tracking);
+  text-transform: uppercase;
+}
+
+.quiet {
+  color: var(--nirva-text-3);
+  font-size: 12px;
+}
+
+p.quiet {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.strong {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.one-line,
+.strong {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.rows {
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+  scrollbar-width: thin;
+}
+
+.row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 44px;
+  border-top: 1px solid var(--nirva-hairline);
+  font-size: 14px;
+}
+
+.rows.tall > .row {
+  min-height: 66px;
+}
+
+.rows.mid > .row {
+  min-height: 56px;
+  font-size: 13px;
+}
+
+.row.extra {
+  display: none;
+}
+
+.check {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  min-height: 44px;
+}
+
+.check > input {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--nirva-text);
+}
+
+.check[data-done] {
+  color: var(--nirva-text-3);
+  text-decoration: line-through;
+}
+
+.row.add {
+  margin: 0;
+}
+
+.row.add > input {
+  flex: 1;
+  min-width: 0;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  outline-offset: -2px;
+}
+
+.text-button,
+.icon-button,
+.outline-button,
+.strip-workspace,
+.command-pill {
+  appearance: none;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.text-button {
+  align-self: flex-start;
+  height: 44px;
+  padding: 0;
+  color: var(--nirva-text-2);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.text-button.accent {
+  color: var(--nirva-accent);
+}
+
+.icon-button {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: var(--nirva-radius-control);
+  color: var(--nirva-text-3);
+}
+
+.icon-button svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+/* A remove button draws its own cross and shows when its row is in use. */
+.remove {
+  position: relative;
+  opacity: 0;
+  transition: opacity var(--nirva-t-fast) var(--nirva-ease);
+}
+
+.remove::before,
+.remove::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 1.5px;
+  border-radius: 1px;
+  background: currentColor;
+  rotate: 45deg;
+}
+
+.remove::after {
+  rotate: -45deg;
+}
+
+.row:hover > .remove,
+.remove:focus-visible,
+:root[data-editing] .remove {
+  opacity: 1;
+}
+
+/* Focus session */
+
+[data-widget="focus"] {
+  justify-content: space-between;
+}
+
+.focus-face {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.focus-ring circle {
+  fill: none;
+  stroke-width: 1.5;
+}
+
+.focus-ring-track {
+  stroke: var(--nirva-hairline);
+}
+
+.focus-ring-value {
+  stroke: var(--nirva-text);
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+.focus-time {
+  font-family: var(--nirva-font-display);
+  font-size: 44px;
+  font-weight: var(--nirva-display-weight);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.focus-line {
+  display: none;
+  height: 2px;
+  background: var(--nirva-card-hairline, var(--nirva-hairline));
+}
+
+.focus-line > div {
+  height: 100%;
+  background: var(--nirva-text);
+}
+
+.focus-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 16px;
+  margin-bottom: -12px;
+}
+
+/* Live clips */
+
+.two-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.dot {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border: 1px solid var(--nirva-text-3);
+  border-radius: 50%;
+}
+
+.dot[data-fresh] {
+  border-color: var(--nirva-ok);
+  background: var(--nirva-ok);
+}
+
+#clips-open {
+  margin-top: auto;
+  margin-bottom: -12px;
+}
+
+/* Note */
+
+#note {
+  flex: 1;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  line-height: 1.5;
+  resize: none;
+}
+
+/* Countdown: the one inverted panel on the Glass home */
+
+:root[data-nirva-look="glass"] .widget.inverse {
+  border-color: transparent;
+  background: var(--nirva-inverse);
+  color: var(--nirva-inverse-text);
+}
+
+:root[data-nirva-look="glass"] .widget.inverse :is(h2, .text-button, .countdown-label) {
+  color: inherit;
+  opacity: 0.8;
+}
+
+[data-widget="countdown"] {
+  justify-content: space-between;
+}
+
+.countdown {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.countdown-days {
+  font-family: var(--nirva-font-display);
+  font-size: 76px;
+  font-weight: var(--nirva-display-weight);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+}
+
+.countdown-label {
+  color: var(--nirva-text-2);
+  font-size: 14px;
+}
+
+/* This computer */
+
+[data-widget="computer"] {
+  gap: 18px;
+}
+
+[data-widget="computer"] > h2 {
+  margin: 0;
+}
+
+.meter {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.meter-text {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+.meter-text > .quiet {
+  color: var(--nirva-text-2);
+  font-size: inherit;
+}
+
+.meter-track {
+  height: 2px;
+  background: color-mix(in srgb, var(--nirva-text) 14%, transparent);
+}
+
+.meter-track > div {
+  height: 2px;
+  background: var(--nirva-text);
+}
+
+/* Rows that carry a progress line over their hairline */
+
+.row-link {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-width: 0;
+  min-height: inherit;
+  color: inherit;
+  text-decoration: none;
+}
+
+.progress-line {
+  position: absolute;
+  inset-inline-start: 0;
+  top: -1px;
+  height: 1px;
+  background: var(--nirva-text);
+}
+
+.row.progress > .remove {
+  display: none;
+  width: 32px;
+}
+
+:root[data-editing] .row.progress > .remove {
+  display: grid;
+}
+
+#clips > .row {
+  cursor: pointer;
+}
+
+.heading-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 20px;
+  margin-bottom: 6px;
+}
+
+.heading-row > h2 {
+  margin: 0;
+}
+
+/* The button keeps its 44 px target but does not push the label down. */
+.heading-row > .icon-button {
+  margin-block: -12px;
+  margin-inline-end: -14px;
+}
+
+.figure {
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+/* ---------- Time travel line ---------- */
+
+.ribbon {
+  margin-top: 48px;
+}
+
+.ribbon-track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 24px;
+}
+
+.ribbon-track::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 39px;
+  height: 1px;
+  background: var(--nirva-hairline-strong, var(--nirva-hairline));
+}
+
+.stop {
+  grid-column: span 3;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.stop[data-now] {
+  grid-column: 10 / span 3;
+}
+
+.stop-time {
+  margin-bottom: 14px;
+  color: var(--nirva-text-2);
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.stop-dot {
+  position: relative;
+  width: 11px;
+  height: 11px;
+  margin-bottom: 14px;
+  border: 1px solid var(--nirva-text-2);
+  border-radius: 50%;
+  background: var(--nirva-bg);
+}
+
+.stop-title {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 22px;
+}
+
+.stop > .quiet {
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.stop[data-now] .stop-time {
+  color: var(--nirva-accent);
+}
+
+.stop[data-now] .stop-dot {
+  border-color: var(--nirva-accent);
+  background: var(--nirva-accent);
+  box-shadow: 0 0 0 5px var(--nirva-accent-glow, transparent);
+}
+
+.stop[data-now] .text-button {
+  color: var(--nirva-accent);
+  font-weight: 600;
+}
+
+/* ---------- Foot: quick links, command pill, Edit home ---------- */
+
+.foot {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--nirva-grid-gap);
+  margin-top: auto;
+  padding-top: 28px;
+}
+
+.links {
+  grid-column: 2;
+  display: flex;
+  align-items: center;
+  height: 56px;
+  padding: 0 6px;
+  border: 1px solid var(--nirva-island-border);
+  border-radius: 28px;
+  background: var(--nirva-island);
+  box-shadow: var(--nirva-island-shadow);
+  backdrop-filter: var(--nirva-panel-blur);
+}
+
+#links {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#links:not(:empty)::after {
+  content: "";
+  width: 1px;
+  height: 20px;
+  margin: 0 6px;
+  background: color-mix(in srgb, var(--nirva-text) 20%, transparent);
+}
+
+#links > li {
+  display: flex;
+  align-items: center;
+}
+
+.link {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--nirva-radius-control);
+  color: inherit;
+  text-decoration: none;
+}
+
+.link > img {
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+}
+
+.link-title {
+  display: none;
+}
+
+#links .remove {
+  display: none;
+  width: 28px;
+}
+
+:root[data-editing] #links .remove {
+  display: grid;
+}
+
+.command-pill {
+  display: none;
+}
+
+#edit {
+  grid-column: 3;
+  justify-self: end;
+}
+
+/* ---------- Panels opened from the foot ---------- */
+
+.panel {
+  margin-top: var(--nirva-grid-gap);
+  padding: 22px 24px;
+  border: 1px solid var(--nirva-panel-border);
+  border-radius: var(--nirva-radius-panel);
+  background: var(--nirva-panel);
+  box-shadow: var(--nirva-panel-shadow);
+  backdrop-filter: var(--nirva-panel-blur);
+}
+
+.panel :is(input[type="text"], input[type="date"], textarea) {
+  min-height: var(--nirva-hit);
+  padding: 10px 14px;
+  border: 1px solid var(--nirva-hairline);
+  border-radius: var(--nirva-radius-control);
+  background: var(--nirva-raised, transparent);
+  color: inherit;
+  font: inherit;
+}
+
+.panel textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+
+.link-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  align-self: center;
+  gap: 10px;
+}
+
+.outline-button {
+  align-self: flex-start;
+  min-height: var(--nirva-hit);
+  padding-inline: 14px;
+  border: 1px solid var(--nirva-hairline);
+  border-radius: var(--nirva-radius-control);
+  font-weight: 500;
+}
+
+.status {
+  flex-basis: 100%;
+  margin: 0;
+  color: var(--nirva-warn);
+  font-size: 13px;
+}
+
+.editor-columns {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--nirva-grid-gap);
+  margin-top: 10px;
+}
+
+fieldset {
+  grid-column: span 3;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+legend {
+  margin-bottom: 10px;
+  padding: 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.checks {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- Paper: flat pastel cards, serif headings, one dark rule ---------- */
+
+:root[data-nirva-look="paper"] {
+  .home {
+    padding-inline-end: 56px;
+  }
+
+  .top {
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--nirva-rule);
+  }
+
+  .clock-block {
+    gap: 14px;
+  }
+
+  .date {
+    font-family: var(--nirva-font-display);
+    font-size: 22px;
+    font-style: italic;
+    line-height: 28px;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .clock {
+    margin-inline-start: 0;
+    font-size: clamp(88px, 9.2vw, 132px);
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+  }
+
+  .grid {
+    grid-auto-rows: 188px;
+    margin-top: 28px;
+  }
+
+  .widget {
+    border: 1px solid var(--nirva-hairline);
+    border-radius: 6px;
+    background: var(--nirva-raised);
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  :is([data-widget="todo"], [data-widget="focus"], [data-widget="note"], [data-widget="countdown"], [data-widget="reading"]) {
+    border-color: transparent;
+  }
+
+  [data-widget="todo"] {
+    background: var(--nirva-pastel-sage);
+  }
+
+  [data-widget="focus"] {
+    background: var(--nirva-pastel-powder);
+  }
+
+  [data-widget="note"] {
+    background: var(--nirva-pastel-butter);
+  }
+
+  [data-widget="countdown"] {
+    background: var(--nirva-pastel-blush);
+  }
+
+  [data-widget="reading"] {
+    grid-column: span 5;
+    background: var(--nirva-pastel-lilac);
+  }
+
+  [data-widget="privacy"] {
+    grid-column: span 4;
+  }
+
+  h2 {
+    color: inherit;
+    font-family: var(--nirva-font-display);
+    font-size: 20px;
+    font-style: italic;
+    line-height: 24px;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .widget .row {
+    border-top-color: var(--nirva-card-hairline);
+  }
+
+  .rows.mid > .row {
+    min-height: 52px;
+    font-size: 14px;
+  }
+
+  .focus-ring {
+    display: none;
+  }
+
+  .focus-line {
+    display: block;
+  }
+
+  .focus-time {
+    font-size: 64px;
+    letter-spacing: -0.02em;
+  }
+
+  .figure {
+    font-family: var(--nirva-font-display);
+    font-size: 22px;
+    font-weight: 400;
+  }
+
+  #note {
+    font-family: var(--nirva-font-display);
+    font-size: 19px;
+    line-height: 1.45;
+  }
+}
+
+/* Paper and Cockpit show quick links as words, not an icon dock. */
+:root:is([data-nirva-look="paper"], [data-nirva-look="cockpit"]) {
+  .links {
+    grid-column: 1;
+    justify-self: start;
+    height: auto;
+    padding: 0;
+    border: 0;
+    background: none;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  #links:not(:empty)::after {
+    display: none;
+  }
+
+  .link {
+    display: flex;
+    align-items: center;
+    width: auto;
+    margin-inline-end: 28px;
+    font-family: var(--nirva-font-display);
+    font-size: 17px;
+  }
+
+  .link > img {
+    display: none;
+  }
+
+  .link-title {
+    display: inline;
+  }
+
+  &[data-editing] .link {
+    margin-inline-end: 0;
+  }
+
+  /* The add button reads as one more word: on the text's baseline, one word gap along. */
+  .links,
+  #links,
+  #links > li {
+    align-items: baseline;
+  }
+
+  #link-add {
+    justify-items: start;
+
+    svg {
+      width: 12px;
+      height: 12px;
+    }
+  }
+}
+
+/* ---------- Cockpit: lines only, built around the time travel line ---------- */
+
+:root[data-nirva-look="cockpit"] {
+  .home {
+    padding-top: 0;
+  }
+
+  .strip {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    height: 56px;
+    border-bottom: 1px solid var(--nirva-hairline);
+  }
+
+  .strip-workspaces {
+    display: flex;
+    gap: 28px;
+  }
+
+  .strip-workspace {
+    height: 56px;
+    padding: 0;
+    color: var(--nirva-text-2);
+    font-size: 13px;
+  }
+
+  .strip-workspace[data-active] {
+    color: var(--nirva-text);
+    font-weight: 600;
+    box-shadow: inset 0 -1px 0 var(--nirva-accent);
+  }
+
+  .strip-stats {
+    display: flex;
+    gap: 28px;
+    margin-inline-start: auto;
+    color: var(--nirva-text-2);
+    font-size: 12px;
+  }
+
+  .top {
+    margin-top: 40px;
+  }
+
+  .clock-block {
+    gap: 12px;
+  }
+
+  .date,
+  h2 {
+    font-family: var(--nirva-font-mono);
+  }
+
+  .clock {
+    font-size: clamp(96px, 10.6vw, 152px);
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+
+  .top-slot {
+    width: 312px;
+    padding-bottom: 14px;
+  }
+
+  .grid {
+    grid-template-rows: none;
+    grid-auto-rows: auto;
+    column-gap: 24px;
+    margin-top: 28px;
+  }
+
+  .widget {
+    grid-column: span 4;
+    padding: 0;
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  .widget > h2 {
+    height: 32px;
+    margin: 0;
+    border-bottom: 1px solid var(--nirva-hairline-strong);
+  }
+
+  .widget .row {
+    min-height: 48px;
+    border-top: 0;
+    border-bottom: 1px solid var(--nirva-hairline);
+    font-size: 14px;
+  }
+
+  .row.extra {
+    display: flex;
+  }
+
+  .progress-line {
+    top: auto;
+    bottom: -1px;
+  }
+
+  .row[data-heaviest] > .progress-line {
+    background: var(--nirva-accent);
+  }
+
+  .row[data-heaviest] > .quiet {
+    color: var(--nirva-accent);
+  }
+
+  [data-widget="focus"] {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    row-gap: 12px;
+  }
+
+  [data-widget="focus"] > h2 {
+    height: auto;
+    border: 0;
+  }
+
+  .focus-ring {
+    display: none;
+  }
+
+  .focus-time {
+    font-size: 28px;
+    font-weight: 300;
+    letter-spacing: -0.01em;
+  }
+
+  .focus-line {
+    grid-column: 1 / -1;
+    display: block;
+    height: 1px;
+    background: var(--nirva-hairline);
+  }
+
+  .focus-line > div {
+    background: var(--nirva-accent);
+  }
+
+  .focus-actions {
+    grid-column: 1 / -1;
+    justify-content: space-between;
+    margin: 0;
+  }
+
+  #focus-toggle {
+    margin-inline-start: auto;
+  }
+
+  .widget > p.quiet {
+    margin-top: 14px;
+  }
+
+  .foot {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    row-gap: 8px;
+  }
+
+  .links {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  .command-pill,
+  #edit {
+    grid-row: 2;
+  }
+
+  .focus-actions > .quiet {
+    font-size: 13px;
+  }
+
+  .text-button.accent {
+    font-weight: 600;
+  }
+
+  .link {
+    font-size: 13px;
+  }
+
+  .command-pill {
+    grid-column: 2;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 560px;
+    max-width: 100%;
+    height: 52px;
+    padding: 0 8px 0 22px;
+    border: 1px solid var(--nirva-hairline-strong);
+    border-radius: 26px;
+    background: var(--nirva-island);
+    color: var(--nirva-text-2);
+    font-size: 14px;
+    cursor: text;
+  }
+
+  .command-mark {
+    color: var(--nirva-accent);
+  }
+
+  .command-text {
+    flex: 1;
+    overflow: hidden;
+    text-align: start;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .command-pill > kbd {
+    margin-inline-end: 6px;
+    padding: 4px 8px;
+    border: 1px solid var(--nirva-hairline-strong);
+    border-radius: 6px;
+    font: inherit;
+    font-size: 11px;
+  }
+
+  .panel {
+    border: 1px solid var(--nirva-hairline-strong);
+    border-radius: var(--nirva-radius-control);
+  }
+}
+
+/* ---------- Short and narrow windows ---------- */
+
+@media (max-height: 820px) {
+  .home {
+    padding-top: 96px;
+  }
+
+  .clock {
+    font-size: clamp(88px, 14vh, 148px);
+  }
+
+  .grid {
+    margin-top: 32px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .widget,
+  :root[data-nirva-look] .widget,
+  fieldset {
+    grid-column: span 6;
+  }
+
+  .stop,
+  .stop[data-now] {
+    grid-column: span 6;
+  }
+
+  .ribbon-track {
+    row-gap: 16px;
+  }
+
+  .ribbon-track::before {
+    display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .home {
+    padding-inline: 24px;
+  }
+
+  .widget,
+  :root[data-nirva-look] .widget,
+  fieldset {
+    grid-column: 1 / -1;
+  }
+
+  .top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .foot {
+    grid-template-columns: 1fr;
+    justify-items: start;
+  }
+
+  .links,
+  .command-pill,
+  #edit {
+    grid-column: 1;
+    justify-self: start;
+  }
+}
+
+/* Shorter windows (laptops, a browser not maximised): the drawn layout is 900 px tall. Below
+ * that the clock and cards shrink so the quick links and Edit home stay on screen. */
+@media (max-height: 860px) {
+  .home {
+    padding-top: 88px;
+    padding-bottom: 16px;
+  }
+
+  .clock {
+    font-size: clamp(72px, 15vh, 148px);
+  }
+
+  .grid {
+    grid-template-rows: 168px;
+    grid-auto-rows: 156px;
+    margin-top: 28px;
+  }
+
+  .widget {
+    padding-block: 18px;
+  }
+
+  .foot {
+    padding-top: 16px;
+  }
+}

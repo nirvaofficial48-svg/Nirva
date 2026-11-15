@@ -1,0 +1,10 @@
+# Automatically download and use compiled C++ components:
+ac_add_options --enable-artifact-builds
+
+# Nirva name, icons and its own profile folder (item 1.1)
+ac_add_options --with-branding=browser/branding/nirva
+ac_add_options --with-app-basename=Nirva
+# Artifact builds download a ready-made program file named firefox, so keep that file name here.
+# Cloud builds (configs/mozconfig.release) name it nirva.
+ac_add_options --with-app-name=firefox
+export MOZ_APP_REMOTINGNAME=nirva

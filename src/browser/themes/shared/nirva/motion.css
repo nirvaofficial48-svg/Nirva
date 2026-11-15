@@ -1,0 +1,77 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/* Motion system (S8) and Lite mode (S14). Driven by NirvaMotion.sys.mjs.
+ *
+ * Every Nirva animation uses these, never a number of its own:
+ *   --nirva-move-fast / -base / -max   how long, from the tokens divided by the speed setting
+ *   --nirva-move-ease                  the curve: spring for Springy, standard otherwise
+ *   --nirva-motion-move                1 when things may move, 0 when they may only fade
+ *
+ * Movement is written as calc(<distance> * var(--nirva-motion-move)), so the Minimal style,
+ * the system's "reduce motion" setting and Lite mode all turn it into a plain fade. */
+
+:root {
+  --nirva-speed: 1;
+  --nirva-motion-move: 1;
+  --nirva-move-ease: var(--nirva-ease);
+  /* A faster speed shortens the tokens; nothing can become longer than --nirva-t-max. */
+  --nirva-move-fast: min(var(--nirva-t-max), calc(var(--nirva-t-fast) / var(--nirva-speed)));
+  --nirva-move-base: min(var(--nirva-t-max), calc(var(--nirva-t-base) / var(--nirva-speed)));
+  --nirva-move-max: min(var(--nirva-t-max), calc(var(--nirva-t-max) / var(--nirva-speed)));
+}
+
+:root[data-nirva-motion="springy"] {
+  --nirva-move-ease: var(--nirva-ease-spring);
+}
+
+:root:is([data-nirva-motion="minimal"], [data-nirva-lite="true"]) {
+  --nirva-motion-move: 0;
+  --nirva-move-ease: var(--nirva-ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --nirva-motion-move: 0;
+    --nirva-move-ease: var(--nirva-ease);
+  }
+}
+
+/* Lite mode: no blur. tokens.css says the same, but there each look sets its blur with a
+ * more specific rule, which would win; this one is specific enough to hold in every look. */
+:root[data-nirva-lite="true"]:is([data-nirva-look], [data-nirva-mode]) {
+  --nirva-panel-blur: none;
+  --nirva-light-blur: 0px;
+}
+
+:root[data-nirva-look][data-nirva-mode][data-nirva-lite="true"] {
+  --nirva-panel-blur: none;
+  --nirva-light-blur: 0px;
+}
+
+/* Firefox's own menus, panels and sidebar follow the same timing. */
+:root[data-nirva-motion] {
+  --panel-motion-duration-enter: var(--nirva-move-base);
+  --panel-motion-duration-exit: var(--nirva-move-fast);
+  --panel-motion-duration-fade: var(--nirva-move-fast);
+  --panel-motion-easing: var(--nirva-move-ease);
+  --panel-motion-translate-y: calc(-4px * var(--nirva-motion-move));
+  --sidebar-motion-duration-enter: var(--nirva-move-max);
+  --sidebar-motion-duration-exit: var(--nirva-move-base);
+  --sidebar-motion-easing: var(--nirva-move-ease);
+  --sidebar-panel-motion-duration-enter: var(--nirva-move-max);
+  --sidebar-panel-motion-duration-exit: var(--nirva-move-base);
+  --sidebar-panel-content-motion-duration-fade: var(--nirva-move-fast);
+}
+
+/* Where movement is off, panels fade in at full size. */
+:root:is([data-nirva-motion="minimal"], [data-nirva-lite="true"]) {
+  --panel-motion-scale: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-nirva-motion] {
+    --panel-motion-scale: 1;
+  }
+}

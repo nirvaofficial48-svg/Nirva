@@ -1,0 +1,7 @@
+      1 console.error: AboutHomeStartupCache: "requestCache called with no _procManager!"
+      1 console.error: "Bookmarks.html file could be corrupt. " [Exception... "<no message>"  nsresult: "0x8046001e (<unknown>)"  location: "JS frame :: resource://gre/modules/BookmarkHTMLUtils.sys.mjs :: fetchData/< :: line 1140"  data: no]
+      1 console.error: "Failed to import bookmarks from chrome://browser/content/default-bookmarks.html:" [Exception... "<no message>"  nsresult: "0x8046001e (<unknown>)"  location: "JS frame :: resource://gre/modules/BookmarkHTMLUtils.sys.mjs :: fetchData/< :: line 1140"  data: no]
+      1 console.error: (new Error("SharedDataMap: in shutdown", "resource://nimbus/lib/SharedDataMap.sys.mjs", 184))
+     18 console.error: services.settings: 
+      1 JavaScript error: moz-extension://UUID/bg.js, line 35: InvalidStateError: An exception was thrown
+      3 JavaScript error: resource://gre/modules/ConduitsChild.sys.mjs, line 64: InvalidStateError: JSWindowActorChild.sendAsyncMessage: JSWindowActorChild cannot send at the moment

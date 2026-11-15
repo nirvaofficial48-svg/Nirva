@@ -1,0 +1,614 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/* stylelint-disable stylelint-plugin-mozilla/use-design-tokens */
+
+:root {
+  min-height: 100%;
+  background: var(--nirva-bg);
+  color: var(--nirva-text);
+  font-family: var(--nirva-font-ui);
+  accent-color: var(--nirva-accent);
+  color-scheme: light dark;
+}
+
+:root[data-nirva-mode="bright"] {
+  color-scheme: light;
+}
+
+:root[data-nirva-mode="dark"] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 360px;
+  min-height: 100vh;
+  margin: 0;
+  background: var(--nirva-bg);
+  color: var(--nirva-text);
+  font-size: 14px;
+}
+
+button,
+input,
+select {
+  color: inherit;
+  font: inherit;
+}
+
+button,
+input,
+select {
+  min-height: var(--nirva-hit);
+  border: 1px solid var(--nirva-hairline);
+  border-radius: var(--nirva-radius-control);
+  background: var(--nirva-raised, var(--nirva-bg));
+}
+
+button {
+  padding-inline: 14px;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--nirva-accent);
+  outline-offset: 2px;
+}
+
+.page {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--nirva-grid-gap);
+  width: min(1280px, calc(100% - 64px));
+  margin: 0 auto;
+  /* The island docks above the page, so the page starts near the top. */
+  padding: 24px 0 40px;
+}
+
+.page-heading,
+.privacy-note,
+.clip-section {
+  grid-column: 1 / -1;
+}
+
+.page-heading,
+.section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: var(--nirva-grid-gap);
+}
+
+.page-heading {
+  margin-bottom: 4px;
+}
+
+.heading-actions {
+  display: flex;
+  flex: none;
+  flex-wrap: nowrap;
+  align-items: start;
+  justify-content: end;
+  gap: 8px;
+}
+
+.heading-copy {
+  max-width: 800px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: var(--nirva-text-3);
+  font-size: var(--nirva-label-size);
+  letter-spacing: var(--nirva-label-tracking);
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 8px;
+  font-family: var(--nirva-font-display);
+  font-size: 38px;
+  font-weight: var(--nirva-display-weight, 300);
+  line-height: 1.1;
+}
+
+h2 {
+  margin: 0;
+  font-family: var(--nirva-font-display);
+  font-size: 21px;
+  font-weight: var(--nirva-display-weight, 400);
+}
+
+h3 {
+  margin: 0 0 6px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.intro {
+  max-width: 760px;
+  margin: 0;
+  color: var(--nirva-text-2);
+  line-height: 1.5;
+}
+
+.quiet-button,
+.primary-button,
+.danger-button {
+  color: var(--nirva-text);
+  font-weight: 500;
+}
+
+.quiet-button {
+  background: transparent;
+}
+
+.primary-button {
+  border-color: var(--nirva-accent);
+  color: var(--nirva-accent);
+  font-weight: 600;
+}
+
+.danger-button {
+  color: var(--nirva-text-2);
+  background: transparent;
+}
+
+.privacy-note {
+  display: grid;
+  grid-template-columns: minmax(130px, 3fr) minmax(0, 9fr);
+  gap: 10px 24px;
+  align-items: baseline;
+  padding: 16px 20px;
+  border: 1px solid var(--nirva-panel-border);
+  border-radius: var(--nirva-radius-panel);
+  background: var(--nirva-panel);
+  box-shadow: var(--nirva-panel-shadow);
+  backdrop-filter: var(--nirva-panel-blur);
+}
+
+.privacy-note h2 {
+  font-family: var(--nirva-font-ui);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.privacy-note p {
+  margin: 0;
+  color: var(--nirva-text-2);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.section-heading {
+  margin-bottom: 12px;
+}
+
+.clip-count {
+  margin: 0;
+  color: var(--nirva-text-2);
+  font-size: 12px;
+}
+
+#status {
+  min-height: 20px;
+  margin: 0 0 12px;
+  color: var(--nirva-text-2);
+  font-size: 13px;
+}
+
+.clip-list {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--nirva-grid-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.clip-card {
+  display: flex;
+  flex-direction: column;
+  grid-column: span 6;
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid var(--nirva-panel-border);
+  border-radius: var(--nirva-radius-panel);
+  background: var(--nirva-panel);
+  box-shadow: var(--nirva-panel-shadow);
+  backdrop-filter: var(--nirva-panel-blur);
+}
+
+:root[data-nirva-look="cockpit"] .clip-card,
+:root[data-nirva-look="cockpit"] .privacy-note {
+  border-color: var(--nirva-hairline);
+}
+
+.clip-heading {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.clip-copy {
+  min-width: 0;
+}
+
+.clip-title,
+.clip-source,
+.clip-text,
+.clip-updated,
+.clip-error {
+  overflow-wrap: anywhere;
+}
+
+.clip-title {
+  font-family: var(--nirva-font-display);
+  font-size: 19px;
+  font-weight: var(--nirva-display-weight, 400);
+}
+
+.clip-source,
+.clip-updated,
+.clip-schedule-state {
+  color: var(--nirva-text-3);
+  font-size: 12px;
+}
+
+.clip-source {
+  margin: 0;
+}
+
+/* The clipped words are what the card is for: they come first and read clearly. */
+.clip-text {
+  display: -webkit-box;
+  min-height: 64px;
+  margin: 16px 0 12px;
+  overflow: hidden;
+  color: var(--nirva-text);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
+.clip-updated {
+  margin: 0;
+  color: var(--nirva-text-3);
+  font-size: 12px;
+}
+
+.clip-error {
+  margin: 0 0 12px;
+  color: var(--nirva-warn);
+  font-size: 12px;
+}
+
+.clip-settings {
+  display: flex;
+  margin-top: auto;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 8px 16px;
+  padding: 12px 0;
+  border-top: 1px solid var(--nirva-hairline);
+  border-bottom: 1px solid var(--nirva-hairline);
+}
+
+.schedule-label,
+.clip-editor label {
+  display: grid;
+  gap: 6px;
+  color: var(--nirva-text-2);
+  font-size: 12px;
+}
+
+.clip-schedule {
+  min-width: 156px;
+  min-height: 36px;
+  padding: 0 9px;
+}
+
+.clip-schedule-state {
+  max-width: 230px;
+  line-height: 1.4;
+  text-align: end;
+}
+
+.clip-actions,
+.editor-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.clip-actions button {
+  min-height: var(--nirva-hit);
+  padding-inline: 12px;
+  font-size: 12px;
+}
+
+.clip-editor {
+  display: grid;
+  gap: 10px;
+  padding: 12px 0;
+  border-top: 1px solid var(--nirva-hairline);
+}
+
+.clip-editor input {
+  width: 100%;
+  padding: 0 10px;
+}
+
+.editor-actions {
+  margin-top: 0;
+}
+
+.empty-state {
+  padding: 24px;
+  border: 1px dashed var(--nirva-hairline);
+  border-radius: var(--nirva-radius-panel);
+  color: var(--nirva-text-2);
+  text-align: center;
+}
+
+.empty-state h3 {
+  color: var(--nirva-text);
+}
+
+.empty-state p {
+  margin: 0 auto;
+  max-width: 600px;
+  line-height: 1.5;
+}
+
+.private-notice {
+  width: min(600px, calc(100% - 48px));
+  margin: 140px auto 0;
+  padding: 20px;
+  border: 1px solid var(--nirva-hairline);
+  border-radius: var(--nirva-radius-panel);
+  color: var(--nirva-text-2);
+}
+
+[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 900px) {
+  .page {
+    width: min(100% - 40px, 720px);
+  }
+
+  .clip-card {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 560px) {
+  .page {
+    width: calc(100% - 28px);
+    padding-top: 116px;
+  }
+
+  .page-heading {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .privacy-note {
+    grid-template-columns: 1fr;
+  }
+
+  .clip-actions button {
+    flex: 1 1 auto;
+  }
+}
+
+/* ---------- The foot of a card: when it was updated, and the two common actions ---------- */
+
+.clip-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--nirva-hairline);
+
+  .clip-actions {
+    margin-top: 0;
+  }
+}
+
+/* Schedule, pause, edit and remove live behind "More". */
+.clip-more {
+  margin-top: 4px;
+
+  > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: var(--nirva-hit);
+    color: var(--nirva-text-2);
+    font-size: 12px;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  > summary:focus-visible {
+    outline: 2px solid var(--nirva-accent);
+    outline-offset: 2px;
+  }
+
+  .clip-schedule-state {
+    color: var(--nirva-text-3);
+  }
+}
+
+.clip-more-panel {
+  display: grid;
+  gap: 12px;
+  padding-top: 8px;
+}
+
+.clip-more-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  button {
+    min-height: var(--nirva-hit);
+    padding-inline: 12px;
+    font-size: 12px;
+  }
+}
+
+/* ---------- A clip whose text changed at its last refresh ---------- */
+
+.clip-card-changed {
+  border-color: var(--nirva-accent);
+}
+
+.clip-changed {
+  flex: none;
+  min-height: 28px;
+  padding: 0 10px;
+  border-color: var(--nirva-accent);
+  background: transparent;
+  color: var(--nirva-accent);
+  font-size: 12px;
+  font-weight: 600;
+
+  /* The visible mark is small; the target still reaches 44 px. */
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -8px 0;
+  }
+}
+
+.clip-previous {
+  margin-bottom: 12px;
+  color: var(--nirva-text-2);
+  font-size: 12px;
+
+  > summary {
+    cursor: pointer;
+  }
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.clip-previous-text {
+  margin: 8px 0 0;
+  padding-inline-start: 10px;
+  border-inline-start: 1px solid var(--nirva-hairline);
+  text-decoration: line-through;
+  text-decoration-color: var(--nirva-text-3);
+}
+
+/* ---------- New clip: open tabs to take a clip from ---------- */
+
+.new-clip {
+  position: relative;
+}
+
+.new-clip-menu {
+  position: absolute;
+  z-index: 2;
+  top: calc(100% + 8px);
+  inset-inline-end: 0;
+  width: 320px;
+  padding: 12px;
+  border: 1px solid var(--nirva-hairline);
+  border-radius: var(--nirva-radius-panel);
+  background: var(--nirva-raised, var(--nirva-bg));
+  box-shadow: var(--nirva-panel-shadow);
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.new-clip-tabs {
+  max-height: calc(6 * var(--nirva-hit));
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.new-clip-tab {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: var(--nirva-hit);
+  padding: 0 8px;
+  border: 0;
+  background: transparent;
+  text-align: start;
+
+  &:hover {
+    background: var(--nirva-hairline);
+  }
+
+  img {
+    flex: none;
+    width: 16px;
+    height: 16px;
+    -moz-context-properties: fill;
+    fill: currentColor;
+  }
+
+  span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.muted {
+  margin: 0;
+  color: var(--nirva-text-2);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* The privacy note now closes the page, after the clips themselves. */
+.page > .privacy-note {
+  margin-top: 32px;
+}

@@ -1,0 +1,4 @@
+# The Firefox checkout is its own repository; our changes to it are stored separately (see DECISIONS.md).
+/firefox/
+*.log
+.DS_Store

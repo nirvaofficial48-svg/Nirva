@@ -1,0 +1,13 @@
+diff --git a/eslint-ignores.config.mjs b/eslint-ignores.config.mjs
+index 45a0db2746..c1a73172d1 100644
+--- a/eslint-ignores.config.mjs
++++ b/eslint-ignores.config.mjs
+@@ -51,6 +51,8 @@ export default [
+ 
+   // browser/ exclusions
+   "browser/app/",
++  // Preprocessed Firefox preference input.
++  "browser/components/nirva/**/00-nirva-*.js",
+   "browser/branding/**/firefox-branding.js",
+   // Gzipped test file.
+   "browser/base/content/test/browser-general/gZipOfflineChild.html",

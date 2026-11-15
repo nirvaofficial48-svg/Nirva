@@ -1,0 +1,26 @@
+diff --git a/browser/components/migration/MigrationUtils.sys.mjs b/browser/components/migration/MigrationUtils.sys.mjs
+index 0086b39242..1cb1e64f58 100644
+--- a/browser/components/migration/MigrationUtils.sys.mjs
++++ b/browser/components/migration/MigrationUtils.sys.mjs
+@@ -60,6 +60,12 @@ const MIGRATOR_MODULES = Object.freeze({
+       "moz-src:///browser/components/migration/FirefoxProfileMigrator.sys.mjs",
+     platforms: ["linux", "macosx", "win"],
+   },
++  // NIRVA: imports bookmarks and history from Mozilla Firefox while running.
++  NirvaFirefoxMigrator: {
++    moduleURI:
++      "moz-src:///browser/components/nirva/importer/NirvaFirefoxMigrator.sys.mjs",
++    platforms: ["linux", "macosx", "win"],
++  },
+   FirefoxSelectableProfileMigrator: {
+     moduleURI:
+       "moz-src:///browser/components/migration/FirefoxSelectableProfileMigrator.sys.mjs",
+@@ -196,6 +202,8 @@ class MigrationUtils {
+         "chrome://browser/content/migration/migration-dialog-window.html",
+         "chrome://browser/content/spotlight.html",
+         "about:firefoxview",
++        // NIRVA: The last step of the first-run guide imports from other browsers.
++        "chrome://browser/content/nirva/welcome.html",
+       ],
+       remoteTypes: ["parent", "privilegedabout"],
+     });

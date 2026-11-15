@@ -1,0 +1,104 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/* stylelint-disable stylelint-plugin-mozilla/use-design-tokens */
+
+/* "Who is browsing?" — Nirva's profile chooser. It replaces Firefox's profile-selector.css
+ * (see jar.mn) and is loaded both by the page and inside the <profile-selector> element.
+ * Colours are Glass dark from design/tokens.css. */
+
+@import url("chrome://browser/skin/nirva/fonts.css");
+
+:root {
+  --nirva-bg: #0e1318;
+  --nirva-light-1: #1e3a5c;
+  --nirva-light-2: #4a3028;
+  --nirva-light-3: #1b4a43;
+  --nirva-text: #eef2f5;
+  --nirva-text-2: #c4cfd9;
+  --nirva-text-3: #a9b6c2;
+  --nirva-hairline: rgba(255, 255, 255, 0.1);
+  --nirva-panel: rgba(255, 255, 255, 0.06);
+  --nirva-panel-border: rgba(255, 255, 255, 0.12);
+  --nirva-panel-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  --nirva-panel-blur: blur(28px) saturate(1.4);
+  --nirva-accent: #8fb0ff;
+  --nirva-radius-panel: 20px;
+
+  /* The shared controls (checkbox, ghost buttons) follow the same palette. */
+  --color-accent-primary: var(--nirva-accent);
+  --text-color: var(--nirva-text);
+  --text-color-deemphasized: var(--nirva-text-3);
+  --icon-color: var(--nirva-text-2);
+  --focus-outline-color: var(--nirva-accent);
+  color-scheme: dark;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  background:
+    radial-gradient(60vmax 50vmax at 12% 92%, var(--nirva-light-1), transparent 70%),
+    radial-gradient(45vmax 40vmax at 88% 8%, var(--nirva-light-2), transparent 70%),
+    radial-gradient(50vmax 40vmax at 96% 96%, var(--nirva-light-3), transparent 70%), var(--nirva-bg);
+  color: var(--nirva-text);
+  font-family: "Hanken Grotesk", system-ui, sans-serif;
+}
+
+profile-selector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1080px;
+  padding: 64px 48px;
+}
+
+.logo {
+  width: 56px;
+  height: 56px;
+}
+
+h1[data-l10n-id="profile-window-heading"] {
+  margin: 28px 0 0;
+  font-size: 44px;
+  font-weight: 200;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+.profiles-body-text {
+  max-width: 520px;
+  margin: 10px 0 0;
+  color: var(--nirva-text-3);
+  font-size: 15px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.profile-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  width: 100%;
+  max-height: 60vh;
+  margin: 48px 0 0;
+  padding: 8px;
+  overflow: auto;
+}
+
+moz-checkbox {
+  margin-block-start: 40px;
+  color: var(--nirva-text-2);
+}
+
+moz-checkbox span[hidden] {
+  visibility: hidden;
+}

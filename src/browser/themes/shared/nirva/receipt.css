@@ -1,0 +1,309 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/* stylelint-disable stylelint-plugin-mozilla/use-design-tokens */
+
+:root {
+  min-height: 100%;
+  background: var(--nirva-bg);
+  color: var(--nirva-text);
+  font-family: var(--nirva-font-ui);
+  accent-color: var(--nirva-accent);
+  color-scheme: light dark;
+}
+
+:root[data-nirva-mode="bright"] {
+  color-scheme: light;
+}
+
+:root[data-nirva-mode="dark"] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 360px;
+  min-height: 100vh;
+  margin: 0;
+  background: var(--nirva-bg);
+  color: var(--nirva-text);
+  font-size: 14px;
+}
+
+button,
+input,
+select,
+textarea {
+  color: inherit;
+  font: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+  min-height: var(--nirva-hit);
+  border: 1px solid var(--nirva-hairline);
+  border-radius: var(--nirva-radius-control);
+  background: var(--nirva-raised, var(--nirva-bg));
+}
+
+button {
+  padding-inline: 14px;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--nirva-accent);
+  outline-offset: 2px;
+}
+
+.page {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--nirva-grid-gap);
+  width: min(1280px, calc(100% - 64px));
+  margin: 0 auto;
+  padding: 132px 0 40px;
+}
+
+.page-heading,
+.privacy-note,
+.receipt-section {
+  grid-column: 1 / -1;
+}
+
+.page-heading,
+.section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: var(--nirva-grid-gap);
+}
+
+.page-heading {
+  margin-bottom: 4px;
+}
+
+.heading-copy {
+  max-width: 800px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: var(--nirva-text-3);
+  font-size: var(--nirva-label-size);
+  letter-spacing: var(--nirva-label-tracking);
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 8px;
+  font-family: var(--nirva-font-display);
+  font-size: 38px;
+  font-weight: var(--nirva-display-weight, 300);
+  line-height: 1.1;
+}
+
+h2 {
+  margin: 0;
+  font-family: var(--nirva-font-display);
+  font-size: 21px;
+  font-weight: var(--nirva-display-weight, 400);
+}
+
+h3 {
+  margin: 0 0 6px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.intro {
+  max-width: 760px;
+  margin: 0;
+  color: var(--nirva-text-2);
+  line-height: 1.5;
+}
+
+.quiet-button,
+.primary-button,
+.danger-button {
+  color: var(--nirva-text);
+  font-weight: 500;
+}
+
+.quiet-button {
+  background: transparent;
+}
+
+.primary-button {
+  border-color: var(--nirva-accent);
+  color: var(--nirva-accent);
+  font-weight: 600;
+}
+
+.danger-button {
+  color: var(--nirva-text-2);
+  background: transparent;
+}
+
+.privacy-note {
+  display: grid;
+  grid-template-columns: minmax(130px, 3fr) minmax(0, 9fr);
+  gap: 10px 24px;
+  align-items: baseline;
+  padding: 16px 20px;
+  border: 1px solid var(--nirva-panel-border);
+  border-radius: var(--nirva-radius-panel);
+  background: var(--nirva-panel);
+  box-shadow: var(--nirva-panel-shadow);
+  backdrop-filter: var(--nirva-panel-blur);
+}
+
+.privacy-note h2 {
+  font-family: var(--nirva-font-ui);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.privacy-note p {
+  margin: 0;
+  color: var(--nirva-text-2);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.section-heading {
+  margin-bottom: 12px;
+}
+
+.item-count {
+  margin: 0;
+  color: var(--nirva-text-2);
+  font-size: 12px;
+}
+
+.receipt-section {
+  margin-top: 16px;
+}
+
+.quiet-copy {
+  max-width: 760px;
+  margin: 0 0 12px;
+  color: var(--nirva-text-2);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.receipt-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.receipt-table th,
+.receipt-table td {
+  height: 40px;
+  padding: 0 12px 0 0;
+  border-top: 1px solid var(--nirva-hairline);
+  font-weight: 400;
+  text-align: start;
+  overflow-wrap: anywhere;
+}
+
+.receipt-table thead th {
+  border-top: 0;
+  color: var(--nirva-text-3);
+  font-size: var(--nirva-label-size);
+  letter-spacing: var(--nirva-label-tracking);
+  text-transform: uppercase;
+}
+
+.receipt-table tbody tr:last-child :is(th, td) {
+  border-bottom: 1px solid var(--nirva-hairline);
+}
+
+.receipt-table td {
+  font-weight: 500;
+}
+
+.meanings {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--nirva-grid-gap);
+  margin: 0;
+}
+
+.meaning {
+  grid-column: span 6;
+  padding: 18px;
+  border: 1px solid var(--nirva-panel-border);
+  border-radius: var(--nirva-radius-panel);
+  background: var(--nirva-panel);
+  box-shadow: var(--nirva-panel-shadow);
+  backdrop-filter: var(--nirva-panel-blur);
+}
+
+:root[data-nirva-look="cockpit"] .meaning,
+:root[data-nirva-look="cockpit"] .privacy-note {
+  border-color: var(--nirva-hairline);
+}
+
+.meaning dt {
+  margin: 0 0 6px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.meaning dd {
+  margin: 0;
+  color: var(--nirva-text-2);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 900px) {
+  .page {
+    width: min(100% - 40px, 720px);
+  }
+
+  .meaning {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 560px) {
+  .page {
+    width: calc(100% - 28px);
+    padding-top: 116px;
+  }
+
+  .privacy-note {
+    grid-template-columns: 1fr;
+  }
+}

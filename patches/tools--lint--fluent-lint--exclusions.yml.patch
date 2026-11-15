@@ -1,0 +1,13 @@
+diff --git a/tools/lint/fluent-lint/exclusions.yml b/tools/lint/fluent-lint/exclusions.yml
+index 685a2bdf2c..f8d1bbc346 100644
+--- a/tools/lint/fluent-lint/exclusions.yml
++++ b/tools/lint/fluent-lint/exclusions.yml
+@@ -133,6 +133,8 @@ ID02:
+ # Check with the localization team for advice.
+ CO01:
+     messages:
++        # NIRVA: browser/migrationWizard.ftl names Mozilla Firefox as an import source.
++        - migration-wizard-migrator-display-name-firefox
+         # browser/branding/official/locales/en-US/brand.ftl
+         - trademarkInfo
+         # browser/addonNotifications.ftl

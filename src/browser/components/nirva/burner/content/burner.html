@@ -1,0 +1,87 @@
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src chrome:; object-src 'none'"
+    />
+    <meta name="color-scheme" content="light dark" />
+    <title data-l10n-id="nirva-burner-title"></title>
+    <link rel="localization" href="branding/brand.ftl" />
+    <link rel="localization" href="browser/nirva/burner.ftl" />
+    <link rel="stylesheet" href="chrome://browser/skin/nirva/tokens.css" />
+    <link rel="stylesheet" href="chrome://browser/skin/nirva/fonts.css" />
+    <link rel="stylesheet" href="chrome://browser/skin/nirva/theme.css" />
+    <link rel="stylesheet" href="chrome://browser/skin/nirva/burner.css" />
+    <script
+      type="module"
+      src="chrome://browser/content/nirva/burner.mjs"
+    ></script>
+  </head>
+  <body>
+    <main class="page">
+      <header class="page-heading">
+        <div class="heading-copy">
+          <p class="eyebrow" data-l10n-id="nirva-burner-eyebrow"></p>
+          <h1 data-l10n-id="nirva-burner-title"></h1>
+          <p
+            id="intro-inside"
+            class="intro"
+            data-l10n-id="nirva-burner-intro"
+            hidden=""
+          ></p>
+          <p
+            id="intro-outside"
+            class="intro"
+            data-l10n-id="nirva-burner-intro-outside"
+            hidden=""
+          ></p>
+        </div>
+        <button
+          id="open-burner"
+          class="primary-button"
+          type="button"
+          data-l10n-id="nirva-burner-open"
+          hidden=""
+        ></button>
+      </header>
+
+      <section class="privacy-note" aria-labelledby="limits-heading">
+        <h2 id="limits-heading" data-l10n-id="nirva-burner-limits-title"></h2>
+        <p data-l10n-id="nirva-burner-limits-copy"></p>
+      </section>
+
+      <section class="meanings">
+        <div class="meaning">
+          <h2 data-l10n-id="nirva-burner-erased-title"></h2>
+          <ul>
+            <li data-l10n-id="nirva-burner-erased-cookies"></li>
+            <li data-l10n-id="nirva-burner-erased-storage"></li>
+            <li data-l10n-id="nirva-burner-erased-cache"></li>
+            <li data-l10n-id="nirva-burner-erased-session"></li>
+          </ul>
+        </div>
+        <div class="meaning">
+          <h2 data-l10n-id="nirva-burner-kept-title"></h2>
+          <ul>
+            <li data-l10n-id="nirva-burner-kept-downloads"></li>
+            <li data-l10n-id="nirva-burner-kept-bookmarks"></li>
+            <li data-l10n-id="nirva-burner-kept-passwords"></li>
+            <li data-l10n-id="nirva-burner-kept-permissions"></li>
+          </ul>
+        </div>
+        <div class="meaning wide">
+          <h2 data-l10n-id="nirva-burner-never-title"></h2>
+          <ul>
+            <li data-l10n-id="nirva-burner-never-history"></li>
+            <li data-l10n-id="nirva-burner-never-nirva"></li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/* stylelint-disable stylelint-plugin-mozilla/use-design-tokens */
+
+/* Workspace slide animation with parallax (Launch Plan item 8.3, SPEC A5). */
+
+@keyframes nirva-workspace-slide-in {
+  from {
+    opacity: 0.88;
+    transform: translateY(calc(8px * var(--nirva-motion-move))) scale(calc(1 - 0.008 * var(--nirva-motion-move)));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+:root[data-nirva-workspace-slide="true"] #tabbrowser-tabbox[data-nirva-workspace-sliding="true"] {
+  animation: nirva-workspace-slide-in var(--nirva-move-base) var(--nirva-move-ease);
+  transform-origin: center top;
+  will-change: transform, opacity;
+}
+
+:root:is([data-nirva-motion="minimal"], [data-nirva-lite="true"])[data-nirva-workspace-slide="true"] #tabbrowser-tabbox[data-nirva-workspace-sliding="true"] {
+  animation-duration: var(--nirva-move-fast);
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-nirva-workspace-slide="true"] #tabbrowser-tabbox[data-nirva-workspace-sliding="true"] {
+    animation: none;
+  }
+}

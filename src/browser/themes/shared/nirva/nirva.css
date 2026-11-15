@@ -1,0 +1,75 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+@import url("chrome://browser/skin/nirva/tokens.css");
+@import url("chrome://browser/skin/nirva/fonts.css");
+@import url("chrome://browser/skin/nirva/motion.css");
+@import url("chrome://browser/skin/nirva/spring.css");
+@import url("chrome://browser/skin/nirva/morph.css");
+@import url("chrome://browser/skin/nirva/workspace-slide.css");
+@import url("chrome://browser/skin/nirva/page-transitions.css");
+@import url("chrome://browser/skin/nirva/burn-away.css");
+@import url("chrome://browser/skin/nirva/tab-stacks.css");
+@import url("chrome://browser/skin/nirva/split-snap.css");
+@import url("chrome://browser/skin/nirva/split.css");
+@import url("chrome://browser/skin/nirva/sidebar.css");
+@import url("chrome://browser/skin/nirva/island.css");
+@import url("chrome://browser/skin/nirva/commandbar.css");
+@import url("chrome://browser/skin/nirva/burner-chip.css");
+@import url("chrome://browser/skin/nirva/receipt-panel.css");
+@import url("chrome://browser/skin/nirva/trust-dial.css");
+@import url("chrome://browser/skin/nirva/link-cleaner.css");
+/* NIRVA: Theme Studio wallpaper presets use the saved theme attributes. */
+@import url("chrome://browser/skin/nirva/theme.css");
+
+/* Firefox's own interface variables take their values from the Nirva tokens, so one change of
+ * data-nirva-look or data-nirva-mode restyles the whole window. */
+:root[data-nirva-look] {
+  font-family: var(--nirva-font-ui);
+  accent-color: var(--nirva-accent);
+
+  --text-color: var(--nirva-text);
+  --icon-color: var(--nirva-text-2);
+  --border-color: var(--nirva-hairline);
+  --color-accent-primary: var(--nirva-accent);
+  --focus-outline-color: var(--nirva-accent);
+  --link-color: var(--nirva-accent);
+
+  --toolbox-background-color: var(--nirva-bg);
+  --toolbox-background-color-inactive: var(--nirva-bg);
+  --toolbox-text-color: var(--nirva-text);
+  --toolbox-text-color-inactive: var(--nirva-text-2);
+  --toolbar-background-color: var(--nirva-bg);
+  --toolbar-text-color: var(--nirva-text);
+  --toolbarbutton-icon-fill: var(--nirva-text-2);
+  --toolbarseparator-color: var(--nirva-hairline);
+
+  --toolbar-field-background-color: var(--nirva-island);
+  --toolbar-field-background-color-focus: var(--nirva-island);
+  --toolbar-field-text-color: var(--nirva-text);
+  --toolbar-field-text-color-focus: var(--nirva-text);
+  --toolbar-field-border-color: var(--nirva-island-border);
+  --toolbar-field-border-color-focus: var(--nirva-accent);
+
+  --tab-background-color-selected: var(--nirva-tab-active, var(--nirva-raised));
+  --tabs-navbar-separator-color: var(--nirva-hairline);
+  --chrome-content-separator-color: var(--nirva-hairline);
+
+  --sidebar-background-color: var(--nirva-sidebar, var(--nirva-bg));
+  --sidebar-text-color: var(--nirva-text);
+  --sidebar-border-color: var(--nirva-hairline);
+
+  --panel-background-color: var(--nirva-raised, var(--nirva-bg));
+  --panel-text-color: var(--nirva-text);
+  --panel-border-color: var(--nirva-hairline);
+  --panel-separator-color: var(--nirva-hairline);
+
+  /* Menus and panels set their own colours on the element, so they are mapped there too. */
+  & :is(menupopup, panel) {
+    --panel-background-color: var(--nirva-raised, var(--nirva-bg));
+    --panel-text-color: var(--nirva-text);
+    --panel-border-color: var(--nirva-hairline);
+    --panel-separator-color: var(--nirva-hairline);
+  }
+}

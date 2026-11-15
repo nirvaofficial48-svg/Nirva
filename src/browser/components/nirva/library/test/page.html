@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Harbour field notes</title>
+    <link rel="stylesheet" href="page.css" />
+    <script>
+      window.scriptRan = true;
+    </script>
+  </head>
+  <body>
+    <main>
+      <h1 id="styled" onclick="window.clicked = true">Harbour field notes</h1>
+      <img id="photo" src="pixel.png" width="8" height="8" alt="Blue tile" />
+      <p id="passage">
+        The lighthouse keeper logs seventeen <b>amber</b> lanterns every
+        evening before the tide turns.
+      </p>
+      <p class="screen-only">seventeen amber lanterns, but never shown</p>
+      <p id="other">
+        Further along the quay, <span id="phrase">seventeen amber lanterns</span>
+        are counted again by the ferry crew.
+      </p>
+      <p>
+        <a id="relative" href="other.html">Next entry</a>
+        <a id="scripted" href="javascript:void(0)">Run</a>
+      </p>
+      <form action="submit.html">
+        <input type="hidden" name="csrf" value="csrf-secret-123" />
+        <input type="text" name="name" value="private-typed-value" />
+        <input type="password" name="pass" value="hunter2-secret" />
+        <textarea name="draft">private-draft-text</textarea>
+      </form>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,371 @@
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src chrome:; object-src 'none'"
+    />
+    <meta name="color-scheme" content="light dark" />
+    <title data-l10n-id="nirva-theme-title"></title>
+    <link rel="localization" href="browser/nirva/theme-studio.ftl" />
+    <link rel="stylesheet" href="chrome://browser/skin/nirva/tokens.css" />
+    <link rel="stylesheet" href="chrome://browser/skin/nirva/fonts.css" />
+    <link rel="stylesheet" href="chrome://browser/skin/nirva/motion.css" />
+    <link rel="stylesheet" href="chrome://browser/skin/nirva/theme.css" />
+    <link
+      rel="stylesheet"
+      href="chrome://browser/skin/nirva/theme-studio.css"
+    />
+    <script
+      type="module"
+      src="chrome://browser/content/nirva/studio.mjs"
+    ></script>
+  </head>
+  <body>
+    <main class="page">
+      <header class="page-heading">
+        <div>
+          <p class="eyebrow" data-l10n-id="nirva-theme-eyebrow"></p>
+          <h1 data-l10n-id="nirva-theme-title"></h1>
+          <p class="intro" data-l10n-id="nirva-theme-intro"></p>
+        </div>
+        <div class="heading-actions">
+          <button
+            id="import"
+            class="quiet-button"
+            type="button"
+            data-l10n-id="nirva-theme-import"
+          ></button>
+          <button
+            id="export"
+            class="quiet-button"
+            type="button"
+            data-l10n-id="nirva-theme-export"
+          ></button>
+          <button
+            id="reset"
+            class="quiet-button"
+            type="button"
+            data-l10n-id="nirva-theme-reset"
+          ></button>
+        </div>
+      </header>
+
+      <section class="presets" aria-labelledby="presets-heading">
+        <div class="section-heading">
+          <h2 id="presets-heading" data-l10n-id="nirva-theme-presets"></h2>
+          <span data-l10n-id="nirva-theme-presets-note"></span>
+        </div>
+        <div class="preset-grid">
+          <button class="preset" type="button" data-preset="glass-mist">
+            <span class="preset-mark preset-glass" aria-hidden="true"></span>
+            <span class="preset-copy"
+              ><strong data-l10n-id="nirva-theme-preset-glass"></strong
+              ><span data-l10n-id="nirva-theme-preset-glass-description"></span
+            ></span>
+          </button>
+          <button class="preset" type="button" data-preset="cockpit-amber">
+            <span class="preset-mark preset-cockpit" aria-hidden="true"></span>
+            <span class="preset-copy"
+              ><strong data-l10n-id="nirva-theme-preset-cockpit"></strong
+              ><span
+                data-l10n-id="nirva-theme-preset-cockpit-description"
+              ></span
+            ></span>
+          </button>
+          <button class="preset" type="button" data-preset="paper-linen">
+            <span class="preset-mark preset-paper" aria-hidden="true"></span>
+            <span class="preset-copy"
+              ><strong data-l10n-id="nirva-theme-preset-paper"></strong
+              ><span data-l10n-id="nirva-theme-preset-paper-description"></span
+            ></span>
+          </button>
+        </div>
+      </section>
+
+      <div class="studio-grid">
+        <section class="preview-column" aria-labelledby="preview-heading">
+          <div class="section-heading">
+            <h2 id="preview-heading" data-l10n-id="nirva-theme-preview"></h2>
+          </div>
+          <div id="preview" class="preview-window">
+            <div class="preview-toolbar">
+              <span class="preview-dot"></span><span class="preview-dot"></span
+              ><span class="preview-dot"></span>
+              <div
+                class="preview-address"
+                data-l10n-id="nirva-theme-preview-address"
+              ></div>
+            </div>
+            <div class="preview-content">
+              <i class="nirva-wall-scene" aria-hidden="true"></i>
+              <p
+                class="preview-label"
+                data-l10n-id="nirva-theme-preview-label"
+              ></p>
+              <h3 data-l10n-id="nirva-theme-preview-headline"></h3>
+              <p data-l10n-id="nirva-theme-preview-copy"></p>
+              <div class="preview-lines" aria-hidden="true">
+                <span></span><span></span><span></span>
+              </div>
+              <span
+                class="preview-action"
+                data-l10n-id="nirva-theme-preview-action"
+              ></span>
+            </div>
+          </div>
+          <div class="preview-foot">
+            <p
+              class="preview-caption"
+              data-l10n-id="nirva-theme-preview-caption"
+            ></p>
+            <div class="preview-tools">
+              <div
+                id="preview-mode"
+                class="preview-mode"
+                role="group"
+                data-l10n-id="nirva-theme-preview-in"
+              >
+                <button
+                  type="button"
+                  data-preview-mode="bright"
+                  data-l10n-id="nirva-theme-mode-bright"
+                ></button>
+                <button
+                  type="button"
+                  data-preview-mode="dark"
+                  data-l10n-id="nirva-theme-mode-dark"
+                ></button>
+              </div>
+              <button
+                id="replay"
+                class="quiet-button"
+                type="button"
+                data-l10n-id="nirva-theme-replay"
+              ></button>
+            </div>
+          </div>
+        </section>
+
+        <section class="controls-column" aria-labelledby="controls-heading">
+          <div class="section-heading">
+            <h2 id="controls-heading" data-l10n-id="nirva-theme-controls"></h2>
+            <span data-l10n-id="nirva-theme-controls-note"></span>
+          </div>
+
+          <div class="control-card">
+            <div class="field-row two-fields">
+              <label class="field" for="look">
+                <span data-l10n-id="nirva-theme-look"></span>
+                <select id="look">
+                  <option
+                    value="glass"
+                    data-l10n-id="nirva-theme-look-glass"
+                  ></option>
+                  <option
+                    value="cockpit"
+                    data-l10n-id="nirva-theme-look-cockpit"
+                  ></option>
+                  <option
+                    value="paper"
+                    data-l10n-id="nirva-theme-look-paper"
+                  ></option>
+                </select>
+              </label>
+              <label class="field" for="mode">
+                <span data-l10n-id="nirva-theme-mode"></span>
+                <select id="mode">
+                  <option
+                    value="system"
+                    data-l10n-id="nirva-theme-mode-system"
+                  ></option>
+                  <option
+                    value="bright"
+                    data-l10n-id="nirva-theme-mode-bright"
+                  ></option>
+                  <option
+                    value="dark"
+                    data-l10n-id="nirva-theme-mode-dark"
+                  ></option>
+                </select>
+              </label>
+            </div>
+
+            <fieldset class="accent-fields">
+              <legend data-l10n-id="nirva-theme-accent"></legend>
+              <div class="field-row two-fields">
+                <label class="color-field" for="accent-bright">
+                  <span data-l10n-id="nirva-theme-accent-bright"></span>
+                  <input id="accent-bright" type="color" />
+                  <button
+                    class="default-accent"
+                    type="button"
+                    data-mode="bright"
+                    data-l10n-id="nirva-theme-accent-default"
+                  ></button>
+                </label>
+                <label class="color-field" for="accent-dark">
+                  <span data-l10n-id="nirva-theme-accent-dark"></span>
+                  <input id="accent-dark" type="color" />
+                  <button
+                    class="default-accent"
+                    type="button"
+                    data-mode="dark"
+                    data-l10n-id="nirva-theme-accent-default"
+                  ></button>
+                </label>
+              </div>
+              <p class="field-help" data-l10n-id="nirva-theme-accent-help2"></p>
+            </fieldset>
+
+            <div class="field-row two-fields">
+              <label class="field" for="blur">
+                <span data-l10n-id="nirva-theme-blur"></span>
+                <span class="range-row">
+                  <input id="blur" type="range" min="0" max="40" step="1" />
+                  <output id="blur-value" for="blur"></output>
+                </span>
+              </label>
+              <label class="field" for="roundness">
+                <span data-l10n-id="nirva-theme-roundness"></span>
+                <span class="range-row">
+                  <input
+                    id="roundness"
+                    type="range"
+                    min="0"
+                    max="28"
+                    step="1"
+                  />
+                  <output id="roundness-value" for="roundness"></output>
+                </span>
+              </label>
+            </div>
+            <p
+              id="blur-help"
+              class="field-help"
+              data-l10n-id="nirva-theme-blur-help"
+            ></p>
+
+            <div class="field-row two-fields">
+              <label class="field" for="density">
+                <span data-l10n-id="nirva-theme-density"></span>
+                <select id="density">
+                  <option
+                    value="compact"
+                    data-l10n-id="nirva-theme-density-compact"
+                  ></option>
+                  <option
+                    value="comfortable"
+                    data-l10n-id="nirva-theme-density-comfortable"
+                  ></option>
+                  <option
+                    value="spacious"
+                    data-l10n-id="nirva-theme-density-spacious"
+                  ></option>
+                </select>
+              </label>
+              <label class="field" for="wallpaper">
+                <span data-l10n-id="nirva-theme-wallpaper"></span>
+                <select id="wallpaper">
+                  <option
+                    value="none"
+                    data-l10n-id="nirva-theme-wallpaper-none"
+                  ></option>
+                  <option
+                    value="mist"
+                    data-l10n-id="nirva-theme-wallpaper-mist"
+                  ></option>
+                  <option
+                    value="dawn"
+                    data-l10n-id="nirva-theme-wallpaper-dawn"
+                  ></option>
+                  <option
+                    value="forest"
+                    data-l10n-id="nirva-theme-wallpaper-forest"
+                  ></option>
+                  <option
+                    value="linen"
+                    data-l10n-id="nirva-theme-wallpaper-linen"
+                  ></option>
+                </select>
+              </label>
+            </div>
+            <p
+              id="wallpaper-help"
+              class="field-help"
+              data-l10n-id="nirva-theme-wallpaper-note"
+            ></p>
+
+            <div class="field-row two-fields">
+              <label class="field" for="ui-font">
+                <span data-l10n-id="nirva-theme-ui-font"></span>
+                <select id="ui-font" class="font-select"></select>
+              </label>
+              <label class="field" for="display-font">
+                <span data-l10n-id="nirva-theme-display-font"></span>
+                <select id="display-font" class="font-select"></select>
+              </label>
+            </div>
+
+            <div class="field-row two-fields motion-row">
+              <label class="field" for="motion">
+                <span data-l10n-id="nirva-theme-motion"></span>
+                <select id="motion">
+                  <option
+                    value="smooth"
+                    data-l10n-id="nirva-theme-motion-smooth"
+                  ></option>
+                  <option
+                    value="springy"
+                    data-l10n-id="nirva-theme-motion-springy"
+                  ></option>
+                  <option
+                    value="minimal"
+                    data-l10n-id="nirva-theme-motion-minimal"
+                  ></option>
+                </select>
+              </label>
+              <label class="field" for="speed">
+                <span data-l10n-id="nirva-theme-speed"></span>
+                <span class="range-row">
+                  <input
+                    id="speed"
+                    type="range"
+                    min="100"
+                    max="300"
+                    step="10"
+                  />
+                  <output id="speed-value" for="speed"></output>
+                </span>
+              </label>
+              <label class="lite-control" for="lite">
+                <input id="lite" type="checkbox" />
+                <span data-l10n-id="nirva-theme-lite"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="actions">
+            <p id="status" class="status" role="status" aria-live="polite"></p>
+            <button
+              id="discard"
+              class="quiet-button"
+              type="button"
+              data-l10n-id="nirva-theme-discard"
+            ></button>
+            <button
+              id="apply"
+              class="primary-button"
+              type="button"
+              data-l10n-id="nirva-theme-apply"
+            ></button>
+          </div>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

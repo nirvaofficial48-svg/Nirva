@@ -1,0 +1,414 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/* Sizes, colours and weights here come from Nirva's own tokens (design/tokens.css) and the
+ * approved designs, not from Firefox's design system. */
+/* stylelint-disable stylelint-plugin-mozilla/use-design-tokens */
+
+/* Nirva sidebar (S4): Firefox's vertical tabs drawn from the design tokens.
+ * Reference: designs/Main.html and designs/Paper.html. */
+
+:root[nirva-sidebar][data-nirva-look] {
+  --sidebar-expanded-launcher-width: var(--nirva-sidebar-width);
+  /* NIRVA: Theme Studio controls this spacing through appearance density. */
+  --nirva-sidebar-padding: var(--nirva-density-padding, 16px);
+  --nirva-workspace-mark: var(--nirva-text);
+
+  &[data-nirva-look="cockpit"] {
+    --nirva-workspace-mark: var(--nirva-accent);
+  }
+
+  #sidebar-container {
+    background-color: var(--nirva-sidebar, transparent);
+  }
+
+  /* The switcher sits above the tab list. */
+  #vertical-tabs {
+    flex-direction: column;
+  }
+
+  /* ---------- Workspace switcher ---------- */
+
+  #nirva-workspaces {
+    display: flex;
+    flex-shrink: 0;
+    height: var(--nirva-hit);
+    margin: var(--space-small) var(--nirva-sidebar-padding) 0;
+    border-bottom: 1px solid var(--nirva-hairline);
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  .nirva-workspace {
+    appearance: none;
+    flex-shrink: 0;
+    height: var(--nirva-hit);
+    min-width: var(--nirva-hit);
+    margin: 0;
+    padding: 0;
+    /* Names sit one grid gap apart; the button itself stays a full-size target. */
+    padding-inline-end: var(--nirva-grid-gap);
+    border: 0;
+    background: none;
+    color: var(--nirva-text-3);
+    font: inherit;
+    font-size: 13px;
+    text-align: start;
+
+    > span {
+      display: inline-block;
+      height: var(--nirva-hit);
+      line-height: var(--nirva-hit);
+    }
+
+    &[aria-selected="true"] {
+      color: var(--nirva-text);
+      font-weight: 500;
+
+      > span {
+        box-shadow: inset 0 -1px 0 var(--nirva-workspace-mark);
+      }
+    }
+
+    &:focus-visible {
+      outline: 1px solid var(--nirva-accent);
+      outline-offset: -1px;
+    }
+  }
+
+  /* ---------- Tabs ---------- */
+
+  #tabbrowser-tabs[orient="vertical"] {
+    padding-block-start: var(--nirva-density-padding, 16px);
+    --tab-min-height: var(--nirva-hit);
+    /* Rows are 44 px with a 2 px gap. On the rail a 44 px tab plus 4 px each side is 52 px. */
+    --tab-margin-block: 1px;
+    --tab-margin-inline-inner: calc((var(--nirva-rail-width) - var(--nirva-hit)) / 2);
+
+    &[expanded] {
+      --tab-margin-inline-inner: var(--nirva-sidebar-padding);
+      --tab-padding-inline: 12px;
+      /* Pinned sites: 6 px apart, lined up with the 16 px side padding. */
+      --tab-margin-inline-pinned-expanded: 3px;
+      --tab-container-margin-inline-pinned-expanded: calc(var(--nirva-sidebar-padding) - 3px);
+    }
+
+    .tabbrowser-tab {
+      padding-block: 0;
+    }
+
+    /* On the rail Firefox draws a 28 px highlight from the left; Nirva's is a centred 44 px
+     * square, with the icon in its middle. */
+    &:not([expanded]) .tabbrowser-tab {
+      --tab-collapsed-background-width: var(--nirva-hit);
+
+      .tab-content {
+        padding-inline: calc((var(--nirva-rail-width) - 16px) / 2);
+      }
+    }
+
+    &[expanded] .tabbrowser-tab:not([pinned]) .tab-content {
+      padding-inline: calc(var(--tab-margin-inline-inner) + var(--tab-padding-inline));
+    }
+
+    .tabbrowser-tab[pinned] .tab-background {
+      background-color: var(--nirva-panel);
+      outline: 1px solid var(--nirva-panel-border);
+      outline-offset: -1px;
+    }
+
+    #vertical-pinned-tabs-splitter {
+      margin-inline: var(--nirva-sidebar-padding);
+    }
+    --tab-border-radius: var(--nirva-radius-control);
+    --tab-box-shadow-selected: var(--nirva-panel-shadow);
+
+    .tab-label {
+      font-size: 13px;
+    }
+
+    .tabbrowser-tab:is([selected], [visuallyselected]) {
+      .tab-label {
+        font-weight: 500;
+      }
+
+      .tab-background {
+        outline: 1px solid var(--nirva-panel-border);
+        outline-offset: -1px;
+      }
+    }
+
+    /* A sleeping tab's icon is greyed. Firefox also inverts it in dark mode, which hides
+     * icons that are already light, and fades it over a full second. */
+    .tab-icon-image[pending] {
+      filter: grayscale(100%);
+      transition-duration: var(--nirva-move-max);
+    }
+
+    /* A short word at the end of the row says what is special about a tab. */
+    &[expanded] .tabbrowser-tab:is([pending], [nirva-burner], [nirva-remixed]):not([pinned]) .tab-content::after {
+      order: 3;
+      flex-shrink: 0;
+      margin-inline-start: 12px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .tabbrowser-tab[pending]:not([pinned], [selected]) {
+      color: var(--nirva-text-3);
+    }
+
+    &[expanded] .tabbrowser-tab[pending]:not([pinned], [selected]) .tab-content::after {
+      content: var(--nirva-label-asleep);
+    }
+
+    &[expanded] .tabbrowser-tab[nirva-burner]:not([pinned]) .tab-content::after {
+      content: var(--nirva-label-burner);
+      color: var(--nirva-warn);
+    }
+
+    &[expanded] .tabbrowser-tab[nirva-remixed]:not([pinned], [pending], [nirva-burner]) .tab-content::after {
+      content: var(--nirva-label-remixed);
+      color: var(--nirva-accent);
+    }
+  }
+
+  /* Cockpit marks the active tab with a line, not a box. */
+  &[data-nirva-look="cockpit"] #tabbrowser-tabs[orient="vertical"] .tabbrowser-tab:is([selected], [visuallyselected]) .tab-background {
+    outline: none;
+    border-radius: 0;
+    box-shadow: inset 0 -1px 0 var(--nirva-accent);
+  }
+
+  /* New tab sits at the foot of the sidebar, above a hairline. */
+  #tabbrowser-tabs[orient="vertical"] #tabbrowser-arrowscrollbox-periphery {
+    margin-block-start: auto;
+    position: sticky;
+    bottom: 0;
+    /* The hairline is inset to the side padding, like the row of workspaces above. */
+    background-image: linear-gradient(var(--nirva-hairline), var(--nirva-hairline));
+    background-repeat: no-repeat;
+    background-size: calc(100% - 2 * var(--tab-margin-inline-inner)) 1px;
+    background-position: var(--tab-margin-inline-inner) 0;
+    /* The time travel and burner buttons follow straight below. */
+    padding-block: var(--space-small) 0;
+  }
+
+  /* Overflowing, Firefox shows its new-tab button below the list instead, so the list's own
+   * foot is empty and simply ends the list. */
+  #tabbrowser-tabs[orient="vertical"][overflow] #tabbrowser-arrowscrollbox-periphery {
+    position: static;
+    padding: 0;
+    background: none;
+  }
+
+  /* Time travel and burner buttons, below the scrolling list. */
+  #nirva-tab-foot {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: var(--space-xsmall, 4px);
+    padding-inline: calc(var(--tab-margin-inline-inner) - 6px);
+    padding-block-end: var(--space-small);
+  }
+
+  #tabbrowser-tabs[orient="vertical"][overflow] #nirva-tab-foot {
+    padding-block-start: var(--space-small);
+    background-image: linear-gradient(var(--nirva-hairline), var(--nirva-hairline));
+    background-repeat: no-repeat;
+    background-size: calc(100% - 2 * var(--tab-margin-inline-inner)) 1px;
+    background-position: var(--tab-margin-inline-inner) 0;
+  }
+
+  #tabbrowser-tabs[orient="vertical"]:not([expanded]) #nirva-tab-foot {
+    flex-direction: column;
+    padding-inline: 0;
+  }
+
+  /* Every icon at the foot sits in the same column as the tab icons above: centred on the
+   * rail, and at the tab's side margin plus its inner padding when the sidebar is open. */
+  #tabbrowser-tabs[orient="vertical"][expanded] {
+    #tabbrowser-arrowscrollbox > #tabbrowser-arrowscrollbox-periphery > #tabs-newtab-button,
+    > #vertical-tabs-newtab-button {
+      padding-inline: var(--tab-padding-inline);
+    }
+
+    #nirva-tab-foot {
+      /* The 16 px icon sits 14 px inside its 44 px button. */
+      padding-inline: calc(var(--tab-margin-inline-inner) + var(--tab-padding-inline) - 14px);
+    }
+  }
+
+  #tabbrowser-tabs[orient="vertical"]:not([expanded]) > #vertical-tabs-newtab-button {
+    justify-content: center;
+    width: var(--nirva-hit);
+    margin-inline: var(--tab-margin-inline-inner);
+  }
+
+  /* Many tabs: rows shrink smoothly to 34 px before the list starts to scroll. */
+  #tabbrowser-tabs[orient="vertical"] {
+    .tab-background {
+      transition: min-height var(--nirva-move-base) var(--nirva-move-ease);
+    }
+
+    &[nirva-squeezed] {
+      --tab-min-height: 34px;
+    }
+  }
+
+  #tabs-newtab-button {
+    min-height: var(--nirva-hit);
+    font-size: 13px;
+  }
+
+  #vertical-tabs-newtab-button {
+    font-size: 13px;
+  }
+
+  /* Time travel sits at the end of the New tab row; on the rail it sits above it. */
+  .nirva-foot-button {
+    appearance: none;
+    display: none;
+    flex-shrink: 0;
+    place-items: center;
+    width: var(--nirva-hit);
+    height: var(--nirva-hit);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: var(--nirva-radius-control);
+    background: none;
+    color: var(--nirva-text-3);
+    cursor: pointer;
+
+    &:hover {
+      color: var(--nirva-text);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--nirva-accent);
+      outline-offset: -2px;
+    }
+  }
+
+  #tabbrowser-tabs[orient="vertical"] {
+    .nirva-foot-button:not([hidden]) {
+      display: grid;
+    }
+
+    #tabbrowser-arrowscrollbox-periphery {
+      align-items: center;
+    }
+
+    &[expanded] #tabs-newtab-button {
+      flex: 1;
+    }
+
+    &:not([expanded]) #tabbrowser-arrowscrollbox-periphery {
+      flex-direction: column-reverse;
+    }
+  }
+
+  /* ---------- Collapsed rail ---------- */
+
+  sidebar-main:not([expanded]) {
+    #vertical-tabs {
+      width: var(--nirva-rail-width);
+    }
+
+    /* The rail shows tabs only, as drawn; workspaces are chosen with the sidebar open. */
+    #nirva-workspaces {
+      display: none;
+    }
+
+    .nirva-workspace {
+      padding-inline-end: 0;
+      text-align: center;
+
+      &:not([aria-selected="true"]) {
+        display: none;
+      }
+    }
+
+    .nirva-workspace > span {
+      font-size: 0;
+    }
+
+    .nirva-workspace > span::before {
+      content: attr(data-initial);
+      font-size: 13px;
+    }
+  }
+}
+
+/* ---------- Hidden sidebar: slides in from the edge (nirva.autohide.enabled) ---------- */
+
+#nirva-sidebar-edge {
+  display: none;
+}
+
+:root[nirva-sidebar][nirva-sidebar-autohide][nirva-island][data-nirva-look]:not([inDOMFullscreen], [customizing]) {
+  #sidebar-container {
+    position: fixed;
+    z-index: 6;
+    inset-block: 0;
+    inset-inline-start: 0;
+    background-color: var(--nirva-sidebar, var(--nirva-bg));
+    border-inline-end: 1px solid var(--nirva-hairline);
+    box-shadow: var(--nirva-panel-shadow);
+    opacity: 0;
+    translate: calc(-100% * var(--nirva-motion-move)) 0;
+    pointer-events: none;
+    transition:
+      translate var(--nirva-move-base) var(--nirva-ease),
+      opacity var(--nirva-move-fast) var(--nirva-ease);
+  }
+
+  &:-moz-locale-dir(rtl) #sidebar-container {
+    translate: calc(100% * var(--nirva-motion-move)) 0;
+  }
+
+  &[nirva-sidebar-shown] #sidebar-container {
+    opacity: 1;
+    translate: 0 0;
+    pointer-events: auto;
+    /* Opening swings in on the spring curve; closing eases out plainly. */
+    transition-timing-function: var(--nirva-ease-spring), var(--nirva-ease);
+  }
+
+  &:is([data-nirva-motion="minimal"], [data-nirva-lite="true"])[nirva-sidebar-shown] #sidebar-container {
+    transition-timing-function: var(--nirva-ease);
+  }
+
+  #sidebar-launcher-splitter {
+    display: none;
+  }
+
+  &:not([nirva-sidebar-shown]) #nirva-sidebar-edge {
+    display: block;
+    position: fixed;
+    z-index: 6;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: 6px;
+  }
+}
+
+/* Full screen (F11): Firefox folds its sidebar away with the toolbar, but Nirva keeps the
+ * island on screen, so the sidebar stays usable too, pinned or revealed from the edge. */
+:root[nirva-sidebar][nirva-island][data-nirva-look][fullscreenNavToolboxHidden]:not([inDOMFullscreen]) #sidebar-container {
+  content-visibility: visible;
+  flex-basis: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[nirva-sidebar-autohide][nirva-sidebar-shown] #sidebar-container {
+    transition-timing-function: var(--nirva-ease);
+  }
+}

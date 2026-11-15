@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Home screen, Glass dark</title>
+<!-- Approved Nirva design, 1440 x 900. Reference only: fonts are bundled in the real browser. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@200;300;400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:pointer}
+a{color:#EEF2F5;text-decoration:none}a:hover{color:#8FB0FF}
+</style>
+</head>
+<body>
+<div style="width: 1440px; height: 900px; position: relative; overflow: hidden; background: #0E1318; color: #EEF2F5; font-family: 'Hanken Grotesk', system-ui, sans-serif">
+
+  <div aria-hidden="true" style="position: absolute; left: -260px; bottom: -340px; width: 860px; height: 860px; border-radius: 50%; background: #1E3A5C; filter: blur(90px)"></div>
+  <div aria-hidden="true" style="position: absolute; right: -200px; top: -260px; width: 680px; height: 680px; border-radius: 50%; background: #4A3028; filter: blur(90px)"></div>
+  <div aria-hidden="true" style="position: absolute; right: -160px; bottom: -300px; width: 640px; height: 640px; border-radius: 50%; background: #1B4A43; filter: blur(90px)"></div>
+  <div aria-hidden="true" style="position: absolute; left: 560px; top: -520px; width: 900px; height: 900px; border-radius: 50%; border: 1px solid rgba(255,255,255,.16)"></div>
+  <div aria-hidden="true" style="position: absolute; left: 480px; top: -600px; width: 1060px; height: 1060px; border-radius: 50%; border: 1px solid rgba(255,255,255,.08)"></div>
+
+  <nav aria-label="Sidebar, collapsed" style="position: absolute; left: 16px; top: 16px; bottom: 16px; width: 52px; box-sizing: border-box; padding: 4px; border-radius: 18px; background: rgba(255,255,255,.06); backdrop-filter: blur(28px) saturate(1.4); border: 1px solid rgba(255,255,255,.12); display: flex; flex-direction: column; align-items: center; gap: 2px">
+    <button aria-label="Expand sidebar" style="width: 44px; height: 44px; display: grid; place-items: center; color: #A9B6C2"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M9 5v14"/></svg></button>
+    <button aria-label="Tab: Lumen Journal" style="width: 44px; height: 44px; display: grid; place-items: center"><span style="width: 14px; height: 14px; border-radius: 4px; background: #7FD1C4"></span></button>
+    <button aria-label="Tab: Lecture notes" style="width: 44px; height: 44px; display: grid; place-items: center"><span style="width: 14px; height: 14px; border-radius: 4px; background: #8FB0FF"></span></button>
+    <button aria-label="Tab: Documentation" style="width: 44px; height: 44px; display: grid; place-items: center"><span style="width: 14px; height: 14px; border-radius: 4px; background: #EEF2F5"></span></button>
+    <span style="flex-grow: 1"></span>
+    <button aria-label="Tab canvas" style="width: 44px; height: 44px; display: grid; place-items: center; color: #A9B6C2"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg></button>
+    <button aria-label="Time travel" style="width: 44px; height: 44px; display: grid; place-items: center; color: #A9B6C2"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></button>
+  </nav>
+
+  <div style="position: absolute; top: 28px; left: 50%; transform: translateX(-50%); width: 560px; height: 48px; box-sizing: border-box; padding: 0 8px 0 20px; border-radius: 24px; background: rgba(255,255,255,.09); backdrop-filter: blur(28px) saturate(1.4); border: 1px solid rgba(255,255,255,.16); box-shadow: 0 14px 40px rgba(0,0,0,.35); display: flex; align-items: center; gap: 12px">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A9B6C2" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+    <label for="q" style="position: absolute; width: 1px; height: 1px; overflow: hidden">Search or enter address</label>
+    <input id="q" type="text" placeholder="Search, or type a page you remember" style="flex: 1; min-width: 0; height: 44px; border: 0; background: none; font: inherit; font-size: 14px; color: #EEF2F5; outline-offset: 2px">
+    <span style="font-size: 11px; letter-spacing: .06em; color: #A9B6C2; border: 1px solid rgba(255,255,255,.22); border-radius: 6px; padding: 3px 7px; margin-right: 6px">Ctrl K</span>
+  </div>
+
+  <div style="position: absolute; left: 112px; right: 64px; top: 116px; display: flex; align-items: flex-end; justify-content: space-between">
+    <div style="display: flex; flex-direction: column; gap: 8px">
+      <div style="font-size: 12px; line-height: 20px; letter-spacing: .14em; text-transform: uppercase; color: #C4CFD9">Tuesday 10 November</div>
+      <div style="font-size: 148px; line-height: .92; font-weight: 200; letter-spacing: -.05em; margin-left: -8px">10:42</div>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px; padding-bottom: 12px">
+      <div style="font-size: 44px; line-height: 1; font-weight: 200; letter-spacing: -.02em">27°</div>
+      <div style="font-size: 13px; color: #C4CFD9">Clear · [YOUR CITY]</div>
+    </div>
+  </div>
+
+  <div style="position: absolute; left: 112px; right: 64px; top: 332px; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); grid-template-rows: 212px 196px; gap: 20px">
+
+    <section aria-label="To-do list" style="grid-column: span 5; box-sizing: border-box; padding: 22px 24px; border-radius: 20px; background: rgba(255,255,255,.06); backdrop-filter: blur(28px) saturate(1.4); border: 1px solid rgba(255,255,255,.12); box-shadow: 0 20px 50px rgba(0,0,0,.25); display: flex; flex-direction: column">
+      <h2 style="margin: 0 0 6px; font-size: 11px; line-height: 20px; font-weight: 400; letter-spacing: .14em; text-transform: uppercase; color: #C4CFD9">Today</h2>
+      <label style="display: flex; align-items: center; gap: 14px; height: 44px; border-top: 1px solid rgba(255,255,255,.10); font-size: 14px; color: #A9B6C2; text-decoration: line-through"><input type="checkbox" checked style="width: 16px; height: 16px; margin: 0; accent-color: #EEF2F5">Build plain Firefox on the laptop</label>
+      <label style="display: flex; align-items: center; gap: 14px; height: 44px; border-top: 1px solid rgba(255,255,255,.10); font-size: 14px"><input type="checkbox" style="width: 16px; height: 16px; margin: 0; accent-color: #EEF2F5">Export the approved designs</label>
+      <label style="display: flex; align-items: center; gap: 14px; height: 44px; border-top: 1px solid rgba(255,255,255,.10); font-size: 14px"><input type="checkbox" style="width: 16px; height: 16px; margin: 0; accent-color: #EEF2F5">Set up cloud builds</label>
+    </section>
+
+    <section aria-label="Focus timer" style="grid-column: span 3; box-sizing: border-box; padding: 22px 24px; border-radius: 20px; background: rgba(255,255,255,.06); backdrop-filter: blur(28px) saturate(1.4); border: 1px solid rgba(255,255,255,.12); box-shadow: 0 20px 50px rgba(0,0,0,.25); display: flex; flex-direction: column; justify-content: space-between">
+      <h2 style="margin: 0; font-size: 11px; line-height: 20px; font-weight: 400; letter-spacing: .14em; text-transform: uppercase; color: #C4CFD9">Focus</h2>
+      <div style="display: flex; align-items: center; gap: 18px">
+        <svg width="76" height="76" viewBox="0 0 76 76" role="img" aria-label="Two thirds of the session remaining"><circle cx="38" cy="38" r="34" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="1.5"/><circle cx="38" cy="38" r="34" fill="none" stroke="#8FB0FF" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="143 214" transform="rotate(-90 38 38)"/></svg>
+        <div style="font-size: 44px; line-height: 1; font-weight: 200; letter-spacing: -.03em">16:40</div>
+      </div>
+      <button style="align-self: flex-start; height: 44px; margin-bottom: -12px; font-size: 13px; font-weight: 500; color: #8FB0FF">Pause session</button>
+    </section>
+
+    <section aria-label="Live clips" style="grid-column: span 4; box-sizing: border-box; padding: 22px 24px; border-radius: 20px; background: rgba(255,255,255,.06); backdrop-filter: blur(28px) saturate(1.4); border: 1px solid rgba(255,255,255,.12); box-shadow: 0 20px 50px rgba(0,0,0,.25); display: flex; flex-direction: column">
+      <h2 style="margin: 0 0 6px; font-size: 11px; line-height: 20px; font-weight: 400; letter-spacing: .14em; text-transform: uppercase; color: #C4CFD9">Live clips</h2>
+      <div style="height: 66px; border-top: 1px solid rgba(255,255,255,.10); display: flex; align-items: center; justify-content: space-between; gap: 12px">
+        <div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 500">Linux build passed</span><span style="font-size: 12px; color: #A9B6C2">Build status · 2 minutes ago</span></div>
+        <span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 50%; background: #7FD1C4"></span>
+      </div>
+      <div style="height: 66px; border-top: 1px solid rgba(255,255,255,.10); display: flex; align-items: center; justify-content: space-between; gap: 12px">
+        <div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 500">No change yet</span><span style="font-size: 12px; color: #A9B6C2">[PAGE YOU ARE WATCHING] · checked 5 minutes ago</span></div>
+        <span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 50%; border: 1px solid #A9B6C2; box-sizing: border-box"></span>
+      </div>
+    </section>
+
+    <section aria-label="Countdown" style="grid-column: span 3; box-sizing: border-box; padding: 22px 24px; border-radius: 20px; background: rgba(238,242,245,.92); color: #18212B; box-shadow: 0 20px 50px rgba(0,0,0,.3); display: flex; flex-direction: column; justify-content: space-between">
+      <h2 style="margin: 0; font-size: 11px; line-height: 20px; font-weight: 400; letter-spacing: .14em; text-transform: uppercase; color: #36424E">[YOUR EVENT]</h2>
+      <div style="display: flex; align-items: baseline; gap: 10px"><span style="font-size: 76px; line-height: .9; font-weight: 200; letter-spacing: -.04em">18</span><span style="font-size: 14px; color: #36424E">days to go</span></div>
+    </section>
+
+    <section aria-label="Memory and battery" style="grid-column: span 3; box-sizing: border-box; padding: 22px 24px; border-radius: 20px; background: rgba(255,255,255,.06); backdrop-filter: blur(28px) saturate(1.4); border: 1px solid rgba(255,255,255,.12); box-shadow: 0 20px 50px rgba(0,0,0,.25); display: flex; flex-direction: column; gap: 18px">
+      <h2 style="margin: 0; font-size: 11px; line-height: 20px; font-weight: 400; letter-spacing: .14em; text-transform: uppercase; color: #C4CFD9">This computer</h2>
+      <div style="display: flex; flex-direction: column; gap: 8px"><div style="display: flex; justify-content: space-between; font-size: 13px"><span>Memory</span><span style="color: #C4CFD9">3.1 of 12 GB</span></div><div style="height: 2px; background: rgba(255,255,255,.16)"><div style="width: 26%; height: 2px; background: #EEF2F5"></div></div></div>
+      <div style="display: flex; flex-direction: column; gap: 8px"><div style="display: flex; justify-content: space-between; font-size: 13px"><span>Battery</span><span style="color: #C4CFD9">82%</span></div><div style="height: 2px; background: rgba(255,255,255,.16)"><div style="width: 82%; height: 2px; background: #EEF2F5"></div></div></div>
+    </section>
+
+    <section aria-label="Music" style="grid-column: span 3; box-sizing: border-box; padding: 22px 24px; border-radius: 20px; background: rgba(255,255,255,.06); backdrop-filter: blur(28px) saturate(1.4); border: 1px solid rgba(255,255,255,.12); box-shadow: 0 20px 50px rgba(0,0,0,.25); display: flex; flex-direction: column; justify-content: space-between">
+      <h2 style="margin: 0; font-size: 11px; line-height: 20px; font-weight: 400; letter-spacing: .14em; text-transform: uppercase; color: #C4CFD9">Playing</h2>
+      <div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 16px; font-weight: 500">[TRACK TITLE]</span><span style="font-size: 13px; color: #C4CFD9">[ARTIST]</span></div>
+      <div style="display: flex; align-items: center; margin: 0 0 -12px -14px">
+        <button aria-label="Previous track" style="width: 44px; height: 44px; display: grid; place-items: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6l-8 6 8 6V6zM6 6v12"/></svg></button>
+        <button aria-label="Play" style="width: 44px; height: 44px; display: grid; place-items: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5l11 7-11 7V5z"/></svg></button>
+        <button aria-label="Next track" style="width: 44px; height: 44px; display: grid; place-items: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l8 6-8 6V6zM18 6v12"/></svg></button>
+      </div>
+    </section>
+
+    <section aria-label="Continue reading" style="grid-column: span 3; box-sizing: border-box; padding: 22px 24px; border-radius: 20px; background: rgba(255,255,255,.06); backdrop-filter: blur(28px) saturate(1.4); border: 1px solid rgba(255,255,255,.12); box-shadow: 0 20px 50px rgba(0,0,0,.25); display: flex; flex-direction: column">
+      <h2 style="margin: 0 0 6px; font-size: 11px; line-height: 20px; font-weight: 400; letter-spacing: .14em; text-transform: uppercase; color: #C4CFD9">Continue reading</h2>
+      <a href="#r1" style="position: relative; height: 56px; border-top: 1px solid rgba(255,255,255,.10); display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 13px"><span style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">Ring resonators</span><span style="color: #C4CFD9">62%</span><span aria-hidden="true" style="position: absolute; left: 0; top: -1px; width: 62%; height: 1px; background: #EEF2F5"></span></a>
+      <a href="#r2" style="position: relative; height: 56px; border-top: 1px solid rgba(255,255,255,.10); display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 13px"><span style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">Maxwell's equations</span><span style="color: #C4CFD9">35%</span><span aria-hidden="true" style="position: absolute; left: 0; top: -1px; width: 35%; height: 1px; background: #EEF2F5"></span></a>
+    </section>
+  </div>
+
+  <div style="position: absolute; left: 50%; bottom: 28px; transform: translateX(-50%); height: 56px; box-sizing: border-box; padding: 0 6px; border-radius: 28px; background: rgba(255,255,255,.08); backdrop-filter: blur(28px) saturate(1.4); border: 1px solid rgba(255,255,255,.16); box-shadow: 0 14px 40px rgba(0,0,0,.3); display: flex; align-items: center">
+    <a href="#mail" aria-label="Mail" style="width: 44px; height: 44px; display: grid; place-items: center"><span style="width: 18px; height: 18px; border-radius: 5px; background: #8FB0FF"></span></a>
+    <a href="#calendar" aria-label="Calendar" style="width: 44px; height: 44px; display: grid; place-items: center"><span style="width: 18px; height: 18px; border-radius: 5px; background: #E7A66B"></span></a>
+    <a href="#notes" aria-label="Notes" style="width: 44px; height: 44px; display: grid; place-items: center"><span style="width: 18px; height: 18px; border-radius: 5px; background: #EEF2F5"></span></a>
+    <a href="#code" aria-label="Code" style="width: 44px; height: 44px; display: grid; place-items: center"><span style="width: 18px; height: 18px; border-radius: 5px; background: #B9A2F0"></span></a>
+    <a href="#video" aria-label="Video" style="width: 44px; height: 44px; display: grid; place-items: center"><span style="width: 18px; height: 18px; border-radius: 5px; background: #7FD1C4"></span></a>
+    <span aria-hidden="true" style="width: 1px; height: 20px; background: rgba(255,255,255,.22); margin: 0 6px"></span>
+    <button aria-label="Add quick link" style="width: 44px; height: 44px; display: grid; place-items: center; color: #A9B6C2"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+  </div>
+
+  <button style="position: absolute; right: 64px; bottom: 34px; height: 44px; font-size: 13px; color: #C4CFD9">Edit home</button>
+  <div aria-label="Home page 1 of 3" role="img" style="position: absolute; left: 112px; bottom: 54px; display: flex; gap: 6px">
+    <span style="width: 18px; height: 3px; background: #EEF2F5"></span>
+    <span style="width: 18px; height: 3px; background: rgba(255,255,255,.25)"></span>
+    <span style="width: 18px; height: 3px; background: rgba(255,255,255,.25)"></span>
+  </div>
+</div>
+</body>
+</html>

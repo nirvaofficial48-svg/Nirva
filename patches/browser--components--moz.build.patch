@@ -1,0 +1,13 @@
+diff --git a/browser/components/moz.build b/browser/components/moz.build
+index f9ac509165..802dca710f 100644
+--- a/browser/components/moz.build
++++ b/browser/components/moz.build
+@@ -46,6 +46,8 @@ DIRS += [
+     "mozcachedohttp",
+     "multilineeditor",
+     "newtab",
++    # NIRVA: all Nirva features live here
++    "nirva",
+     "nimbus",
+     "originattributes",
+     "pagedata",

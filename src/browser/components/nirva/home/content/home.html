@@ -1,0 +1,341 @@
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src chrome:; img-src chrome: page-icon:; object-src 'none'"
+    />
+    <meta name="color-scheme" content="light dark" />
+    <title data-l10n-id="nirva-home-title"></title>
+    <link rel="icon" href="chrome://branding/content/icon32.png" />
+    <link rel="localization" href="branding/brand.ftl" />
+    <link rel="localization" href="browser/nirva/home.ftl" />
+    <link rel="stylesheet" href="chrome://browser/skin/nirva/tokens.css" />
+    <link rel="stylesheet" href="chrome://browser/skin/nirva/fonts.css" />
+    <link rel="stylesheet" href="chrome://browser/skin/nirva/theme.css" />
+    <link rel="stylesheet" href="chrome://browser/skin/nirva/home.css" />
+    <script
+      type="module"
+      src="chrome://browser/content/nirva/home.mjs"
+    ></script>
+  </head>
+  <body>
+    <div class="wallpaper" aria-hidden="true">
+      <i class="light light-1"></i>
+      <i class="light light-2"></i>
+      <i class="light light-3"></i>
+      <i class="arc arc-1"></i>
+      <i class="arc arc-2"></i>
+      <i class="nirva-wall-scene"></i>
+    </div>
+    <main class="home">
+      <header class="strip">
+        <div id="workspaces" class="strip-workspaces"></div>
+        <div class="strip-stats">
+          <span id="stat-tabs"></span>
+          <span id="stat-memory"></span>
+          <span id="stat-battery"></span>
+        </div>
+      </header>
+
+      <div class="top">
+        <div class="clock-block">
+          <div id="date" class="date"></div>
+          <div id="clock" class="clock"></div>
+        </div>
+        <div id="top-slot" class="top-slot"></div>
+      </div>
+
+      <section
+        class="ribbon"
+        data-widget="ribbon"
+        data-l10n-id="nirva-home-ribbon"
+      >
+        <div id="sessions" class="ribbon-track"></div>
+      </section>
+
+      <div id="grid" class="grid">
+        <section class="widget" data-widget="todo">
+          <div class="heading-row">
+            <h2 data-l10n-id="nirva-home-todo-title"></h2>
+            <button
+              id="todo-new"
+              class="icon-button"
+              type="button"
+              aria-expanded="false"
+              data-l10n-id="nirva-home-todo-new"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path d="M12 5v14M5 12h14" />
+              </svg>
+            </button>
+          </div>
+          <form id="todo-add" class="row add" hidden="">
+            <input
+              id="todo-text"
+              type="text"
+              autocomplete="off"
+              data-l10n-id="nirva-home-todo-add"
+            />
+          </form>
+          <ul id="todo" class="rows"></ul>
+        </section>
+
+        <section class="widget" data-widget="focus">
+          <h2 data-l10n-id="nirva-home-focus-title"></h2>
+          <div class="focus-face">
+            <svg
+              class="focus-ring"
+              width="44"
+              height="44"
+              viewBox="0 0 44 44"
+              aria-hidden="true"
+            >
+              <circle class="focus-ring-track" cx="22" cy="22" r="20" />
+              <circle
+                id="focus-ring"
+                class="focus-ring-value"
+                cx="22"
+                cy="22"
+                r="20"
+              />
+            </svg>
+            <div id="focus-time" class="focus-time" role="timer"></div>
+          </div>
+          <div class="focus-line" aria-hidden="true">
+            <div id="focus-line"></div>
+          </div>
+          <div class="focus-actions">
+            <span
+              id="focus-locking"
+              class="quiet"
+              data-l10n-id="nirva-home-focus-locking"
+              hidden=""
+            ></span>
+            <button
+              id="focus-toggle"
+              class="text-button accent"
+              type="button"
+            ></button>
+            <button
+              id="focus-reset"
+              class="text-button"
+              type="button"
+              data-l10n-id="nirva-home-focus-reset"
+              hidden=""
+            ></button>
+          </div>
+        </section>
+
+        <section class="widget" data-widget="clips">
+          <h2 data-l10n-id="nirva-home-clips-title"></h2>
+          <ul id="clips" class="rows tall"></ul>
+          <button
+            id="clips-open"
+            class="text-button"
+            type="button"
+            data-l10n-id="nirva-home-clips-open"
+          ></button>
+        </section>
+
+        <section class="widget" data-widget="note">
+          <h2 data-l10n-id="nirva-home-note-title"></h2>
+          <textarea id="note" data-l10n-id="nirva-home-note"></textarea>
+        </section>
+
+        <section class="widget inverse" data-widget="countdown">
+          <h2 id="countdown-title"></h2>
+          <div id="countdown" class="countdown">
+            <span id="countdown-days" class="countdown-days"></span>
+            <span id="countdown-label" class="countdown-label"></span>
+          </div>
+          <button
+            id="countdown-set"
+            class="text-button"
+            type="button"
+            data-l10n-id="nirva-home-countdown-set"
+            hidden=""
+          ></button>
+        </section>
+
+        <section class="widget" data-widget="computer">
+          <h2 data-l10n-id="nirva-home-computer-title"></h2>
+          <div class="meter">
+            <div class="meter-text">
+              <span data-l10n-id="nirva-home-memory"></span>
+              <span id="memory-value" class="quiet"></span>
+            </div>
+            <div class="meter-track"><div id="memory-bar"></div></div>
+          </div>
+          <div id="battery" class="meter" hidden="">
+            <div class="meter-text">
+              <span data-l10n-id="nirva-home-battery"></span>
+              <span id="battery-value" class="quiet"></span>
+            </div>
+            <div class="meter-track"><div id="battery-bar"></div></div>
+          </div>
+        </section>
+
+        <section class="widget" data-widget="reading">
+          <h2 data-l10n-id="nirva-home-reading-title"></h2>
+          <ul id="reading" class="rows mid"></ul>
+          <p
+            id="reading-empty"
+            class="quiet"
+            data-l10n-id="nirva-home-reading-empty"
+          ></p>
+        </section>
+
+        <section class="widget" data-widget="energy">
+          <h2 data-l10n-id="nirva-home-energy-title"></h2>
+          <ul id="energy" class="rows mid"></ul>
+          <p
+            id="energy-empty"
+            class="quiet"
+            data-l10n-id="nirva-home-energy-empty"
+          ></p>
+        </section>
+
+        <section class="widget" data-widget="privacy">
+          <h2 data-l10n-id="nirva-home-privacy-title"></h2>
+          <ul class="rows mid">
+            <li class="row">
+              <span data-l10n-id="nirva-home-privacy-trackers"></span>
+              <span id="privacy-trackers" class="figure"></span>
+            </li>
+            <li class="row">
+              <span data-l10n-id="nirva-home-privacy-fingerprinters"></span>
+              <span id="privacy-fingerprinters" class="figure"></span>
+            </li>
+            <li class="row extra">
+              <span data-l10n-id="nirva-home-privacy-burners"></span>
+              <span id="privacy-burners" class="figure"></span>
+            </li>
+            <li class="row extra">
+              <span data-l10n-id="nirva-home-privacy-strict"></span>
+              <span id="privacy-strict" class="figure"></span>
+            </li>
+          </ul>
+        </section>
+      </div>
+
+      <footer class="foot">
+        <nav class="links" data-l10n-id="nirva-home-links">
+          <ul id="links"></ul>
+          <button
+            id="link-add"
+            class="icon-button"
+            type="button"
+            data-l10n-id="nirva-home-link-add"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 5v14M5 12h14" />
+            </svg>
+          </button>
+        </nav>
+        <button id="command" class="command-pill" type="button">
+          <span class="command-mark" aria-hidden="true">&gt;</span>
+          <span class="command-text" data-l10n-id="nirva-home-command"></span>
+          <kbd data-l10n-id="nirva-home-command-key"></kbd>
+        </button>
+        <button
+          id="edit"
+          class="text-button"
+          type="button"
+          aria-expanded="false"
+          data-l10n-id="nirva-home-edit"
+        ></button>
+      </footer>
+
+      <form id="link-form" class="panel link-form" hidden="">
+        <input
+          id="link-url"
+          type="text"
+          autocomplete="off"
+          spellcheck="false"
+          data-l10n-id="nirva-home-link-url"
+        />
+        <input
+          id="link-title"
+          type="text"
+          autocomplete="off"
+          data-l10n-id="nirva-home-link-title"
+        />
+        <button
+          class="outline-button"
+          type="submit"
+          data-l10n-id="nirva-home-link-save"
+        ></button>
+        <p
+          id="link-error"
+          class="status"
+          role="alert"
+          data-l10n-id="nirva-home-link-error"
+          hidden=""
+        ></p>
+      </form>
+
+      <section
+        id="editor"
+        class="panel editor"
+        aria-labelledby="editor-title"
+        hidden=""
+      >
+        <h2 id="editor-title" data-l10n-id="nirva-home-editor-title"></h2>
+        <div class="editor-columns">
+          <fieldset>
+            <legend data-l10n-id="nirva-home-editor-widgets"></legend>
+            <div id="editor-widgets" class="checks"></div>
+          </fieldset>
+          <fieldset>
+            <legend data-l10n-id="nirva-home-editor-countdown"></legend>
+            <input
+              id="editor-countdown-title"
+              type="text"
+              maxlength="60"
+              data-l10n-id="nirva-home-editor-countdown-title"
+            />
+            <input
+              id="editor-countdown-date"
+              type="date"
+              data-l10n-id="nirva-home-editor-countdown-date"
+            />
+          </fieldset>
+          <fieldset>
+            <legend data-l10n-id="nirva-home-editor-focus"></legend>
+            <p class="quiet" data-l10n-id="nirva-home-editor-focus-copy"></p>
+            <textarea
+              id="editor-focus-sites"
+              spellcheck="false"
+              data-l10n-id="nirva-home-editor-focus-sites"
+            ></textarea>
+          </fieldset>
+          <fieldset>
+            <legend data-l10n-id="nirva-home-editor-more"></legend>
+            <button
+              id="editor-clear-reading"
+              class="outline-button"
+              type="button"
+              data-l10n-id="nirva-home-editor-clear-reading"
+            ></button>
+            <button
+              id="editor-studio"
+              class="outline-button"
+              type="button"
+              data-l10n-id="nirva-home-editor-studio"
+            ></button>
+          </fieldset>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

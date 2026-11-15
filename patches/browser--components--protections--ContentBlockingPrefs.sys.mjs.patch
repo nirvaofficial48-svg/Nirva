@@ -1,0 +1,19 @@
+diff --git a/browser/components/protections/ContentBlockingPrefs.sys.mjs b/browser/components/protections/ContentBlockingPrefs.sys.mjs
+index 4b709b7476..e46dd43bdb 100644
+--- a/browser/components/protections/ContentBlockingPrefs.sys.mjs
++++ b/browser/components/protections/ContentBlockingPrefs.sys.mjs
+@@ -517,6 +517,14 @@ export let ContentBlockingPrefs = {
+   },
+ 
+   init() {
++    // NIRVA: Start new profiles in Strict tracking protection.
++    if (
++      Services.prefs.getBoolPref("nirva.privacy.enabled", false) &&
++      !Services.prefs.prefHasUserValue(this.PREF_CB_CATEGORY)
++    ) {
++      Services.prefs.setStringPref(this.PREF_CB_CATEGORY, "strict");
++    }
++
+     this.setPrefExpectationsAndUpdate();
+     this.matchCBCategory();
+ 

@@ -1,0 +1,71 @@
+diff --git a/browser/components/migration/ChromeMigrationUtils.sys.mjs b/browser/components/migration/ChromeMigrationUtils.sys.mjs
+index e97b910cd0..09683a9e1c 100644
+--- a/browser/components/migration/ChromeMigrationUtils.sys.mjs
++++ b/browser/components/migration/ChromeMigrationUtils.sys.mjs
+@@ -306,12 +306,44 @@ export var ChromeMigrationUtils = {
+         Vivaldi: [["ULibDir", "Application Support", "Vivaldi"]],
+       },
+       linux: {
+-        Brave: [["Home", ".config", "BraveSoftware", "Brave-Browser"]],
+-        Chrome: [["Home", ".config", "google-chrome"]],
++        Brave: [
++          ["Home", ".config", "BraveSoftware", "Brave-Browser"],
++          // NIRVA: the Flatpak install keeps its data under ~/.var/app.
++          [
++            "Home",
++            ".var",
++            "app",
++            "com.brave.Browser",
++            "config",
++            "BraveSoftware",
++            "Brave-Browser",
++          ],
++        ],
++        Chrome: [
++          ["Home", ".config", "google-chrome"],
++          // NIRVA: the Flatpak install keeps its data under ~/.var/app.
++          [
++            "Home",
++            ".var",
++            "app",
++            "com.google.Chrome",
++            "config",
++            "google-chrome",
++          ],
++        ],
+         "Chrome Beta": [["Home", ".config", "google-chrome-beta"]],
+         "Chrome Dev": [["Home", ".config", "google-chrome-unstable"]],
+         Chromium: [
+           ["Home", ".config", "chromium"],
++          // NIRVA: the Flatpak install keeps its data under ~/.var/app.
++          [
++            "Home",
++            ".var",
++            "app",
++            "org.chromium.Chromium",
++            "config",
++            "chromium",
++          ],
+ 
+           // If we're installed normally, we can look for Chromium installed
+           // as a Snap on Ubuntu Linux by looking here.
+@@ -327,7 +359,18 @@ export var ChromeMigrationUtils = {
+         // Opera GX is not available on Linux.
+         // Canary is not available on Linux.
+ 
+-        Edge: [["Home", ".config", "microsoft-edge"]],
++        Edge: [
++          ["Home", ".config", "microsoft-edge"],
++          // NIRVA: the Flatpak install keeps its data under ~/.var/app.
++          [
++            "Home",
++            ".var",
++            "app",
++            "com.microsoft.Edge",
++            "config",
++            "microsoft-edge",
++          ],
++        ],
+         Opera: [["Home", ".config", "opera"]],
+         Vivaldi: [["Home", ".config", "vivaldi"]],
+       },

@@ -1,0 +1,164 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/* Sizes, colours and weights here come from Nirva's own tokens (design/tokens.css) and the
+ * approved designs, not from Firefox's design system. */
+/* stylelint-disable stylelint-plugin-mozilla/use-design-tokens */
+
+/* Command bar (T1). Reference: the command pill in designs/Cockpit.html: a 560 by 52 px pill
+ * at the bottom centre of the page area that expands upward when opened. */
+
+#nirva-commandbar {
+  position: fixed;
+  z-index: 5;
+  bottom: 40px;
+  left: var(--nirva-island-center, 50%);
+  translate: -50% 0;
+  box-sizing: border-box;
+  width: min(560px, calc(var(--nirva-content-width, 100vw) - 48px));
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--nirva-island-border);
+  border-radius: 26px;
+  /* A solid ground: the list must stay readable over any page. */
+  background-color: var(--nirva-raised, var(--nirva-bg));
+  box-shadow: var(--nirva-island-shadow);
+  color: var(--nirva-text);
+  font-family: var(--nirva-font-ui);
+  overflow: clip;
+  animation: nirva-commandbar-in var(--nirva-move-base) var(--nirva-move-ease);
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+/* Cockpit and Paper give the island a solid fill of its own; use it there. */
+:root:is([data-nirva-look="cockpit"], [data-nirva-look="paper"]) #nirva-commandbar {
+  background-color: var(--nirva-island);
+}
+
+@keyframes nirva-commandbar-in {
+  from {
+    opacity: 0;
+    /* A fade only when movement is off (Minimal, reduce motion, Lite mode). */
+    translate: -50% calc(8px * var(--nirva-motion-move));
+  }
+}
+
+#nirva-commandbar-pill {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 12px;
+  height: 50px;
+  padding-inline: 22px 8px;
+}
+
+#nirva-commandbar-prompt {
+  font-family: var(--nirva-font-mono, ui-monospace, monospace);
+  font-size: 14px;
+  color: var(--nirva-accent);
+}
+
+#nirva-commandbar-input {
+  appearance: none;
+  flex: 1;
+  min-width: 0;
+  height: var(--nirva-hit);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 14px;
+
+  &::placeholder {
+    color: var(--nirva-text-3);
+    opacity: 1;
+  }
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+#nirva-commandbar-hint {
+  flex-shrink: 0;
+  margin-inline-end: 6px;
+  padding: 4px 8px;
+  border: 1px solid var(--nirva-island-border);
+  border-radius: 6px;
+  font-family: var(--nirva-font-mono, ui-monospace, monospace);
+  font-size: 11px;
+  color: var(--nirva-text-3);
+}
+
+/* Results: rows 48 px high with a hairline under each, growing upward from the pill. */
+#nirva-commandbar-results {
+  order: -1;
+  margin: 0;
+  padding: 8px 0 0;
+  list-style: none;
+  max-height: min(392px, calc(100vh - 200px));
+  overflow-y: auto;
+  scrollbar-width: thin;
+
+  &:empty {
+    display: none;
+  }
+
+  > li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-sizing: border-box;
+    height: 48px;
+    padding-inline: 22px 20px;
+    border-bottom: 1px solid var(--nirva-hairline);
+    font-size: 14px;
+  }
+
+  > li[aria-selected="true"] {
+    box-shadow: inset 2px 0 0 var(--nirva-accent);
+    background-color: var(--nirva-hairline);
+  }
+}
+
+.nirva-result-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  white-space: nowrap;
+}
+
+.nirva-result-title {
+  flex-shrink: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nirva-result-detail {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 12px;
+  color: var(--nirva-text-3);
+}
+
+.nirva-result-kind {
+  flex-shrink: 0;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--nirva-text-3);
+}
+
+.nirva-result-empty {
+  color: var(--nirva-text-3);
+}

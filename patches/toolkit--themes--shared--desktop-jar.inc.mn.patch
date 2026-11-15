@@ -1,0 +1,24 @@
+diff --git a/toolkit/themes/shared/desktop-jar.inc.mn b/toolkit/themes/shared/desktop-jar.inc.mn
+index f31059f08c..55a67d27d5 100644
+--- a/toolkit/themes/shared/desktop-jar.inc.mn
++++ b/toolkit/themes/shared/desktop-jar.inc.mn
+@@ -158,12 +158,13 @@
+   skin/classic/global/illustrations/about-license.svg      (../../shared/illustrations/about-license.svg)
+   skin/classic/global/illustrations/shield-check.svg       (../../shared/illustrations/shield-check.svg)
+   skin/classic/global/illustrations/shield-alert.svg       (../../shared/illustrations/shield-alert.svg)
+-  skin/classic/global/illustrations/kit-concerned.svg      (../../shared/illustrations/kit-concerned.svg)
+-  skin/classic/global/illustrations/kit-confetti.svg       (../../shared/illustrations/kit-confetti.svg)
+-  skin/classic/global/illustrations/kit-happy.svg	   (../../shared/illustrations/kit-happy.svg)
+-  skin/classic/global/illustrations/kit-in-circle.svg      (../../shared/illustrations/kit-in-circle.svg)
+-  skin/classic/global/illustrations/kit-holding-lock.svg   (../../shared/illustrations/kit-holding-lock.svg)
+-  skin/classic/global/illustrations/kit-sympathetic.svg   (../../shared/illustrations/kit-sympathetic.svg)
++  # NIRVA: The Nirva mark replaces the Firefox mascot illustrations.
++  skin/classic/global/illustrations/kit-concerned.svg      (../../shared/illustrations/nirva-mark.svg)
++  skin/classic/global/illustrations/kit-confetti.svg       (../../shared/illustrations/nirva-mark.svg)
++  skin/classic/global/illustrations/kit-happy.svg	   (../../shared/illustrations/nirva-mark.svg)
++  skin/classic/global/illustrations/kit-in-circle.svg      (../../shared/illustrations/nirva-mark.svg)
++  skin/classic/global/illustrations/kit-holding-lock.svg   (../../shared/illustrations/nirva-mark.svg)
++  skin/classic/global/illustrations/kit-sympathetic.svg   (../../shared/illustrations/nirva-mark.svg)
+   skin/classic/global/media/picture-in-picture-closed.svg  (../../shared/media/picture-in-picture-closed.svg)
+   skin/classic/global/icons/minus.svg                      (../../shared/icons/minus.svg)
+   skin/classic/global/narrate.css                          (../../shared/narrate.css)

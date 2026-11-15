@@ -1,0 +1,59 @@
+diff --git a/browser/moz.build b/browser/moz.build
+index ea741e3785..6398b2594c 100644
+--- a/browser/moz.build
++++ b/browser/moz.build
+@@ -52,6 +52,54 @@ if CONFIG["MOZ_ARTIFACT_BUILDS"]:
+ # this directory, which is un-set in browser/app.
+ JS_PREFERENCE_PP_FILES += [
+     "app/profile/firefox.js",
++    # NIRVA: Load feature-local privacy defaults after Firefox's app defaults.
++    "components/nirva/burner/00-nirva-burner.js",
++    "components/nirva/commandbar/00-nirva-commandbar.js",
++    # NIRVA: See-through frames on dark pages.
++    "components/nirva/frames/00-nirva-frames.js",
++    # NIRVA: The home screen preferences.
++    "components/nirva/home/00-nirva-home.js",
++    "components/nirva/island/00-nirva-island.js",
++    # NIRVA: Personal Web Library keeps saved copies, highlights and notes locally.
++    "components/nirva/library/00-nirva-library.js",
++    # NIRVA: Automatic Link Cleaner preference.
++    "components/nirva/linkcleaner/00-nirva-linkcleaner.js",
++    # NIRVA: Live Clips stores selected regions and optional refresh settings.
++    "components/nirva/liveclips/00-nirva-liveclips.js",
++    "components/nirva/looks/00-nirva-looks.js",
++    # NIRVA: Macros preferences.
++    "components/nirva/macros/00-nirva-macros.js",
++    # NIRVA: Memory saver and the engine's own memory settings.
++    "components/nirva/memory/00-nirva-memory.js",
++    "components/nirva/motion/00-nirva-motion.js",
++    "components/nirva/motion/burn-away/00-nirva-burn-away.js",
++    "components/nirva/motion/morph/00-nirva-morph.js",
++    "components/nirva/motion/page-transitions/00-nirva-page-transitions.js",
++    "components/nirva/motion/split-snap/00-nirva-split-snap.js",
++    "components/nirva/motion/spring/00-nirva-spring.js",
++    "components/nirva/motion/tab-stacks/00-nirva-tab-stacks.js",
++    "components/nirva/motion/workspace-slide/00-nirva-workspace-slide.js",
++    "components/nirva/privacy/00-nirva-privacy.js",
++    # NIRVA: Profiles and the chooser at start.
++    "components/nirva/profiles/00-nirva-profiles.js",
++    # NIRVA: Read-Everything Search preferences.
++    "components/nirva/readsearch/00-nirva-readsearch.js",
++    # NIRVA: The Privacy Receipt reports what protection logged.
++    "components/nirva/receipt/00-nirva-receipt.js",
++    # NIRVA: Page Remix keeps per-site page adjustments locally.
++    "components/nirva/remix/00-nirva-remix.js",
++    "components/nirva/sidebar/00-nirva-sidebar.js",
++    # NIRVA: Split view of two to four tabs.
++    "components/nirva/split/00-nirva-split.js",
++    # NIRVA: Tab rules preferences.
++    "components/nirva/tabrules/00-nirva-tabrules.js",
++    # NIRVA: Register Theme Studio preferences with the profile.
++    "components/nirva/theme/00-nirva-theme.js",
++    # NIRVA: Register Time Travel retention and storage defaults.
++    "components/nirva/timetravel/00-nirva-timetravel.js",
++    # NIRVA: The Trust Dial preference.
++    "components/nirva/trust/00-nirva-trust.js",
++    "components/nirva/welcome/00-nirva-welcome.js",
+ ]
+ FINAL_TARGET_FILES.defaults += ["app/permissions"]
+ 

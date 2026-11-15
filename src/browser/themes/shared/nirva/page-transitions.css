@@ -1,0 +1,34 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/* stylelint-disable stylelint-plugin-mozilla/use-design-tokens */
+
+/* Page transitions with soft crossfade (Launch Plan item 8.4, SPEC A6). */
+
+:root[data-nirva-page-transitions="true"] {
+  .browserSidebarContainer,
+  browser[type="content"],
+  .browserContainer > browser {
+    transition: opacity var(--nirva-move-fast) var(--nirva-move-ease);
+    will-change: opacity;
+  }
+
+  &:is([data-nirva-page-loading="true"], [nirva-island-loading]) :is(browser[type="content"], .browserContainer > browser) {
+    opacity: calc(1 - 0.16 * var(--nirva-motion-move));
+    background-color: var(--nirva-page, -moz-Field);
+  }
+}
+
+:root:is([data-nirva-motion="minimal"], [data-nirva-lite="true"])[data-nirva-page-transitions="true"] {
+  browser[type="content"],
+  .browserContainer > browser {
+    transition: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-nirva-page-transitions="true"] :is(browser[type="content"], .browserContainer > browser) {
+    transition: none;
+  }
+}

@@ -1,0 +1,13 @@
+diff --git a/browser/themes/shared/browser-shared.css b/browser/themes/shared/browser-shared.css
+index c248d1701e..a139e555cf 100644
+--- a/browser/themes/shared/browser-shared.css
++++ b/browser/themes/shared/browser-shared.css
+@@ -34,6 +34,8 @@
+ @import url("chrome://browser/skin/customizableui/customizeMode.css");
+ @import url("chrome://browser/skin/UITour.css");
+ @import url("chrome://browser/skin/formautofill-notification.css");
++/* NIRVA: tokens and look mapping, last so they win */
++@import url("chrome://browser/skin/nirva/nirva.css");
+ 
+ :root,
+ body {

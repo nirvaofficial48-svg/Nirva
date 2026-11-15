@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Home screen, Cockpit vibe</title>
+<!-- Approved Nirva design, 1440 x 900. Reference only: fonts are bundled in the real browser. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:pointer}
+a{color:#E6EBEF;text-decoration:none}a:hover{color:#F5B25C}
+</style>
+</head>
+<body>
+<div style="width: 1440px; height: 900px; box-sizing: border-box; position: relative; padding: 0 64px; background: #0B0E11; color: #E6EBEF; font-family: Manrope, system-ui, sans-serif; overflow: hidden">
+
+  <header style="height: 56px; border-bottom: 1px solid #1D242C; display: flex; align-items: center; gap: 28px">
+    <button style="height: 56px; font-size: 13px; font-weight: 600; box-shadow: inset 0 -1px 0 #F5B25C">Study</button>
+    <button style="height: 56px; font-size: 13px; color: #93A0AD">Build</button>
+    <button style="height: 56px; font-size: 13px; color: #93A0AD">Play</button>
+    <span style="flex-grow: 1"></span>
+    <div style="display: flex; gap: 28px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #93A0AD">
+      <span>14 tabs · 6 asleep</span>
+      <span>3.1 GB</span>
+      <span>82%</span>
+    </div>
+  </header>
+
+  <div style="margin-top: 40px; display: flex; align-items: flex-end; justify-content: space-between">
+    <div style="display: flex; flex-direction: column; gap: 12px">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 20px; letter-spacing: .1em; text-transform: uppercase; color: #93A0AD">Tuesday 10 November</div>
+      <div style="font-size: 152px; line-height: 1; font-weight: 200; letter-spacing: -.04em; margin-left: -8px">10:42</div>
+    </div>
+    <section aria-label="Focus session" style="width: 312px; display: flex; flex-direction: column; gap: 12px; padding-bottom: 14px">
+      <div style="display: flex; align-items: baseline; justify-content: space-between">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: #93A0AD">Focus</span>
+        <span style="font-size: 28px; font-weight: 300; letter-spacing: -.01em">16:40</span>
+      </div>
+      <div role="img" aria-label="Two thirds of the session remaining" style="height: 1px; background: #1D242C"><div style="width: 67%; height: 1px; background: #F5B25C"></div></div>
+      <div style="display: flex; justify-content: space-between; align-items: center">
+        <span style="font-size: 13px; color: #93A0AD">Distracting sites are locked</span>
+        <button style="height: 44px; font-size: 13px; font-weight: 600; color: #F5B25C">Pause</button>
+      </div>
+    </section>
+  </div>
+
+  <section aria-label="Time travel" style="margin-top: 48px; position: relative; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px">
+    <div aria-hidden="true" style="position: absolute; left: 0; right: 0; top: 39px; height: 1px; background: #2A333D"></div>
+
+    <div style="grid-column: span 3; display: flex; flex-direction: column">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 20px; color: #93A0AD; margin-bottom: 14px">Sun 16:40</div>
+      <span aria-hidden="true" style="position: relative; width: 11px; height: 11px; box-sizing: border-box; border-radius: 50%; background: #0B0E11; border: 1px solid #93A0AD; margin-bottom: 14px"></span>
+      <div style="font-size: 15px; line-height: 22px; font-weight: 500">6 tabs in Play</div>
+      <div style="font-size: 13px; line-height: 18px; color: #93A0AD">One window</div>
+      <button style="align-self: flex-start; height: 44px; font-size: 13px; color: #93A0AD">Restore</button>
+    </div>
+
+    <div style="grid-column: span 3; display: flex; flex-direction: column">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 20px; color: #93A0AD; margin-bottom: 14px">Yesterday 21:00</div>
+      <span aria-hidden="true" style="position: relative; width: 11px; height: 11px; box-sizing: border-box; border-radius: 50%; background: #0B0E11; border: 1px solid #93A0AD; margin-bottom: 14px"></span>
+      <div style="font-size: 15px; line-height: 22px; font-weight: 500">22 tabs in Study</div>
+      <div style="font-size: 13px; line-height: 18px; color: #93A0AD">Two windows, split view</div>
+      <button style="align-self: flex-start; height: 44px; font-size: 13px; color: #93A0AD">Restore</button>
+    </div>
+
+    <div style="grid-column: span 3; display: flex; flex-direction: column">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 20px; color: #93A0AD; margin-bottom: 14px">Today 08:15</div>
+      <span aria-hidden="true" style="position: relative; width: 11px; height: 11px; box-sizing: border-box; border-radius: 50%; background: #0B0E11; border: 1px solid #93A0AD; margin-bottom: 14px"></span>
+      <div style="font-size: 15px; line-height: 22px; font-weight: 500">9 tabs in Build</div>
+      <div style="font-size: 13px; line-height: 18px; color: #93A0AD">One window</div>
+      <button style="align-self: flex-start; height: 44px; font-size: 13px; color: #93A0AD">Restore</button>
+    </div>
+
+    <div style="grid-column: span 3; display: flex; flex-direction: column">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 20px; color: #F5B25C; margin-bottom: 14px">Now</div>
+      <span aria-hidden="true" style="position: relative; width: 11px; height: 11px; border-radius: 50%; background: #F5B25C; box-shadow: 0 0 0 5px rgba(245,178,92,.16); margin-bottom: 14px"></span>
+      <div style="font-size: 15px; line-height: 22px; font-weight: 500">14 tabs in Study</div>
+      <div style="font-size: 13px; line-height: 18px; color: #93A0AD">One window, 6 asleep</div>
+      <button style="align-self: flex-start; height: 44px; font-size: 13px; font-weight: 600; color: #F5B25C">Save as recipe</button>
+    </div>
+  </section>
+
+  <div style="margin-top: 28px; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px">
+
+    <section aria-label="Continue reading" style="grid-column: span 4; display: flex; flex-direction: column">
+      <h2 style="margin: 0; height: 32px; border-bottom: 1px solid #2A333D; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 20px; font-weight: 400; letter-spacing: .1em; text-transform: uppercase; color: #93A0AD">Continue reading</h2>
+      <a href="#r1" style="position: relative; height: 48px; border-bottom: 1px solid #1D242C; display: flex; align-items: center; justify-content: space-between; gap: 16px; font-size: 14px"><span style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">How a ring resonator traps light</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #93A0AD">62%</span><span aria-hidden="true" style="position: absolute; left: 0; bottom: -1px; width: 62%; height: 1px; background: #E6EBEF"></span></a>
+      <a href="#r2" style="position: relative; height: 48px; border-bottom: 1px solid #1D242C; display: flex; align-items: center; justify-content: space-between; gap: 16px; font-size: 14px"><span style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">Maxwell's equations: lecture notes</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #93A0AD">35%</span><span aria-hidden="true" style="position: absolute; left: 0; bottom: -1px; width: 35%; height: 1px; background: #E6EBEF"></span></a>
+      <a href="#r3" style="position: relative; height: 48px; border-bottom: 1px solid #1D242C; display: flex; align-items: center; justify-content: space-between; gap: 16px; font-size: 14px"><span style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">Waveguide solver documentation</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #93A0AD">80%</span><span aria-hidden="true" style="position: absolute; left: 0; bottom: -1px; width: 80%; height: 1px; background: #E6EBEF"></span></a>
+      <a href="#r4" style="position: relative; height: 48px; border-bottom: 1px solid #1D242C; display: flex; align-items: center; justify-content: space-between; gap: 16px; font-size: 14px"><span style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">Beam splitters explained</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #93A0AD">10%</span><span aria-hidden="true" style="position: absolute; left: 0; bottom: -1px; width: 10%; height: 1px; background: #E6EBEF"></span></a>
+    </section>
+
+    <section aria-label="Tab energy" style="grid-column: span 4; display: flex; flex-direction: column">
+      <h2 style="margin: 0; height: 32px; border-bottom: 1px solid #2A333D; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 20px; font-weight: 400; letter-spacing: .1em; text-transform: uppercase; color: #93A0AD">Tab energy</h2>
+      <div style="position: relative; height: 48px; border-bottom: 1px solid #1D242C; display: flex; align-items: center; justify-content: space-between; gap: 16px; font-size: 14px"><span style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">Optics lecture playlist</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #F5B25C">910 MB</span><span aria-hidden="true" style="position: absolute; left: 0; bottom: -1px; width: 88%; height: 1px; background: #F5B25C"></span></div>
+      <div style="position: relative; height: 48px; border-bottom: 1px solid #1D242C; display: flex; align-items: center; justify-content: space-between; gap: 16px; font-size: 14px"><span style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">Waveguide solver documentation</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #93A0AD">420 MB</span><span aria-hidden="true" style="position: absolute; left: 0; bottom: -1px; width: 41%; height: 1px; background: #E6EBEF"></span></div>
+      <div style="position: relative; height: 48px; border-bottom: 1px solid #1D242C; display: flex; align-items: center; justify-content: space-between; gap: 16px; font-size: 14px"><span style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">Lumen Journal</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #93A0AD">180 MB</span><span aria-hidden="true" style="position: absolute; left: 0; bottom: -1px; width: 18%; height: 1px; background: #E6EBEF"></span></div>
+      <div style="position: relative; height: 48px; border-bottom: 1px solid #1D242C; display: flex; align-items: center; justify-content: space-between; gap: 16px; font-size: 14px"><span style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">Lecture notes</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #93A0AD">95 MB</span><span aria-hidden="true" style="position: absolute; left: 0; bottom: -1px; width: 9%; height: 1px; background: #E6EBEF"></span></div>
+    </section>
+
+    <section aria-label="Privacy today" style="grid-column: span 4; display: flex; flex-direction: column">
+      <h2 style="margin: 0; height: 32px; border-bottom: 1px solid #2A333D; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 20px; font-weight: 400; letter-spacing: .1em; text-transform: uppercase; color: #93A0AD">Privacy today</h2>
+      <div style="height: 48px; border-bottom: 1px solid #1D242C; display: flex; align-items: center; justify-content: space-between; font-size: 14px"><span>Trackers blocked</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px">187</span></div>
+      <div style="height: 48px; border-bottom: 1px solid #1D242C; display: flex; align-items: center; justify-content: space-between; font-size: 14px"><span>Fingerprinting attempts stopped</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px">25</span></div>
+      <div style="height: 48px; border-bottom: 1px solid #1D242C; display: flex; align-items: center; justify-content: space-between; font-size: 14px"><span>Burner tabs wiped</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px">3</span></div>
+      <div style="height: 48px; border-bottom: 1px solid #1D242C; display: flex; align-items: center; justify-content: space-between; font-size: 14px"><span>Sites set to strict</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px">4</span></div>
+    </section>
+  </div>
+
+  <div style="position: absolute; left: 50%; bottom: 28px; transform: translateX(-50%); width: 560px; height: 52px; box-sizing: border-box; padding: 0 8px 0 22px; border-radius: 26px; border: 1px solid #2A333D; background: #10151A; display: flex; align-items: center; gap: 12px">
+    <span aria-hidden="true" style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #F5B25C">&gt;</span>
+    <label for="cmd" style="position: absolute; width: 1px; height: 1px; overflow: hidden">Command or search</label>
+    <input id="cmd" type="text" placeholder="Type a command, a page you read, or a search" style="flex: 1; min-width: 0; height: 44px; border: 0; background: none; outline-offset: 2px; font: inherit; font-size: 14px; color: #E6EBEF">
+    <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #93A0AD; border: 1px solid #2A333D; border-radius: 6px; padding: 4px 8px; margin-right: 6px">Ctrl K</span>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,8 @@
+[DEFAULT]
+prefs = [
+  "dom.security.https_only_mode=false",
+  "dom.security.https_only_mode_pbm=false",
+]
+support-files = ["article.html"]
+
+["browser_nirva_home.js"]

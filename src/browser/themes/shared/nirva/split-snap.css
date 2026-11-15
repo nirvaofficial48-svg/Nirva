@@ -1,0 +1,31 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/* Magnetic split-view snap with spring settle (SPEC A8, item 4.3). */
+
+:root[data-nirva-split-snap="true"] {
+  :is(tab-split-view-wrapper, .split-view-panel) {
+    transition:
+      flex var(--nirva-move-base) var(--nirva-ease-spring),
+      width var(--nirva-move-base) var(--nirva-ease-spring),
+      height var(--nirva-move-base) var(--nirva-ease-spring);
+    will-change: width, height, flex;
+
+    &:active {
+      transition: none;
+    }
+  }
+}
+
+:root:is([data-nirva-motion="minimal"], [data-nirva-lite="true"])[data-nirva-split-snap="true"] {
+  :is(tab-split-view-wrapper, .split-view-panel) {
+    transition: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-nirva-split-snap="true"] :is(tab-split-view-wrapper, .split-view-panel) {
+    transition: none;
+  }
+}

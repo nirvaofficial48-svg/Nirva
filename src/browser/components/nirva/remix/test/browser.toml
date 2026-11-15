@@ -1,0 +1,8 @@
+[DEFAULT]
+prefs = [
+  "dom.security.https_only_mode=false",
+  "dom.security.https_only_mode_pbm=false",
+]
+support-files = ["page.html"]
+
+["browser_nirva_remix.js"]

@@ -1,0 +1,159 @@
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src chrome:; object-src 'none'"
+    />
+    <meta name="color-scheme" content="light dark" />
+    <title data-l10n-id="nirva-receipt-title"></title>
+    <link rel="localization" href="branding/brand.ftl" />
+    <link rel="localization" href="browser/nirva/receipt.ftl" />
+    <link rel="stylesheet" href="chrome://browser/skin/nirva/tokens.css" />
+    <link rel="stylesheet" href="chrome://browser/skin/nirva/fonts.css" />
+    <link rel="stylesheet" href="chrome://browser/skin/nirva/theme.css" />
+    <link rel="stylesheet" href="chrome://browser/skin/nirva/receipt.css" />
+    <script
+      type="module"
+      src="chrome://browser/content/nirva/receipt.mjs"
+    ></script>
+  </head>
+  <body>
+    <main class="page">
+      <header class="page-heading">
+        <div class="heading-copy">
+          <p class="eyebrow" data-l10n-id="nirva-receipt-page-eyebrow"></p>
+          <h1 data-l10n-id="nirva-receipt-title"></h1>
+          <p class="intro" data-l10n-id="nirva-receipt-intro"></p>
+        </div>
+      </header>
+
+      <section class="privacy-note" aria-labelledby="limits-heading">
+        <h2 id="limits-heading" data-l10n-id="nirva-receipt-limits-title"></h2>
+        <p data-l10n-id="nirva-receipt-limits-copy"></p>
+      </section>
+
+      <section class="receipt-section" aria-labelledby="totals-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow" data-l10n-id="nirva-receipt-totals-label"></p>
+            <h2
+              id="totals-heading"
+              data-l10n-id="nirva-receipt-totals-title"
+            ></h2>
+          </div>
+          <p id="totals-since" class="item-count"></p>
+        </div>
+        <p
+          id="totals-missing"
+          class="quiet-copy"
+          hidden
+          data-l10n-id="nirva-receipt-totals-missing"
+        ></p>
+        <table id="totals" class="receipt-table">
+          <thead>
+            <tr>
+              <th scope="col" data-l10n-id="nirva-receipt-column-kind"></th>
+              <th scope="col" data-l10n-id="nirva-receipt-column-week"></th>
+              <th scope="col" data-l10n-id="nirva-receipt-column-month"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-kind="trackers">
+              <th scope="row" data-l10n-id="nirva-receipt-total-trackers"></th>
+              <td class="week"></td>
+              <td class="month"></td>
+            </tr>
+            <tr data-kind="fingerprinters">
+              <th
+                scope="row"
+                data-l10n-id="nirva-receipt-total-fingerprinters"
+              ></th>
+              <td class="week"></td>
+              <td class="month"></td>
+            </tr>
+            <tr data-kind="cookies">
+              <th scope="row" data-l10n-id="nirva-receipt-total-cookies"></th>
+              <td class="week"></td>
+              <td class="month"></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="receipt-section" aria-labelledby="meaning-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow" data-l10n-id="nirva-receipt-meaning-label"></p>
+            <h2
+              id="meaning-heading"
+              data-l10n-id="nirva-receipt-meaning-title"
+            ></h2>
+          </div>
+        </div>
+        <dl class="meanings">
+          <div class="meaning">
+            <dt data-l10n-id="nirva-receipt-label-trackers"></dt>
+            <dd data-l10n-id="nirva-receipt-meaning-trackers"></dd>
+          </div>
+          <div class="meaning">
+            <dt data-l10n-id="nirva-receipt-label-fingerprinters"></dt>
+            <dd data-l10n-id="nirva-receipt-meaning-fingerprinters"></dd>
+          </div>
+          <div class="meaning">
+            <dt data-l10n-id="nirva-receipt-label-cookies"></dt>
+            <dd data-l10n-id="nirva-receipt-meaning-cookies"></dd>
+          </div>
+          <div class="meaning">
+            <dt data-l10n-id="nirva-receipt-label-loaded"></dt>
+            <dd data-l10n-id="nirva-receipt-meaning-loaded"></dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="receipt-section" aria-labelledby="sites-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow" data-l10n-id="nirva-receipt-sites-label"></p>
+            <h2
+              id="sites-heading"
+              data-l10n-id="nirva-receipt-sites-title"
+            ></h2>
+          </div>
+          <button
+            id="clear-session"
+            class="quiet-button"
+            type="button"
+            data-l10n-id="nirva-receipt-clear-session"
+          ></button>
+        </div>
+        <p class="quiet-copy" data-l10n-id="nirva-receipt-sites-copy"></p>
+        <p
+          id="sites-empty"
+          class="quiet-copy"
+          hidden
+          data-l10n-id="nirva-receipt-sites-empty"
+        ></p>
+        <table id="sites" class="receipt-table">
+          <thead>
+            <tr>
+              <th scope="col" data-l10n-id="nirva-receipt-column-site"></th>
+              <th scope="col" data-l10n-id="nirva-receipt-label-trackers"></th>
+              <th
+                scope="col"
+                data-l10n-id="nirva-receipt-label-fingerprinters"
+              ></th>
+              <th scope="col" data-l10n-id="nirva-receipt-label-cookies"></th>
+              <th scope="col" data-l10n-id="nirva-receipt-label-loaded"></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </section>
+    </main>
+  </body>
+</html>

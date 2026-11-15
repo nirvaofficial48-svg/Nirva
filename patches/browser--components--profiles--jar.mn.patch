@@ -1,0 +1,17 @@
+diff --git a/browser/components/profiles/jar.mn b/browser/components/profiles/jar.mn
+index b76fe67065..930b40b42c 100644
+--- a/browser/components/profiles/jar.mn
++++ b/browser/components/profiles/jar.mn
+@@ -16,9 +16,10 @@ browser.jar:
+     content/browser/profiles/new-profile.html     (content/new-profile.html)
+     content/browser/profiles/profile-avatar-selector.css (content/profile-avatar-selector.css)
+     content/browser/profiles/profile-avatar-selector.mjs (content/profile-avatar-selector.mjs)
+-    content/browser/profiles/profile-card.css     (content/profile-card.css)
++# NIRVA: Nirva's own design for the profile chooser and its cards.
++    content/browser/profiles/profile-card.css     (../../themes/shared/nirva/profiles/profile-card.css)
+     content/browser/profiles/profile-card.mjs     (content/profile-card.mjs)
+-    content/browser/profiles/profile-selector.css (content/profile-selector.css)
++    content/browser/profiles/profile-selector.css (../../themes/shared/nirva/profiles/profile-selector.css)
+     content/browser/profiles/profile-selector.mjs (content/profile-selector.mjs)
+     content/browser/profiles/profiles-pages.css   (content/profiles-pages.css)
+     content/browser/profiles/profiles-theme-card.css (content/profiles-theme-card.css)

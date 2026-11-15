@@ -1,0 +1,219 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/* Generated from design/tokens.css by tools/sync-tokens.sh. Do not edit here. */
+
+/* Nirva design tokens. Every colour, font, radius and timing in the interface comes from here.
+   The root element of each window carries data-nirva-look = glass | cockpit | paper
+   and data-nirva-mode = bright | dark. Cockpit ignores the mode and is always dark. */
+
+:root {
+  /* Motion: nothing runs longer than --nirva-t-max */
+  --nirva-t-fast: 120ms;
+  --nirva-t-base: 180ms;
+  --nirva-t-max: 200ms;
+  --nirva-ease: cubic-bezier(0.2, 0, 0, 1);
+  --nirva-ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+
+  /* Layout */
+  --nirva-grid-columns: 12;
+  --nirva-grid-gap: 20px;
+  --nirva-hit: 44px; /* minimum size of anything clickable */
+  --nirva-sidebar-width: 244px;
+  --nirva-rail-width: 52px;
+  --nirva-island-height: 48px;
+  --nirva-island-collapsed: 3px;
+}
+
+/* ---------- Glass, bright ---------- */
+:root[data-nirva-look="glass"][data-nirva-mode="bright"] {
+  --nirva-font-ui: "Hanken Grotesk", system-ui, sans-serif;
+  --nirva-font-display: "Hanken Grotesk", system-ui, sans-serif;
+  --nirva-display-weight: 200;
+  --nirva-bg: #e8ecef;
+  --nirva-light-1: #b4c8dc;
+  --nirva-light-2: #edd3c4;
+  --nirva-light-3: #bfd6ca;
+  --nirva-light-blur: 80px;
+  --nirva-arc: rgba(255, 255, 255, 0.9);
+  --nirva-text: #18212b;
+  --nirva-text-2: #36424e;
+  --nirva-text-3: #4b5866;
+  --nirva-hairline: rgba(24, 33, 43, 0.1);
+  --nirva-panel: rgba(255, 255, 255, 0.5);
+  --nirva-panel-border: rgba(255, 255, 255, 0.85);
+  --nirva-panel-shadow: 0 20px 50px rgba(24, 33, 43, 0.06);
+  --nirva-panel-blur: blur(28px) saturate(1.4);
+  --nirva-island: rgba(255, 255, 255, 0.72);
+  --nirva-island-border: rgba(255, 255, 255, 0.95);
+  --nirva-island-shadow: 0 1px 1px rgba(24, 33, 43, 0.05), 0 14px 40px rgba(24, 33, 43, 0.14);
+  --nirva-tab-active: rgba(255, 255, 255, 0.75);
+  --nirva-inverse: rgba(24, 33, 43, 0.86);
+  --nirva-inverse-text: #ffffff;
+  --nirva-page: #ffffff;
+  --nirva-accent: #23408e;
+  --nirva-warn: #8f4a12;
+  --nirva-ok: #0f5257;
+  --nirva-radius-panel: 20px;
+  --nirva-radius-control: 12px;
+  --nirva-radius-page: 14px;
+  --nirva-label-size: 11px;
+  --nirva-label-tracking: 0.14em;
+}
+
+/* ---------- Glass, dark ---------- */
+:root[data-nirva-look="glass"][data-nirva-mode="dark"] {
+  --nirva-font-ui: "Hanken Grotesk", system-ui, sans-serif;
+  --nirva-font-display: "Hanken Grotesk", system-ui, sans-serif;
+  --nirva-display-weight: 200;
+  --nirva-bg: #0e1318;
+  --nirva-light-1: #1e3a5c;
+  --nirva-light-2: #4a3028;
+  --nirva-light-3: #1b4a43;
+  --nirva-light-blur: 90px;
+  --nirva-arc: rgba(255, 255, 255, 0.16);
+  --nirva-text: #eef2f5;
+  --nirva-text-2: #c4cfd9;
+  --nirva-text-3: #a9b6c2;
+  --nirva-hairline: rgba(255, 255, 255, 0.1);
+  --nirva-panel: rgba(255, 255, 255, 0.06);
+  --nirva-panel-border: rgba(255, 255, 255, 0.12);
+  --nirva-panel-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  --nirva-panel-blur: blur(28px) saturate(1.4);
+  --nirva-island: rgba(255, 255, 255, 0.09);
+  --nirva-island-border: rgba(255, 255, 255, 0.16);
+  --nirva-island-shadow: 0 14px 40px rgba(0, 0, 0, 0.35);
+  --nirva-tab-active: rgba(255, 255, 255, 0.12);
+  --nirva-inverse: rgba(238, 242, 245, 0.92);
+  --nirva-inverse-text: #18212b;
+  --nirva-page: #14191f;
+  --nirva-accent: #8fb0ff;
+  --nirva-warn: #e7a66b;
+  --nirva-ok: #7fd1c4;
+  --nirva-radius-panel: 20px;
+  --nirva-radius-control: 12px;
+  --nirva-radius-page: 14px;
+  --nirva-label-size: 11px;
+  --nirva-label-tracking: 0.14em;
+}
+
+/* ---------- Cockpit (always dark) ---------- */
+:root[data-nirva-look="cockpit"] {
+  --nirva-font-ui: "Manrope", system-ui, sans-serif;
+  --nirva-font-display: "Manrope", system-ui, sans-serif;
+  --nirva-font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --nirva-display-weight: 200;
+  --nirva-bg: #0b0e11;
+  --nirva-text: #e6ebef;
+  --nirva-text-2: #93a0ad;
+  --nirva-text-3: #93a0ad;
+  --nirva-hairline: #1d242c;
+  --nirva-hairline-strong: #2a333d;
+  --nirva-panel: transparent; /* Cockpit uses lines, not boxes */
+  --nirva-panel-border: transparent;
+  --nirva-panel-shadow: none;
+  --nirva-panel-blur: none;
+  --nirva-island: #10151a;
+  --nirva-island-border: #2a333d;
+  --nirva-island-shadow: none;
+  --nirva-tab-active: transparent; /* active tab is marked by a 1px accent underline */
+  --nirva-page: #0e1216;
+  --nirva-accent: #f5b25c;
+  --nirva-accent-glow: rgba(245, 178, 92, 0.16);
+  --nirva-warn: #f5b25c;
+  --nirva-ok: #e6ebef;
+  --nirva-radius-panel: 0;
+  --nirva-radius-control: 4px;
+  --nirva-radius-page: 6px;
+  --nirva-label-size: 12px;
+  --nirva-label-tracking: 0.1em; /* labels are mono, upper case */
+}
+
+/* ---------- Paper, bright ---------- */
+:root[data-nirva-look="paper"][data-nirva-mode="bright"] {
+  --nirva-font-ui: "Figtree", system-ui, sans-serif;
+  --nirva-font-display: "Newsreader", Georgia, serif;
+  --nirva-display-weight: 300;
+  --nirva-bg: #f5f0e6;
+  --nirva-sidebar: #ede6d9;
+  --nirva-raised: #fbf8f2;
+  --nirva-text: #2a2826;
+  --nirva-text-2: #5c5750;
+  --nirva-text-3: #4a4640;
+  --nirva-hairline: #d9d0c0;
+  --nirva-rule: #2a2826; /* the single dark rule under the clock */
+  --nirva-card-hairline: rgba(42, 40, 38, 0.18);
+  --nirva-pastel-sage: #d5e2d3;
+  --nirva-pastel-powder: #d3dfea;
+  --nirva-pastel-butter: #f1e7be;
+  --nirva-pastel-blush: #f0d9d0;
+  --nirva-pastel-lilac: #dfd8eb;
+  --nirva-panel: var(--nirva-raised);
+  --nirva-panel-border: #d9d0c0;
+  --nirva-panel-shadow: none;
+  --nirva-panel-blur: none;
+  --nirva-island: #fbf8f2;
+  --nirva-island-border: #d9d0c0;
+  --nirva-island-shadow: none;
+  --nirva-page: #ffffff;
+  --nirva-accent: #2f4b7c;
+  --nirva-warn: #8a3f2b;
+  --nirva-ok: #3f6b4f;
+  --nirva-radius-panel: 6px;
+  --nirva-radius-control: 6px;
+  --nirva-radius-page: 6px;
+  --nirva-heading-style: italic; /* widget headings: Newsreader italic 20px */
+}
+
+/* ---------- Paper, dark ---------- */
+:root[data-nirva-look="paper"][data-nirva-mode="dark"] {
+  --nirva-font-ui: "Figtree", system-ui, sans-serif;
+  --nirva-font-display: "Newsreader", Georgia, serif;
+  --nirva-display-weight: 300;
+  --nirva-bg: #1f1d1a;
+  --nirva-sidebar: #191715;
+  --nirva-raised: #262320;
+  --nirva-text: #ede6d9;
+  --nirva-text-2: #b3aa9b;
+  --nirva-text-3: #c2baac;
+  --nirva-hairline: #3a362f;
+  --nirva-rule: #ede6d9;
+  --nirva-card-hairline: rgba(237, 230, 217, 0.18);
+  --nirva-pastel-sage: #2c3a30;
+  --nirva-pastel-powder: #2a3642;
+  --nirva-pastel-butter: #3d3824;
+  --nirva-pastel-blush: #42302b;
+  --nirva-pastel-lilac: #35304a;
+  --nirva-panel: var(--nirva-raised);
+  --nirva-panel-border: #3a362f;
+  --nirva-panel-shadow: none;
+  --nirva-panel-blur: none;
+  --nirva-island: #262320;
+  --nirva-island-border: #3a362f;
+  --nirva-island-shadow: none;
+  --nirva-page: #1a1816;
+  --nirva-accent: #a9bee6;
+  --nirva-warn: #e3a493;
+  --nirva-ok: #9cc3a4;
+  --nirva-radius-panel: 6px;
+  --nirva-radius-control: 6px;
+  --nirva-radius-page: 6px;
+  --nirva-heading-style: italic;
+}
+
+/* Reduce motion and Lite mode: movement becomes a short fade */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --nirva-t-fast: 80ms;
+    --nirva-t-base: 80ms;
+    --nirva-t-max: 80ms;
+  }
+}
+:root[data-nirva-lite="true"] {
+  --nirva-t-fast: 80ms;
+  --nirva-t-base: 80ms;
+  --nirva-t-max: 80ms;
+  --nirva-panel-blur: none;
+  --nirva-light-blur: 0px;
+}

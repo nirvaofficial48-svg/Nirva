@@ -1,0 +1,79 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/* Tab stacks fanning animation (SPEC A7, item 4.4). */
+
+:root[data-nirva-tab-stacks="true"] :is(#tabbrowser-tabs tab-group, tab-group, [data-tab-group-id]) {
+  transition: transform var(--nirva-move-base) var(--nirva-ease-spring);
+
+  .tabbrowser-tab {
+    will-change: transform;
+    transform-origin: left bottom;
+    transition: transform var(--nirva-move-base) var(--nirva-ease-spring);
+  }
+
+  &:hover .tabbrowser-tab:not([selected]) {
+    transform: translateX(calc(4px * var(--nirva-motion-move)));
+    transition: transform var(--nirva-move-fast) var(--nirva-ease-spring);
+  }
+
+  &:hover .tabbrowser-tab:not([selected]):nth-of-type(2) {
+    transform: translateX(calc(4px * var(--nirva-motion-move))) rotate(calc(0.5deg * var(--nirva-motion-move)));
+  }
+
+  &:hover .tabbrowser-tab:not([selected]):nth-of-type(3) {
+    transform: translateX(calc(8px * var(--nirva-motion-move))) rotate(calc(1deg * var(--nirva-motion-move)));
+  }
+
+  &:hover .tabbrowser-tab:not([selected]):nth-of-type(4) {
+    transform: translateX(calc(12px * var(--nirva-motion-move))) rotate(calc(1.5deg * var(--nirva-motion-move)));
+  }
+
+  &:hover .tabbrowser-tab:not([selected]):nth-of-type(n + 5) {
+    transform: translateX(calc(16px * var(--nirva-motion-move))) rotate(calc(2deg * var(--nirva-motion-move)));
+  }
+}
+
+:root:dir(rtl)[data-nirva-tab-stacks="true"] :is(#tabbrowser-tabs tab-group, tab-group, [data-tab-group-id]) {
+  .tabbrowser-tab {
+    transform-origin: right bottom;
+  }
+
+  &:hover .tabbrowser-tab:not([selected]) {
+    transform: translateX(calc(-4px * var(--nirva-motion-move)));
+  }
+
+  &:hover .tabbrowser-tab:not([selected]):nth-of-type(2) {
+    transform: translateX(calc(-4px * var(--nirva-motion-move))) rotate(calc(-0.5deg * var(--nirva-motion-move)));
+  }
+
+  &:hover .tabbrowser-tab:not([selected]):nth-of-type(3) {
+    transform: translateX(calc(-8px * var(--nirva-motion-move))) rotate(calc(-1deg * var(--nirva-motion-move)));
+  }
+
+  &:hover .tabbrowser-tab:not([selected]):nth-of-type(4) {
+    transform: translateX(calc(-12px * var(--nirva-motion-move))) rotate(calc(-1.5deg * var(--nirva-motion-move)));
+  }
+
+  &:hover .tabbrowser-tab:not([selected]):nth-of-type(n + 5) {
+    transform: translateX(calc(-16px * var(--nirva-motion-move))) rotate(calc(-2deg * var(--nirva-motion-move)));
+  }
+}
+
+:root:is([data-nirva-motion="minimal"], [data-nirva-lite="true"])[data-nirva-tab-stacks="true"]
+  :is(#tabbrowser-tabs tab-group, tab-group, [data-tab-group-id]) {
+  transition: none;
+
+  &:hover .tabbrowser-tab:not([selected]) {
+    transform: none;
+    transition: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-nirva-tab-stacks="true"] :is(#tabbrowser-tabs tab-group, tab-group, [data-tab-group-id]):hover .tabbrowser-tab {
+    transform: none;
+    transition: none;
+  }
+}

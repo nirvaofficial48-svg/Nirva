@@ -1,0 +1,11 @@
+[DEFAULT]
+prefs = [
+  "dom.security.https_only_mode=false",
+  "dom.security.https_only_mode_pbm=false",
+]
+support-files = [
+  "page.html",
+  "slow.sjs",
+]
+
+["browser_nirva_macros.js"]

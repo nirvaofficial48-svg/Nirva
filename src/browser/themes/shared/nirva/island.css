@@ -1,0 +1,474 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/* Sizes, colours and weights here come from Nirva's own tokens (design/tokens.css) and the
+ * approved designs, not from Firefox's design system. */
+/* stylelint-disable stylelint-plugin-mozilla/use-design-tokens */
+
+/* Island toolbar (S3) and light-sweep loading (A3). Reference: designs/Main.html.
+ * Driven by NirvaIsland.sys.mjs through attributes on the window root. */
+
+:root[nirva-island][data-nirva-look]:not([inDOMFullscreen], [customizing]) {
+  --nirva-island-top: 32px;
+  --nirva-island-width: min(620px, calc(var(--nirva-content-width, 100vw) - 48px));
+  --nirva-page-inset: 12px;
+
+  /* ---------- The page: a card that runs under the island ---------- */
+
+  #tabbrowser-tabbox {
+    margin: var(--nirva-page-inset);
+    margin-inline-start: 0;
+  }
+
+  /* With the sidebar hidden at the edge the page fills the whole window. */
+  &[nirva-sidebar-autohide] {
+    #tabbrowser-tabbox {
+      margin: 0;
+    }
+
+    .browserContainer {
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+    }
+  }
+
+  #tabbrowser-tabpanels {
+    background-color: transparent;
+  }
+
+  .browserContainer {
+    border-radius: var(--nirva-radius-page);
+    outline: none;
+    box-shadow: var(--nirva-panel-shadow);
+    background-color: var(--nirva-page);
+  }
+
+  /* ---------- Websites: the page has the whole window ---------- *
+   * The island is compact here and docks in a slim strip above the page, never over it.
+   * When it tucks away (collapsed) the page card takes its strip; a short handle stays in
+   * the thin margin above the page. NirvaIsland._setCollapsed slides the card by transform
+   * only, so the site is laid out once and not redrawn while it moves. */
+
+  &[nirva-island-docked] {
+    --nirva-island-top: 4px;
+    --nirva-island-height: 32px;
+    --nirva-island-width: min(480px, calc(var(--nirva-content-width, 100vw) - 48px));
+    /* The margin left above the page while the island is tucked away; it holds the handle
+     * and is where the pointer brings the island back. */
+    --nirva-island-tucked: max(var(--nirva-page-inset), 8px);
+
+    #tabbrowser-tabbox {
+      margin-top: calc(2 * var(--nirva-island-top) + var(--nirva-island-height));
+      transition: translate var(--nirva-move-base) var(--nirva-move-ease);
+    }
+
+    #nav-bar .toolbarbutton-1 {
+      min-width: 32px;
+      min-height: calc(var(--nirva-island-height) - 2px);
+    }
+
+    &[nirva-island-collapsed] {
+      #tabbrowser-tabbox {
+        margin-top: var(--nirva-island-tucked);
+      }
+
+      #navigator-toolbox {
+        translate: -50% calc(-1 * (var(--nirva-island-top) + var(--nirva-island-height)) * var(--nirva-motion-move));
+      }
+
+      /* The handle: a short line centred in the margin, not the island's full width. */
+      #nirva-island-line {
+        top: calc((var(--nirva-island-tucked) - var(--nirva-island-collapsed)) / 2);
+        width: 48px;
+        opacity: 0.6;
+      }
+
+      #nirva-island-line:hover {
+        opacity: 1;
+      }
+
+      /* A 96 by tucked-margin target, so the short line is easy to reach. */
+      #nirva-island-line::before {
+        inset: calc(-1 * (var(--nirva-island-tucked) - var(--nirva-island-collapsed)) / 2) -24px;
+      }
+    }
+  }
+
+  /* With the sidebar hidden at the edge the tucked margin is the thinnest there is. */
+  &[nirva-sidebar-autohide][nirva-island-docked] {
+    --nirva-island-tucked: 8px;
+  }
+
+  /* Full screen (F11): Firefox slides its toolbar up out of sight by its height, which
+   * would leave the floating island half off the screen. The island stays in place. */
+  &[sizemode="fullscreen"] #navigator-toolbox {
+    margin-top: 0 !important;
+  }
+
+  &[nirva-island-arrive] #navigator-toolbox {
+    animation: nirva-island-arrive var(--nirva-move-base) var(--nirva-ease-spring);
+  }
+
+  &:is([data-nirva-motion="minimal"], [data-nirva-lite="true"])[nirva-island-arrive] #navigator-toolbox {
+    animation-timing-function: var(--nirva-ease);
+  }
+
+  /* ---------- The island ---------- */
+
+  #navigator-toolbox {
+    position: fixed;
+    z-index: 4;
+    top: var(--nirva-island-top);
+    left: var(--nirva-island-center, 50%);
+    translate: -50% 0;
+    box-sizing: border-box;
+    width: var(--nirva-island-width);
+    height: var(--nirva-island-height);
+    border: 1px solid var(--nirva-island-border);
+    border-radius: calc(var(--nirva-island-height) / 2);
+    background-color: var(--nirva-island);
+    backdrop-filter: var(--nirva-panel-blur);
+    box-shadow: var(--nirva-island-shadow);
+    color: var(--nirva-text);
+    /* Firefox clips this box; the bar itself is clipped below instead, so notification bars
+     * can hang under the island. */
+    overflow: visible;
+    transition:
+      opacity var(--nirva-move-base) var(--nirva-move-ease),
+      translate var(--nirva-move-base) var(--nirva-move-ease);
+  }
+
+  /* Glass dark: the island's own fill is nearly clear, so over a bright page its light text
+   * would vanish. A mostly solid layer of the ground colour underneath keeps it readable. */
+  &[data-nirva-look="glass"][data-nirva-mode="dark"] #navigator-toolbox {
+    background-image: linear-gradient(var(--nirva-island), var(--nirva-island));
+    background-color: color-mix(in srgb, var(--nirva-bg) 80%, transparent);
+  }
+
+  #nav-bar {
+    height: calc(var(--nirva-island-height) - 2px);
+    padding-inline: 2px;
+    border: 0;
+    border-radius: inherit;
+    overflow: clip;
+    background: none;
+    box-shadow: none;
+  }
+
+  /* Notification bars belong to the toolbar box, which here is only as tall as the island.
+   * They hang just below it at the same width instead of being squeezed inside it. */
+  #notifications-toolbar {
+    position: absolute;
+    top: calc(100% + 8px);
+    inset-inline: -1px;
+    border: 0;
+    border-radius: var(--nirva-radius-control);
+    background: none;
+    box-shadow: none;
+    overflow: clip;
+  }
+
+  #notifications-toolbar notification-message {
+    margin: 0;
+    border: 1px solid var(--nirva-hairline);
+    border-radius: var(--nirva-radius-control);
+    background-color: var(--nirva-bg);
+    box-shadow: var(--nirva-island-shadow);
+    color: var(--nirva-text);
+    --message-bar-icon-color: var(--nirva-text-2);
+  }
+
+  /* The island holds back, forward, the address and the menu. Everything else Firefox puts
+   * in this toolbar is reachable from the menu. */
+  #sidebar-button,
+  #stop-reload-button,
+  #alltabs-button,
+  #nav-bar toolbarspring,
+  #PersonalToolbar,
+  #TabsToolbar {
+    display: none;
+  }
+
+  #nav-bar .toolbarbutton-1 {
+    min-width: var(--nirva-hit);
+    min-height: var(--nirva-hit);
+    justify-content: center;
+    --toolbarbutton-icon-fill: var(--nirva-text);
+  }
+
+  #forward-button {
+    margin-inline-start: -8px;
+    --toolbarbutton-icon-fill: var(--nirva-text-3);
+  }
+
+  /* ---------- The address ---------- */
+
+  #urlbar-container {
+    flex: 1;
+    min-width: 0;
+    margin-inline: 0;
+  }
+
+  #urlbar {
+    font-size: 13px;
+
+    &:not([focused], [open]) {
+      --toolbar-field-background-color: transparent;
+      --toolbar-field-border-color: transparent;
+
+      > .urlbar-background {
+        background-color: transparent;
+        border-color: transparent;
+        box-shadow: none;
+        outline: none;
+      }
+
+      /* At rest the island is calm: only warnings about the connection stay visible. */
+      .searchmode-switcher,
+      #page-action-buttons,
+      #identity-box:is(.verifiedDomain, .chromeUI, .localResource, .extensionPage) {
+        display: none;
+      }
+
+      #urlbar-input {
+        text-align: center;
+      }
+    }
+
+    &:is([focused], [open]) {
+      /* A solid ground, so suggestions stay readable over any page. */
+      --toolbar-field-background-color-focus: var(--nirva-raised, var(--nirva-bg));
+
+      /* The calm and the focused layouts differ; the new one fades in instead of jumping. */
+      :is(.urlbar-input-box, .searchmode-switcher, #identity-box, #page-action-buttons) {
+        animation: nirva-urlbar-settle var(--nirva-move-fast) var(--nirva-move-ease);
+      }
+    }
+
+    /* Suggestions open as one rounded card that grows down out of the island. */
+    &[open] > .urlbar-background {
+      border-radius: var(--nirva-radius-panel);
+    }
+
+    &[open] .urlbarView {
+      animation: nirva-urlbar-drop var(--nirva-move-base) var(--nirva-move-ease);
+    }
+  }
+
+  &:is([data-nirva-lite="true"], [data-nirva-motion="minimal"])
+    #urlbar
+    :is(.urlbar-input-box, .searchmode-switcher, #identity-box, #page-action-buttons, .urlbarView) {
+    animation: none;
+  }
+
+  .urlbar-input-box {
+    position: relative;
+  }
+
+  #nirva-island-address {
+    display: none;
+    position: absolute;
+    inset: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    pointer-events: none;
+    white-space: nowrap;
+    font-size: 13px;
+  }
+
+  .nirva-address-site {
+    flex-shrink: 0;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 500;
+  }
+
+  .nirva-address-rest {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--nirva-text-3);
+  }
+
+  #urlbar[nirva-has-address][pageproxystate="valid"]:not([focused], [open]) {
+    #nirva-island-address {
+      display: flex;
+    }
+
+    #urlbar-input {
+      opacity: 0;
+    }
+  }
+
+  /* ---------- Loading: a line of accent colour along the lower edge ---------- */
+
+  #nirva-island-sweep {
+    position: absolute;
+    z-index: 1;
+    /* Inside the border, as in the design: the toolbar clips anything drawn on its border. */
+    inset: 0;
+    border-radius: inherit;
+    overflow: clip;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--nirva-move-fast) var(--nirva-move-ease);
+
+    > span {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 240px;
+      height: 1px;
+      background-color: var(--nirva-accent);
+      translate: -240px 0;
+    }
+  }
+
+  &[nirva-island-loading] #nirva-island-sweep {
+    opacity: 1;
+
+    > span {
+      /* One pass takes six of the longest motion steps; it repeats while the page loads. */
+      animation: nirva-island-sweep calc(var(--nirva-t-max) * 6) linear infinite;
+    }
+  }
+
+  /* Reduce motion, Lite mode and the Minimal style: a still line that fades in. */
+  @media (prefers-reduced-motion: reduce) {
+    &[nirva-island-loading] #nirva-island-sweep > span {
+      animation: none;
+      width: 100%;
+      translate: 0 0;
+    }
+  }
+
+  &:is([data-nirva-lite="true"], [data-nirva-motion="minimal"])[nirva-island-loading] #nirva-island-sweep > span {
+    animation: none;
+    width: 100%;
+    translate: 0 0;
+  }
+
+  /* ---------- Collapsed: a 3 px line of the same width ---------- */
+
+  #nirva-island-line {
+    appearance: none;
+    position: fixed;
+    z-index: 4;
+    top: var(--nirva-island-top);
+    left: var(--nirva-island-center, 50%);
+    translate: -50% 0;
+    width: var(--nirva-island-width);
+    height: var(--nirva-island-collapsed);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: var(--nirva-island-collapsed);
+    background-color: var(--nirva-text-3);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--nirva-move-base) var(--nirva-move-ease);
+
+    /* The visible mark is 3 px; the target reaches from the top edge to below the line. */
+    &::before {
+      content: "";
+      position: absolute;
+      inset: calc(-1 * var(--nirva-island-top)) 0 calc(-1 * var(--nirva-hit) + var(--nirva-island-top));
+    }
+  }
+
+  &[nirva-island-collapsed] {
+    #navigator-toolbox {
+      opacity: 0;
+      translate: -50% calc(-8px * var(--nirva-motion-move));
+      pointer-events: none;
+    }
+
+    #nirva-island-line {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  /* ---------- Top of the sidebar ---------- */
+
+  #nirva-sidebar-top {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: flex-end;
+    height: var(--nirva-hit);
+    margin-block-start: 12px;
+    /* The 16 px icon sits on the sidebar's 16 px side padding. */
+    margin-inline: var(--nirva-sidebar-padding, 16px) 3px;
+  }
+
+  #nirva-sidebar-collapse {
+    appearance: none;
+    width: var(--nirva-hit);
+    height: var(--nirva-hit);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: url("chrome://browser/skin/sidebar-collapsed.svg") center / 16px no-repeat;
+    -moz-context-properties: fill, stroke;
+    fill: var(--nirva-text-3);
+    stroke: var(--nirva-text-3);
+
+    &:focus-visible {
+      outline: 1px solid var(--nirva-accent);
+      outline-offset: -1px;
+    }
+  }
+
+  sidebar-main:not([expanded]) #nirva-sidebar-top {
+    justify-content: center;
+    margin-inline: 0;
+  }
+}
+
+@keyframes nirva-island-arrive {
+  from {
+    opacity: 0.4;
+    translate: -50% calc(-10px * var(--nirva-motion-move));
+    scale: calc(1 - 0.04 * var(--nirva-motion-move));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[nirva-island-arrive] #navigator-toolbox {
+    animation-timing-function: var(--nirva-ease);
+  }
+}
+
+/* Without the island the sidebar's own collapse button is not needed: Firefox's is in the
+ * toolbar. */
+:root:not([nirva-island]) :is(#nirva-sidebar-top, #nirva-island-line, #nirva-island-sweep, #nirva-island-address),
+:root:is([inDOMFullscreen], [customizing]) :is(#nirva-island-line, #nirva-island-sweep) {
+  display: none;
+}
+
+@keyframes nirva-urlbar-settle {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes nirva-urlbar-drop {
+  from {
+    opacity: 0;
+    translate: 0 calc(-6px * var(--nirva-motion-move));
+  }
+}
+
+@keyframes nirva-island-sweep {
+  from {
+    translate: -240px 0;
+  }
+  to {
+    translate: 620px 0;
+  }
+}

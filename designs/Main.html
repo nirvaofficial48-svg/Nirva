@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Browser window, Glass vibe</title>
+<!-- Approved Nirva design, 1440 x 900. Reference only: fonts are bundled in the real browser. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@200;300;400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:pointer}
+a{color:#0F5257}a:hover{color:#0A3A3E}
+</style>
+</head>
+<body>
+<div style="width: 1440px; height: 900px; position: relative; overflow: hidden; background: #E6ECE8; color: #18212B; font-family: 'Hanken Grotesk', system-ui, sans-serif">
+
+  <div aria-hidden="true" style="position: absolute; left: -200px; top: 240px; width: 620px; height: 620px; border-radius: 50%; background: #B7D2C2; filter: blur(70px)"></div>
+  <div aria-hidden="true" style="position: absolute; left: -120px; top: -260px; width: 520px; height: 520px; border-radius: 50%; background: #C6D5E0; filter: blur(70px)"></div>
+
+  <div style="position: absolute; inset: 0; display: flex">
+    <nav aria-label="Tabs" style="width: 244px; flex-shrink: 0; box-sizing: border-box; padding: 12px 16px 16px; display: flex; flex-direction: column">
+      <div style="display: flex; align-items: center; justify-content: space-between; height: 44px">
+        <div style="display: flex; gap: 8px" aria-hidden="true">
+          <span style="width: 11px; height: 11px; border-radius: 50%; border: 1px solid #7E9388; box-sizing: border-box"></span>
+          <span style="width: 11px; height: 11px; border-radius: 50%; border: 1px solid #7E9388; box-sizing: border-box"></span>
+          <span style="width: 11px; height: 11px; border-radius: 50%; border: 1px solid #7E9388; box-sizing: border-box"></span>
+        </div>
+        <button aria-label="Collapse sidebar" style="width: 44px; height: 44px; margin-right: -13px; display: grid; place-items: center; color: #4B5866"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M9 5v14"/></svg></button>
+      </div>
+
+      <div style="display: flex; gap: 20px; height: 44px; margin-top: 8px; border-bottom: 1px solid rgba(24,33,43,.12)">
+        <button style="height: 44px; font-size: 13px; font-weight: 500; box-shadow: inset 0 -1px 0 #18212B">Study</button>
+        <button style="height: 44px; font-size: 13px; color: #4B5866">Build</button>
+        <button style="height: 44px; font-size: 13px; color: #4B5866">Play</button>
+      </div>
+
+      <div style="display: flex; gap: 6px; margin-top: 16px">
+        <button aria-label="Pinned: Mail" style="flex: 1; height: 44px; border-radius: 12px; background: rgba(255,255,255,.45); border: 1px solid rgba(255,255,255,.7); display: grid; place-items: center"><span style="width: 14px; height: 14px; border-radius: 4px; background: #23408E"></span></button>
+        <button aria-label="Pinned: Calendar" style="flex: 1; height: 44px; border-radius: 12px; background: rgba(255,255,255,.45); border: 1px solid rgba(255,255,255,.7); display: grid; place-items: center"><span style="width: 14px; height: 14px; border-radius: 4px; background: #B5651D"></span></button>
+        <button aria-label="Pinned: Notes" style="flex: 1; height: 44px; border-radius: 12px; background: rgba(255,255,255,.45); border: 1px solid rgba(255,255,255,.7); display: grid; place-items: center"><span style="width: 14px; height: 14px; border-radius: 4px; background: #18212B"></span></button>
+        <button aria-label="Pinned: Code" style="flex: 1; height: 44px; border-radius: 12px; background: rgba(255,255,255,.45); border: 1px solid rgba(255,255,255,.7); display: grid; place-items: center"><span style="width: 14px; height: 14px; border-radius: 4px; background: #6A4FA3"></span></button>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 2px; margin-top: 20px; flex-grow: 1">
+        <button style="display: flex; align-items: center; gap: 12px; width: 100%; height: 44px; padding: 0 12px; box-sizing: border-box; border-radius: 12px; background: rgba(255,255,255,.75); border: 1px solid rgba(255,255,255,.9); box-shadow: 0 6px 20px rgba(24,33,43,.06); text-align: left">
+          <span aria-hidden="true" style="width: 14px; height: 14px; flex-shrink: 0; border-radius: 4px; background: #0F5257"></span>
+          <span style="flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 13px; font-weight: 500">How a ring resonator traps light</span>
+        </button>
+        <button style="display: flex; align-items: center; gap: 12px; width: 100%; height: 44px; padding: 0 13px; box-sizing: border-box; text-align: left">
+          <span aria-hidden="true" style="width: 14px; height: 14px; flex-shrink: 0; border-radius: 4px; background: #23408E"></span>
+          <span style="flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 13px">Maxwell's equations: lecture notes</span>
+        </button>
+        <button style="display: flex; align-items: center; gap: 12px; width: 100%; height: 44px; padding: 0 13px; box-sizing: border-box; text-align: left">
+          <span aria-hidden="true" style="width: 14px; height: 14px; flex-shrink: 0; border-radius: 4px; background: #18212B"></span>
+          <span style="flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 13px">Waveguide solver documentation</span>
+        </button>
+        <button style="display: flex; align-items: center; gap: 12px; width: 100%; height: 44px; padding: 0 13px; box-sizing: border-box; text-align: left">
+          <span style="width: 14px; height: 14px; flex-shrink: 0; color: #8F4A12; display: grid; place-items: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c1 3.2 4.5 4.8 4.5 9a4.5 4.5 0 0 1-9 0c0-1.6.7-2.8 1.6-3.7.3 1.2.9 1.9 1.7 2C10.6 8 11 5.4 12 3z"/></svg></span>
+          <span style="flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 13px">Checkout</span>
+          <span style="font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #8F4A12">Burner</span>
+        </button>
+        <button style="display: flex; align-items: center; gap: 12px; width: 100%; height: 44px; padding: 0 13px; box-sizing: border-box; text-align: left; color: #4B5866">
+          <span style="width: 14px; height: 14px; flex-shrink: 0; display: grid; place-items: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></span>
+          <span style="flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 13px">Optics lecture playlist</span>
+          <span style="font-size: 11px; letter-spacing: .08em; text-transform: uppercase">Asleep</span>
+        </button>
+      </div>
+
+      <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(24,33,43,.12); padding-top: 8px">
+        <button style="height: 44px; display: flex; align-items: center; gap: 10px; font-size: 13px">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          New tab
+        </button>
+        <div style="display: flex; margin-right: -13px">
+          <button aria-label="Tab canvas" style="width: 44px; height: 44px; display: grid; place-items: center; color: #4B5866"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg></button>
+          <button aria-label="Time travel" style="width: 44px; height: 44px; display: grid; place-items: center; color: #4B5866"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></button>
+        </div>
+      </div>
+    </nav>
+
+    <div style="flex: 1; min-width: 0; position: relative; padding: 12px 12px 12px 0; box-sizing: border-box">
+      <main style="width: 100%; height: 100%; box-sizing: border-box; border-radius: 14px; background: #FFFFFF; box-shadow: 0 1px 2px rgba(24,33,43,.06), 0 20px 60px rgba(24,33,43,.08); overflow: hidden; padding: 132px 0 0 112px">
+        <article style="width: 600px; display: flex; flex-direction: column; gap: 24px">
+          <div style="font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: #0F5257">Lumen Journal · Photonics</div>
+          <h1 style="margin: 0; font-size: 52px; line-height: 1.06; font-weight: 300; letter-spacing: -.025em">How a ring resonator traps light</h1>
+          <p style="margin: 0; font-size: 17px; line-height: 1.65; color: #36424E">Light travelling along a straight waveguide can leak into a ring placed beside it. It stays there only when the ring's circumference fits a whole number of wavelengths.</p>
+          <svg width="600" height="170" viewBox="0 0 600 170" role="img" aria-label="A straight waveguide passing beside a circular ring" style="border-top: 1px solid #DCE4E0; border-bottom: 1px solid #DCE4E0">
+            <path d="M0 134h600" stroke="#0F5257" stroke-width="1.5" fill="none"/>
+            <circle cx="300" cy="78" r="52" stroke="#0F5257" stroke-width="1.5" fill="none"/>
+            <path d="M40 118h56M88 112l8 6-8 6" stroke="#8F4A12" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+          <p style="margin: 0; font-size: 17px; line-height: 1.65; color: #36424E">At those wavelengths each lap adds in step with the last, and the light builds up inside the ring. <a href="#more">Read how that makes a filter</a>.</p>
+        </article>
+      </main>
+
+      <div style="position: absolute; top: 32px; left: 50%; transform: translateX(-50%); width: 620px; height: 48px; box-sizing: border-box; padding: 0 2px; border-radius: 24px; background: rgba(255,255,255,.72); backdrop-filter: blur(28px) saturate(1.4); border: 1px solid rgba(255,255,255,.95); box-shadow: 0 1px 1px rgba(24,33,43,.05), 0 14px 40px rgba(24,33,43,.14); display: flex; align-items: center; overflow: hidden">
+        <button aria-label="Back" style="width: 44px; height: 44px; display: grid; place-items: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <button aria-label="Forward" style="width: 44px; height: 44px; margin-left: -8px; display: grid; place-items: center; color: #4B5866"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+        <div style="flex: 1; min-width: 0; display: flex; justify-content: center; align-items: baseline; gap: 2px; font-size: 13px">
+          <span style="font-weight: 500">lumenjournal.example</span><span style="color: #4B5866; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">/photonics/ring-resonators</span>
+        </div>
+        <button aria-label="Privacy receipt: 9 items blocked" style="height: 44px; padding: 0 10px; display: flex; align-items: center; gap: 6px; color: #0F5257; font-size: 13px; font-weight: 500">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/></svg>
+          9
+        </button>
+        <button aria-label="Split view" style="width: 44px; height: 44px; margin-left: -6px; display: grid; place-items: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M12 5v14"/></svg></button>
+        <span aria-hidden="true" style="position: absolute; left: 24px; bottom: 0; width: 240px; height: 1px; background: #0F5257"></span>
+      </div>
+
+      <section aria-label="Privacy receipt" style="position: absolute; top: 96px; right: 40px; width: 300px; box-sizing: border-box; padding: 24px; border-radius: 20px; background: rgba(255,255,255,.78); backdrop-filter: blur(28px) saturate(1.4); border: 1px solid rgba(255,255,255,.95); box-shadow: 0 1px 1px rgba(24,33,43,.05), 0 24px 60px rgba(24,33,43,.16); display: flex; flex-direction: column">
+        <div style="font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #4B5866">Privacy receipt</div>
+        <div style="margin-top: 6px; font-size: 22px; font-weight: 300; letter-spacing: -.01em">Nothing left this site</div>
+        <div style="margin-top: 16px; display: flex; flex-direction: column; font-size: 13px">
+          <div style="height: 36px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(24,33,43,.10)"><span>Trackers blocked</span><span style="font-weight: 500">6</span></div>
+          <div style="height: 36px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(24,33,43,.10)"><span>Fingerprinting attempts stopped</span><span style="font-weight: 500">3</span></div>
+          <div style="height: 36px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(24,33,43,.10)"><span>Cookies kept inside this site</span><span style="font-weight: 500">11</span></div>
+          <div style="height: 36px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(24,33,43,.10); border-bottom: 1px solid rgba(24,33,43,.10)"><span>Sent to other companies</span><span style="font-weight: 500">None</span></div>
+        </div>
+        <label for="trust" style="margin-top: 18px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #4B5866">Trust dial</label>
+        <input id="trust" type="range" min="0" max="2" step="1" value="1" style="width: 100%; height: 28px; margin: 4px 0 0; accent-color: #0F5257">
+        <div style="display: flex; justify-content: space-between; font-size: 12px; color: #4B5866"><span>Strict</span><span style="color: #18212B; font-weight: 500">Balanced</span><span>Trusted</span></div>
+        <button style="margin-top: 14px; height: 44px; border-radius: 22px; border: 1px solid #0F5257; color: #0F5257; font-size: 13px; font-weight: 500">Reopen as burner tab</button>
+      </section>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,9 @@
+[DEFAULT]
+prefs = [
+  "dom.security.https_only_mode=false",
+  "dom.security.https_only_mode_pbm=false",
+  "privacy.trackingprotection.enabled=true",
+]
+support-files = ["page.html", "plain.html"]
+
+["browser_nirva_receipt.js"]

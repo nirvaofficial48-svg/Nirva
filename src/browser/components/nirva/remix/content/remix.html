@@ -1,0 +1,136 @@
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src chrome:; object-src 'none'"
+    />
+    <meta name="color-scheme" content="light dark" />
+    <title data-l10n-id="nirva-remix-title"></title>
+    <link rel="localization" href="branding/brand.ftl" />
+    <link rel="localization" href="browser/nirva/remix.ftl" />
+    <link rel="stylesheet" href="chrome://browser/skin/nirva/tokens.css" />
+    <link rel="stylesheet" href="chrome://browser/skin/nirva/fonts.css" />
+    <link rel="stylesheet" href="chrome://browser/skin/nirva/theme.css" />
+    <link rel="stylesheet" href="chrome://browser/skin/nirva/remix.css" />
+    <script
+      type="module"
+      src="chrome://browser/content/nirva/remix.mjs"
+    ></script>
+  </head>
+  <body>
+    <p
+      id="private-notice"
+      class="private-notice"
+      hidden
+      data-l10n-id="nirva-remix-private-window"
+    ></p>
+    <main class="page">
+      <header class="page-heading">
+        <div class="heading-copy">
+          <p class="eyebrow" data-l10n-id="nirva-remix-eyebrow"></p>
+          <h1 data-l10n-id="nirva-remix-title"></h1>
+          <p class="intro" data-l10n-id="nirva-remix-intro"></p>
+        </div>
+        <button
+          id="reset-all"
+          class="danger-button"
+          type="button"
+          data-l10n-id="nirva-remix-reset-all"
+        ></button>
+      </header>
+
+      <section class="privacy-note" aria-labelledby="note-heading">
+        <h2 id="note-heading" data-l10n-id="nirva-remix-note-title"></h2>
+        <p data-l10n-id="nirva-remix-note-copy"></p>
+      </section>
+
+      <section class="remix-section" aria-labelledby="list-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow" data-l10n-id="nirva-remix-list-label"></p>
+            <h2 id="list-heading" data-l10n-id="nirva-remix-list-title"></h2>
+          </div>
+          <p id="remix-count" class="item-count"></p>
+        </div>
+        <p id="status" role="status" aria-live="polite"></p>
+        <div id="empty-state" class="empty-state" hidden>
+          <h3 data-l10n-id="nirva-remix-empty-title"></h3>
+          <p data-l10n-id="nirva-remix-empty-copy"></p>
+        </div>
+        <ol id="remixes" class="page-list" aria-labelledby="list-heading"></ol>
+      </section>
+    </main>
+    <template id="remix-template">
+      <li class="page-card">
+        <div>
+          <h3 class="page-title"></h3>
+          <p class="page-source"></p>
+        </div>
+        <div class="page-actions">
+          <label class="remix-toggle">
+            <input class="remix-enabled" type="checkbox" />
+            <span data-l10n-id="nirva-remix-enabled"></span>
+          </label>
+          <button
+            class="open-site quiet-button"
+            type="button"
+            data-l10n-id="nirva-remix-open-site"
+          ></button>
+          <button
+            class="reset-remix danger-button"
+            type="button"
+            data-l10n-id="nirva-remix-reset"
+          ></button>
+        </div>
+        <label class="field scope-field" hidden>
+          <span data-l10n-id="nirva-remix-scope-label"></span>
+          <select class="remix-scope">
+            <option value="site" data-l10n-id="nirva-remix-scope-site"></option>
+            <option value="page" data-l10n-id="nirva-remix-scope-page"></option>
+          </select>
+        </label>
+        <div class="remix-controls">
+          <label class="field">
+            <span data-l10n-id="nirva-remix-font-label"></span>
+            <select class="remix-font">
+              <option value="" data-l10n-id="nirva-remix-font-site"></option>
+              <option
+                value="serif"
+                data-l10n-id="nirva-remix-font-serif"
+              ></option>
+              <option
+                value="sans-serif"
+                data-l10n-id="nirva-remix-font-sans"
+              ></option>
+              <option
+                value="monospace"
+                data-l10n-id="nirva-remix-font-mono"
+              ></option>
+            </select>
+          </label>
+          <label class="field">
+            <span data-l10n-id="nirva-remix-size-label"></span>
+            <select class="remix-size"></select>
+          </label>
+          <label class="field">
+            <span data-l10n-id="nirva-remix-spacing-label"></span>
+            <select class="remix-spacing"></select>
+          </label>
+        </div>
+        <div class="remix-hidden">
+          <h4 class="remix-hidden-heading"></h4>
+          <p
+            class="remix-hidden-empty"
+            data-l10n-id="nirva-remix-hidden-empty"
+          ></p>
+          <ol class="remix-hidden-list"></ol>
+        </div>
+      </li>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,98 @@
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src chrome:; object-src 'none'"
+    />
+    <meta name="color-scheme" content="light dark" />
+    <title data-l10n-id="nirva-macros-title"></title>
+    <link rel="localization" href="branding/brand.ftl" />
+    <link rel="localization" href="browser/nirva/macros.ftl" />
+    <link rel="stylesheet" href="chrome://browser/skin/nirva/tokens.css" />
+    <link rel="stylesheet" href="chrome://browser/skin/nirva/fonts.css" />
+    <link rel="stylesheet" href="chrome://browser/skin/nirva/theme.css" />
+    <link rel="stylesheet" href="chrome://browser/skin/nirva/tabrules.css" />
+    <link rel="stylesheet" href="chrome://browser/skin/nirva/macros.css" />
+    <script
+      type="module"
+      src="chrome://browser/content/nirva/macros.mjs"
+    ></script>
+  </head>
+  <body>
+    <main class="page">
+      <header class="page-heading">
+        <div class="heading-copy">
+          <p class="eyebrow" data-l10n-id="nirva-macros-eyebrow"></p>
+          <h1 data-l10n-id="nirva-macros-title"></h1>
+          <p class="intro" data-l10n-id="nirva-macros-intro"></p>
+        </div>
+        <button
+          id="new"
+          class="primary-button"
+          type="button"
+          data-l10n-id="nirva-macros-new"
+        ></button>
+      </header>
+
+      <section class="card" aria-labelledby="list-heading">
+        <h2 id="list-heading" data-l10n-id="nirva-macros-list-title"></h2>
+        <ul id="macros" class="rows"></ul>
+        <p
+          id="macros-empty"
+          class="quiet"
+          data-l10n-id="nirva-macros-list-empty"
+        ></p>
+      </section>
+
+      <section id="editor" class="card" aria-labelledby="editor-heading">
+        <h2 id="editor-heading"></h2>
+        <label class="field">
+          <span data-l10n-id="nirva-macros-name"></span>
+          <input id="name" type="text" maxlength="60" autocomplete="off" />
+        </label>
+        <ol id="steps" class="rows"></ol>
+        <p
+          id="steps-empty"
+          class="quiet"
+          data-l10n-id="nirva-macros-steps-empty"
+        ></p>
+        <form id="add" class="add-row">
+          <select id="choice" data-l10n-id="nirva-macros-choice"></select>
+          <input
+            id="url"
+            type="text"
+            autocomplete="off"
+            spellcheck="false"
+            data-l10n-id="nirva-macros-url"
+            hidden=""
+          />
+          <button
+            class="quiet-button"
+            type="submit"
+            data-l10n-id="nirva-macros-add-step"
+          ></button>
+        </form>
+        <p id="error" class="status" role="alert" hidden=""></p>
+        <div class="editor-actions">
+          <button
+            id="cancel"
+            class="quiet-button"
+            type="button"
+            data-l10n-id="nirva-macros-cancel"
+          ></button>
+          <button
+            id="save"
+            class="primary-button"
+            type="button"
+            data-l10n-id="nirva-macros-save"
+          ></button>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,7 @@
+[DEFAULT]
+prefs = [
+  "dom.security.https_only_mode=false",
+  "nirva.morph.enabled=true",
+]
+
+["browser_nirva_morph.js"]

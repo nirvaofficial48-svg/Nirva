@@ -1,0 +1,14 @@
+diff --git a/browser/components/preferences/preferences.js b/browser/components/preferences/preferences.js
+index b947043afe..793e920c6c 100644
+--- a/browser/components/preferences/preferences.js
++++ b/browser/components/preferences/preferences.js
+@@ -602,7 +602,8 @@ function init_all() {
+   if (redesignEnabled) {
+     categorySync.setAttribute("data-l10n-id", "pane-account-sync-title2");
+     categorySync.iconSrc = "chrome://browser/skin/fxa/avatar-empty.svg";
+-    categorySync.hidden = false;
++    // NIRVA: No account page when accounts are switched off.
++    categorySync.hidden = !accountsEnabled;
+   } else if (accountsEnabled) {
+     categorySync.hidden = false;
+     register_module("paneSync", gSyncPane);

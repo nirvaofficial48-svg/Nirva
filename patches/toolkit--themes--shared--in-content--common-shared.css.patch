@@ -1,0 +1,17 @@
+diff --git a/toolkit/themes/shared/in-content/common-shared.css b/toolkit/themes/shared/in-content/common-shared.css
+index b10fde49e0..a82f492210 100644
+--- a/toolkit/themes/shared/in-content/common-shared.css
++++ b/toolkit/themes/shared/in-content/common-shared.css
+@@ -1013,3 +1013,12 @@ xul|*.addons-icon {
+ .back-button:dir(rtl) {
+   transform: scaleX(-1);
+ }
++
++/* NIRVA: Built-in pages use Nirva's accent (design/tokens.css, Glass) instead of Firefox's. */
++@media not (forced-colors) {
++  :root {
++    --color-accent-primary: light-dark(#23408e, #8fb0ff);
++    --color-accent-primary-hover: color-mix(in srgb, var(--color-accent-primary) 86%, light-dark(black, white));
++    --color-accent-primary-active: color-mix(in srgb, var(--color-accent-primary) 72%, light-dark(black, white));
++  }
++}

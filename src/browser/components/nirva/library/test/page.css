@@ -1,0 +1,8 @@
+#styled {
+  color: rgb(12, 34, 56);
+  background-image: url(pixel.png);
+}
+
+.screen-only {
+  display: none;
+}

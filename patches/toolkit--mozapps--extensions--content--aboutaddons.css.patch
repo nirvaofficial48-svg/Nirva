@@ -1,0 +1,14 @@
+diff --git a/toolkit/mozapps/extensions/content/aboutaddons.css b/toolkit/mozapps/extensions/content/aboutaddons.css
+index 1e1eef0ce3..8df4f1c353 100644
+--- a/toolkit/mozapps/extensions/content/aboutaddons.css
++++ b/toolkit/mozapps/extensions/content/aboutaddons.css
+@@ -113,7 +113,8 @@ h2 {
+   display: flex;
+   justify-content: flex-end;
+   align-items: center;
+-  padding-top: 20px;
++  /* NIRVA: Clear Nirva's floating address bar, which sits over the top of the page. */
++  padding-top: 76px;
+   padding-bottom: var(--space-small);
+   max-width: var(--page-main-content-width);
+ }

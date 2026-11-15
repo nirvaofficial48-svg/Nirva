@@ -1,0 +1,5 @@
+[DEFAULT]
+# Keep Firefox browser tests reachable over their local HTTP server.
+prefs = ["dom.security.https_only_mode=false", "dom.security.https_only_mode_pbm=false"]
+
+["browser_nirva_looks.js"]

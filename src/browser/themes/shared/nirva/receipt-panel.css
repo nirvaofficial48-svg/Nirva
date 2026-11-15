@@ -1,0 +1,139 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/* stylelint-disable stylelint-plugin-mozilla/use-design-tokens */
+
+/* ---------- The receipt button in the island ---------- */
+
+#nirva-receipt-button {
+  appearance: none;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 6px;
+  min-width: 32px;
+  min-height: 32px;
+  margin: 0;
+  padding: 0 10px;
+  border: 0;
+  border-radius: var(--nirva-radius-control);
+  background: transparent;
+  color: var(--nirva-accent);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+
+  &[hidden] {
+    display: none;
+  }
+
+  &:is(:hover, [open]) {
+    background: var(--urlbar-box-hover-bgcolor);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--nirva-accent);
+    outline-offset: -2px;
+  }
+}
+
+.nirva-receipt-count:empty {
+  display: none;
+}
+
+/* ---------- Its panel ---------- */
+
+#nirva-receipt-panel {
+  --panel-padding: 24px;
+  --panel-border-radius: var(--nirva-radius-panel);
+  font-family: var(--nirva-font-ui);
+}
+
+.nirva-receipt {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: 252px;
+  /* The scrollbar sits in the panel's own side padding, never over the figures. */
+  margin-inline-end: calc(8px - var(--panel-padding));
+  padding-inline-end: calc(var(--panel-padding) - 8px);
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  color: var(--nirva-text);
+  font-size: 13px;
+}
+
+.nirva-receipt-eyebrow {
+  color: var(--nirva-text-2);
+  font-size: var(--nirva-label-size);
+  letter-spacing: var(--nirva-label-tracking);
+  text-transform: uppercase;
+}
+
+.nirva-receipt-headline {
+  margin-top: 6px;
+  font-family: var(--nirva-font-display);
+  font-size: 22px;
+  font-weight: var(--nirva-display-weight, 300);
+  line-height: 1.2;
+}
+
+.nirva-receipt-rows {
+  margin-top: 16px;
+  border-bottom: 1px solid var(--nirva-hairline);
+}
+
+.nirva-receipt-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 36px;
+  border-top: 1px solid var(--nirva-hairline);
+}
+
+.nirva-receipt-value {
+  flex-shrink: 0;
+  font-weight: 500;
+}
+
+.nirva-receipt-note {
+  margin: 12px 0 0;
+  color: var(--nirva-text-2);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.nirva-receipt-details,
+.nirva-receipt-burner {
+  appearance: none;
+  min-height: var(--nirva-hit);
+  margin: 14px 0 0;
+  border: 1px solid var(--nirva-accent);
+  border-radius: var(--nirva-radius-control);
+  background: transparent;
+  color: var(--nirva-accent);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+
+  &[hidden] {
+    display: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--nirva-accent);
+    outline-offset: 2px;
+  }
+}
+
+.nirva-receipt-burner:not([hidden]) + .nirva-receipt-details {
+  margin-top: 8px;
+  border-color: var(--nirva-hairline);
+  color: var(--nirva-text);
+}

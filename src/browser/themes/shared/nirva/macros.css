@@ -1,0 +1,56 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/* stylelint-disable stylelint-plugin-mozilla/use-design-tokens */
+
+/* The Macros page. It builds on the shared page styles in tabrules.css. */
+
+.row-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.row-sub {
+  color: var(--nirva-text-3);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--nirva-text-2);
+  font-size: 13px;
+
+  > input {
+    color: var(--nirva-text);
+  }
+}
+
+.asks-first {
+  color: var(--nirva-warn);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.step > button {
+  padding-inline: 10px;
+}
+
+.editor-actions {
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.add-row > select {
+  flex: 1 1 100%;
+}

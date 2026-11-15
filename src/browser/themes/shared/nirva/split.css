@@ -1,0 +1,604 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/* Sizes, colours and weights here come from Nirva's own tokens (design/tokens.css) and the
+ * approved designs, not from Firefox's design system. */
+/* stylelint-disable stylelint-plugin-mozilla/use-design-tokens */
+
+/* Split view of two to four tabs (SPEC T3, A8). NirvaSplit.sys.mjs places each pane with
+ * inline left, top, width and height; the gap between panes equals the page's own inset. */
+
+#tabbrowser-tabpanels {
+  --nirva-split-gap: var(--nirva-page-inset, 12px);
+}
+
+:root[nirva-split-on] #split-view-button {
+  display: none !important;
+}
+
+#tabbrowser-tabpanels[nirva-split] {
+  > .split-view-splitter {
+    display: none !important;
+  }
+
+  > .split-view-panel.split-view-panel-active {
+    position: absolute;
+    margin: 0;
+    min-width: 0;
+    max-width: none;
+    min-height: 0;
+    transition: none;
+  }
+
+  /* Pages meet edge to edge across the gap, so a card shadow would smudge the gap. */
+  > .split-view-panel > .browserContainer {
+    box-shadow: none;
+  }
+
+  /* The pane that has focus carries the accent hairline. */
+  > .split-view-panel.deck-selected > .browserContainer {
+    outline: 1px solid var(--nirva-accent);
+    outline-offset: -1px;
+  }
+}
+
+/* Panes follow the pointer exactly; the older snap experiment's width transition must not
+ * lag behind a drag. */
+:root[data-nirva-split-snap] #tabbrowser-tabpanels[nirva-split] > .split-view-panel {
+  transition: none;
+}
+
+/* While a divider is dragged the pages must not take the pointer or show their own cursor. */
+:root[nirva-split-dragging] {
+  #tabbrowser-tabpanels browser {
+    pointer-events: none;
+  }
+}
+
+:root[nirva-split-dragging="x"] {
+  cursor: col-resize;
+}
+
+:root[nirva-split-dragging="y"] {
+  cursor: row-resize;
+}
+
+:root[nirva-split-dragging="xy"] {
+  cursor: move;
+}
+
+/* ---------- The split in the sidebar ---------- *
+ * Firefox draws a split as two narrow columns on a grey fill. In Nirva's sidebar its tabs are
+ * full rows, lined up with every other row, grouped by one hairline. */
+
+:root[data-nirva-look][nirva-split-on] #tabbrowser-tabs[orient="vertical"][expanded] tab-split-view-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-inline: var(--nirva-sidebar-padding);
+  margin-block: var(--tab-margin-block);
+  padding: 0;
+  border-radius: var(--nirva-radius-control);
+  background-color: transparent;
+  outline: 1px solid var(--nirva-hairline);
+  outline-offset: -1px;
+
+  &[hasactivetab] {
+    background-color: transparent;
+  }
+
+  .tabbrowser-tab:not([pinned]) {
+    .tab-background {
+      margin-inline: 0;
+    }
+
+    .tab-content {
+      padding-inline: var(--tab-padding-inline);
+    }
+
+    /* Firefox's line between its two columns. */
+    > .tab-stack {
+      border-inline-start: none !important;
+    }
+  }
+}
+
+/* ---------- Dividers ---------- */
+
+#nirva-split-overlay {
+  position: fixed;
+  z-index: 3;
+  pointer-events: none;
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.nirva-split-divider {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  pointer-events: auto;
+  touch-action: none;
+  cursor: col-resize;
+
+  &[data-axis="y"] {
+    cursor: row-resize;
+  }
+
+  /* The full line shows on hover; the grip in its middle is the 44 px target. */
+  &::before {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: calc(50% - 0.5px);
+    width: 1px;
+    background-color: var(--nirva-text-3);
+    opacity: 0;
+    transition: opacity var(--nirva-move-fast) var(--nirva-move-ease);
+  }
+
+  &[data-axis="y"]::before {
+    inset-inline: 0;
+    inset-block: calc(50% - 0.5px) auto;
+    width: auto;
+    height: 1px;
+  }
+
+  &:focus-visible {
+    outline: none;
+  }
+
+  &:is(:hover, :focus-visible, [dragging])::before {
+    opacity: 1;
+  }
+
+  &[dragging]::before {
+    background-color: var(--nirva-accent);
+  }
+}
+
+.nirva-split-grip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  width: var(--nirva-hit);
+  height: var(--nirva-hit);
+  display: grid;
+  place-items: center;
+
+  &::before {
+    content: "";
+    width: 4px;
+    height: 28px;
+    border-radius: 2px;
+    background-color: var(--nirva-text-2);
+    opacity: 0;
+    transition: opacity var(--nirva-move-fast) var(--nirva-move-ease);
+  }
+
+  [data-axis="y"] > &::before {
+    width: 28px;
+    height: 4px;
+  }
+
+  :is(.nirva-split-divider:hover, .nirva-split-divider:focus-visible, .nirva-split-divider[dragging]) > &::before {
+    opacity: 1;
+  }
+
+  .nirva-split-divider[snapped] > &::before {
+    background-color: var(--nirva-accent);
+  }
+}
+
+/* Where the two lines of a grid meet: drag to resize all four pages at once. */
+.nirva-split-cross {
+  position: absolute;
+  z-index: 1;
+  width: var(--nirva-hit);
+  height: var(--nirva-hit);
+  translate: -50% -50%;
+  display: grid;
+  place-items: center;
+  pointer-events: auto;
+  touch-action: none;
+  cursor: move;
+
+  &::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    box-sizing: border-box;
+    border: 1px solid var(--nirva-text-2);
+    border-radius: 50%;
+    background-color: var(--nirva-bg);
+    opacity: 0;
+    transition: opacity var(--nirva-move-fast) var(--nirva-move-ease);
+  }
+
+  &:is(:hover, :focus-visible, [dragging])::before {
+    opacity: 1;
+  }
+
+  &[dragging]::before {
+    border-color: var(--nirva-accent);
+  }
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+/* ---------- The button on each sidebar tab ---------- */
+
+.nirva-split-tab-button {
+  appearance: none;
+  display: none;
+  flex: none;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  margin-inline-end: 2px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--nirva-radius-control);
+  background: transparent;
+  color: var(--nirva-text-2);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--nirva-hairline);
+    color: var(--nirva-text);
+  }
+}
+
+:root[nirva-split-on] .tabbrowser-tab:not([pinned]):is(:hover, :focus-within) .nirva-split-tab-button {
+  display: grid;
+}
+
+/* On the narrow rail there is no room: the island button and the command bar remain. */
+:root #tabbrowser-tabs[orient="vertical"]:not([expanded]) .nirva-split-tab-button {
+  display: none !important;
+}
+
+/* ---------- Firefox's own split items ---------- *
+ * Nirva's "Split view…" item and panel replace them. */
+
+:root[nirva-split-on] :is(#context_moveTabToSplitView, #context_separateSplitView, #context_reverseSplitView, #context-openlinkinsplitview) {
+  display: none !important;
+}
+
+/* ---------- The island button ---------- */
+
+#nirva-split-button {
+  appearance: none;
+  display: none;
+  flex-shrink: 0;
+  place-items: center;
+  min-width: 32px;
+  min-height: 32px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--nirva-radius-control);
+  background: transparent;
+  color: var(--nirva-text-2);
+  cursor: pointer;
+
+  :root[nirva-split-on] & {
+    display: grid;
+  }
+
+  &:is(:hover, [open]) {
+    background: var(--urlbar-box-hover-bgcolor);
+  }
+
+  &[active] {
+    color: var(--nirva-accent);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--nirva-accent);
+    outline-offset: -2px;
+  }
+}
+
+/* ---------- The split panel ---------- *
+ * One small rectangle: the tabs to show together, the layout, the actions. It opens beside
+ * the tab or button that asked for it. Solid ground, like the command bar: it sits over pages. */
+
+#nirva-split-popup {
+  --panel-padding: 0;
+  --panel-border-radius: var(--nirva-radius-panel);
+  --panel-border-color: var(--nirva-hairline);
+  --panel-background: var(--nirva-raised, var(--nirva-bg));
+  --panel-color: var(--nirva-text);
+}
+
+:root:is([data-nirva-look="cockpit"], [data-nirva-look="paper"]) #nirva-split-popup {
+  --panel-background: var(--nirva-island, var(--nirva-bg));
+}
+
+#nirva-split-panel {
+  box-sizing: border-box;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  color: var(--nirva-text);
+  font-family: var(--nirva-font-ui);
+  font-size: 13px;
+  line-height: 18px;
+  animation: nirva-split-panel-in var(--nirva-move-base) var(--nirva-move-ease);
+
+  &[hidden] {
+    display: none;
+  }
+
+  button {
+    font: inherit;
+    color: inherit;
+  }
+}
+
+@keyframes nirva-split-panel-in {
+  from {
+    opacity: 0;
+    /* A fade only when movement is off (Minimal, reduce motion, Lite mode). */
+    translate: 0 calc(-4px * var(--nirva-motion-move));
+  }
+}
+
+.nirva-split-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.nirva-split-eyebrow {
+  font-size: 11px;
+  line-height: 14px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--nirva-text-3);
+}
+
+.nirva-split-tally {
+  font-size: 11px;
+  line-height: 14px;
+  color: var(--nirva-text-2);
+  font-variant-numeric: tabular-nums;
+}
+
+:root[data-nirva-look="cockpit"] :is(.nirva-split-eyebrow, .nirva-split-tally) {
+  font-family: var(--nirva-font-mono, ui-monospace, monospace);
+  font-size: 12px;
+}
+
+/* The tabs: one 44 px row each, five rows before it scrolls. */
+.nirva-split-list {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  /* Five and a half rows: the half row shows that the list scrolls. */
+  max-height: calc(5.5 * var(--nirva-hit));
+  overflow-y: auto;
+  scrollbar-width: thin;
+  margin-inline: -8px;
+  border-block: 1px solid var(--nirva-hairline);
+}
+
+.nirva-split-row {
+  display: flex;
+  align-items: center;
+  flex: none;
+  border-radius: var(--nirva-radius-control);
+
+  &:hover {
+    background-color: var(--nirva-hairline);
+  }
+}
+
+.nirva-split-row-main {
+  appearance: none;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: var(--nirva-hit);
+  margin: 0;
+  padding: 0 8px;
+  border: 0;
+  background: transparent;
+  text-align: start;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: default;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--nirva-accent);
+    outline-offset: -2px;
+    border-radius: var(--nirva-radius-control);
+  }
+}
+
+/* An empty ring, or the place number once ticked. */
+.nirva-split-mark {
+  flex: none;
+  box-sizing: border-box;
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--nirva-text-3);
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+
+  .nirva-split-row[checked] & {
+    border-color: var(--nirva-accent);
+    color: var(--nirva-accent);
+  }
+}
+
+.nirva-split-row-icon {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  -moz-context-properties: fill;
+  fill: currentColor;
+  color: var(--nirva-text-2);
+}
+
+.nirva-split-row-label {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  .nirva-split-row[checked] & {
+    font-weight: 500;
+  }
+}
+
+.nirva-split-up {
+  appearance: none;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: var(--nirva-hit);
+  height: var(--nirva-hit);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--nirva-radius-control);
+  background: transparent;
+  color: var(--nirva-text-2);
+  cursor: pointer;
+  opacity: 0;
+
+  .nirva-split-row:is(:hover, :focus-within) & {
+    opacity: 1;
+  }
+
+  &:hover {
+    color: var(--nirva-text);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--nirva-accent);
+    outline-offset: -2px;
+  }
+}
+
+.nirva-split-shapes {
+  display: flex;
+  gap: 8px;
+  margin-top: -4px;
+}
+
+.nirva-split-shape {
+  appearance: none;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: var(--nirva-hit);
+  margin: 0;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--nirva-radius-control);
+  background: transparent;
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--nirva-hairline);
+  }
+
+  &[aria-checked="true"] {
+    border-color: var(--nirva-accent);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--nirva-accent);
+    outline-offset: 1px;
+  }
+}
+
+.nirva-split-mini {
+  position: relative;
+  width: 56px;
+  height: 34px;
+}
+
+.nirva-split-mini-pane {
+  position: absolute;
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--nirva-text-3);
+  border-radius: 2px;
+  font-size: 10px;
+  line-height: 1;
+  color: var(--nirva-text-3);
+
+  [aria-checked="true"] & {
+    border-color: var(--nirva-accent);
+    color: var(--nirva-accent);
+  }
+}
+
+.nirva-split-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--nirva-hairline);
+}
+
+.nirva-split-spacer {
+  flex: 1;
+}
+
+.nirva-split-action {
+  appearance: none;
+  min-height: var(--nirva-hit);
+  margin: 0;
+  padding: 0 12px;
+  border: 1px solid var(--nirva-hairline);
+  border-radius: var(--nirva-radius-control);
+  background: transparent;
+  white-space: nowrap;
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    border-color: var(--nirva-text-3);
+  }
+
+  &[primary] {
+    border-color: var(--nirva-accent);
+    color: var(--nirva-accent);
+    font-weight: 600;
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: default;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--nirva-accent);
+    outline-offset: 1px;
+  }
+}

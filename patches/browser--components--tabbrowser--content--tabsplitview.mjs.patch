@@ -1,0 +1,24 @@
+diff --git a/browser/components/tabbrowser/content/tabsplitview.mjs b/browser/components/tabbrowser/content/tabsplitview.mjs
+index 34953fb224..c83f69076b 100644
+--- a/browser/components/tabbrowser/content/tabsplitview.mjs
++++ b/browser/components/tabbrowser/content/tabsplitview.mjs
+@@ -160,6 +160,19 @@ export class MozTabSplitViewWrapper extends MozXULElement {
+   #observeTabChanges() {
+     if (!this.#tabChangeObserver) {
+       this.#tabChangeObserver = new window.MutationObserver(mutations => {
++        // NIRVA: a split of three or four tabs survives losing one; keep the list in step.
++        if (this.tabs.length >= 2) {
++          const gone = this.#tabs.filter(tab => tab.parentElement !== this);
++          this.#tabs = this.tabs;
++          if (gone.length) {
++            gBrowser.tabpanels.removeTabsFromSplitview(
++              gone.filter(tab => !tab.splitview)
++            );
++            if (this.hasActiveTab) {
++              this.#activate();
++            }
++          }
++        }
+         if (this.tabs.length) {
+           this.hasActiveTab = this.tabs.some(tab => tab.selected);
+           this.toggleAttribute(

@@ -1,0 +1,225 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/* stylelint-disable stylelint-plugin-mozilla/use-design-tokens */
+
+/* Bundled wallpapers. Each wallpaper is a small palette (sky, glow, far, near) for bright and
+ * dark, and each look draws that palette its own way, so the look keeps its identity:
+ *   Glass   soft light, blurred shapes and a misty scene behind frosted panels;
+ *   Cockpit fine instrument lines on near-black: ridge lines, contours, scan bands;
+ *   Paper   tinted paper stock under the grain, with the scene printed like an ink wash.
+ * --nirva-wallpaper-image is the atmosphere (home, sidebar, Studio preview);
+ * .nirva-wall-scene draws the scene artwork, tinted through -moz-context-properties.
+ * The home page and the Studio preview draw them three times stronger than the sidebar. */
+
+/* ---------- Palettes ---------- */
+
+:root[data-nirva-theme="true"][data-nirva-wallpaper="mist"] {
+  --nirva-wall-sky: #c9d6e2;
+  --nirva-wall-glow: #f4f7f9;
+  --nirva-wall-far: #a9bacb;
+  --nirva-wall-near: #8497ab;
+  --nirva-wall-glow-shape: 140% 34% at 50% 62%;
+  --nirva-wall-scene: url("chrome://browser/skin/nirva/wall-hills.svg");
+}
+
+:root[data-nirva-theme="true"][data-nirva-wallpaper="dawn"] {
+  --nirva-wall-sky: #c8cceb;
+  --nirva-wall-glow: #f7c59f;
+  --nirva-wall-far: #e2b4b8;
+  --nirva-wall-near: #b88894;
+  --nirva-wall-glow-shape: 80% 55% at 50% 92%;
+  --nirva-wall-scene: url("chrome://browser/skin/nirva/wall-hills.svg");
+}
+
+:root[data-nirva-theme="true"][data-nirva-wallpaper="forest"] {
+  --nirva-wall-sky: #d2e3d0;
+  --nirva-wall-glow: #eaf0c4;
+  --nirva-wall-far: #86ae8f;
+  --nirva-wall-near: #3e6a50;
+  --nirva-wall-glow-shape: 70% 40% at 62% 70%;
+  --nirva-wall-scene: url("chrome://browser/skin/nirva/wall-pines.svg");
+}
+
+:root[data-nirva-theme="true"][data-nirva-wallpaper="linen"] {
+  --nirva-wall-sky: #e9dfcb;
+  --nirva-wall-glow: #f7f0e2;
+  --nirva-wall-far: #d3c3a6;
+  --nirva-wall-near: #b8a585;
+  --nirva-wall-glow-shape: 90% 70% at 15% 10%;
+  --nirva-wall-scene: none;
+}
+
+:root[data-nirva-theme="true"][data-nirva-mode="dark"] {
+  &[data-nirva-wallpaper="mist"] {
+    --nirva-wall-sky: #22344a;
+    --nirva-wall-glow: #4a6075;
+    --nirva-wall-far: #1f2d3c;
+    --nirva-wall-near: #141e29;
+  }
+
+  &[data-nirva-wallpaper="dawn"] {
+    --nirva-wall-sky: #2a2747;
+    --nirva-wall-glow: #c4703f;
+    --nirva-wall-far: #3b2638;
+    --nirva-wall-near: #231724;
+  }
+
+  &[data-nirva-wallpaper="forest"] {
+    --nirva-wall-sky: #12261d;
+    --nirva-wall-glow: #3f7a52;
+    --nirva-wall-far: #173a2a;
+    --nirva-wall-near: #0b1a12;
+  }
+
+  &[data-nirva-wallpaper="linen"] {
+    --nirva-wall-sky: #2c261f;
+    --nirva-wall-glow: #4b4032;
+    --nirva-wall-far: #3a3229;
+    --nirva-wall-near: #241f19;
+  }
+}
+
+/* ---------- Glass and Paper: atmosphere ---------- */
+
+:root[data-nirva-theme="true"]:is([data-nirva-look="glass"], [data-nirva-look="paper"]):not([data-nirva-wallpaper="none"]) {
+  --nirva-wall-k: calc(var(--nirva-wallpaper-strength, 1) * var(--nirva-wall-look, 1));
+  --nirva-wallpaper-image:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--nirva-wall-sky) calc(28% * var(--nirva-wall-k)), transparent),
+      color-mix(in srgb, var(--nirva-wall-sky) calc(12% * var(--nirva-wall-k)), transparent) 45%,
+      transparent 80%
+    ),
+    radial-gradient(var(--nirva-wall-glow-shape), color-mix(in srgb, var(--nirva-wall-glow) calc(30% * var(--nirva-wall-k)), transparent), transparent 70%);
+  --nirva-wall-scene-size: auto 46%;
+  --nirva-wall-scene-opacity: 0.6;
+  --nirva-wall-scene-filter: blur(2px);
+  --nirva-wall-fill: var(--nirva-wall-far);
+  --nirva-wall-stroke: var(--nirva-wall-near);
+}
+
+/* Glass: the floating lights take the wallpaper's colours. */
+:root[data-nirva-theme="true"][data-nirva-look="glass"]:not([data-nirva-wallpaper="none"]) {
+  --nirva-light-1: var(--nirva-wall-far);
+  --nirva-light-2: var(--nirva-wall-glow);
+  --nirva-light-3: var(--nirva-wall-sky);
+}
+
+:root[data-nirva-theme="true"][data-nirva-look="glass"][data-nirva-mode="dark"]:not([data-nirva-wallpaper="none"]) {
+  --nirva-light-2: color-mix(in srgb, var(--nirva-wall-glow) 50%, var(--nirva-bg));
+  --nirva-wall-scene-opacity: 0.85;
+}
+
+/* Paper: a tinted stock, and the scene printed flat like an ink wash. */
+:root[data-nirva-theme="true"][data-nirva-look="paper"]:not([data-nirva-wallpaper="none"]) {
+  --nirva-wall-look: 0.7;
+  --nirva-wall-scene-opacity: 0.32;
+  --nirva-wall-scene-filter: none;
+  --nirva-wall-scene-size: auto 40%;
+}
+
+:root[data-nirva-theme="true"][data-nirva-look="paper"][data-nirva-mode="dark"]:not([data-nirva-wallpaper="none"]) {
+  --nirva-wall-scene-opacity: 0.7;
+}
+
+/* Linen: a fine woven texture instead of a scene. */
+:root[data-nirva-theme="true"]:is([data-nirva-look="glass"], [data-nirva-look="paper"])[data-nirva-wallpaper="linen"] {
+  --nirva-wallpaper-image:
+    repeating-linear-gradient(0deg, color-mix(in srgb, var(--nirva-wall-near) calc(9% * var(--nirva-wall-k)), transparent) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(90deg, color-mix(in srgb, var(--nirva-wall-near) calc(6% * var(--nirva-wall-k)), transparent) 0 1px, transparent 1px 4px),
+    radial-gradient(var(--nirva-wall-glow-shape), color-mix(in srgb, var(--nirva-wall-glow) calc(30% * var(--nirva-wall-k)), transparent), transparent 70%),
+    linear-gradient(135deg, color-mix(in srgb, var(--nirva-wall-sky) calc(26% * var(--nirva-wall-k)), transparent), transparent 70%);
+}
+
+/* ---------- Cockpit: instrument lines on near-black ---------- */
+
+:root[data-nirva-theme="true"][data-nirva-look="cockpit"]:not([data-nirva-wallpaper="none"]) {
+  --nirva-wall-k: var(--nirva-wallpaper-strength, 1);
+  --nirva-wall-glow-shape: 150% 45% at 50% 100%;
+  --nirva-wall-line: color-mix(in srgb, var(--nirva-wall-glow) 70%, var(--nirva-text-2));
+  --nirva-wallpaper-image: radial-gradient(
+    var(--nirva-wall-glow-shape),
+    color-mix(in srgb, var(--nirva-wall-glow) calc(5% * var(--nirva-wall-k)), transparent),
+    transparent 75%
+  );
+  --nirva-wall-scene: url("chrome://browser/skin/nirva/wall-ridges.svg");
+  --nirva-wall-scene-size: auto 38%;
+  --nirva-wall-scene-opacity: 0.5;
+  --nirva-wall-scene-filter: none;
+  --nirva-wall-fill: var(--nirva-wall-line);
+  --nirva-wall-stroke: var(--nirva-wall-line);
+}
+
+:root[data-nirva-theme="true"][data-nirva-look="cockpit"][data-nirva-wallpaper="mist"] {
+  --nirva-wallpaper-image:
+    repeating-linear-gradient(180deg, color-mix(in srgb, var(--nirva-wall-line) calc(4% * var(--nirva-wall-k)), transparent) 0 1px, transparent 1px 6px),
+    radial-gradient(var(--nirva-wall-glow-shape), color-mix(in srgb, var(--nirva-wall-glow) calc(5% * var(--nirva-wall-k)), transparent), transparent 75%);
+}
+
+:root[data-nirva-theme="true"][data-nirva-look="cockpit"][data-nirva-wallpaper="forest"] {
+  --nirva-wall-scene: url("chrome://browser/skin/nirva/wall-contours.svg");
+  --nirva-wall-scene-size: 800px 600px;
+  --nirva-wall-scene-repeat: repeat;
+  --nirva-wall-scene-position: center;
+  --nirva-wall-scene-opacity: 0.35;
+  --nirva-wall-fill: color-mix(in srgb, var(--nirva-wall-line) 55%, transparent);
+}
+
+:root[data-nirva-theme="true"][data-nirva-look="cockpit"][data-nirva-wallpaper="linen"] {
+  --nirva-wallpaper-image:
+    repeating-linear-gradient(0deg, color-mix(in srgb, var(--nirva-hairline-strong) calc(30% * var(--nirva-wall-k)), transparent) 0 1px, transparent 1px 8px),
+    repeating-linear-gradient(90deg, color-mix(in srgb, var(--nirva-hairline-strong) calc(30% * var(--nirva-wall-k)), transparent) 0 1px, transparent 1px 8px),
+    radial-gradient(var(--nirva-wall-glow-shape), color-mix(in srgb, var(--nirva-wall-glow) calc(7% * var(--nirva-wall-k)), transparent), transparent 70%);
+  --nirva-wall-scene: none;
+}
+
+/* ---------- The scene layer (home page and Studio preview) ---------- */
+
+.nirva-wall-scene {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--nirva-wall-scene, none);
+  background-repeat: var(--nirva-wall-scene-repeat, repeat-x);
+  background-position: var(--nirva-wall-scene-position, bottom center);
+  background-size: var(--nirva-wall-scene-size, auto 46%);
+  -moz-context-properties: fill, stroke;
+  fill: var(--nirva-wall-fill, transparent);
+  stroke: var(--nirva-wall-stroke, transparent);
+  opacity: var(--nirva-wall-scene-opacity, 1);
+  filter: var(--nirva-wall-scene-filter, none);
+}
+
+:root:not([data-nirva-theme="true"]) .nirva-wall-scene,
+:root[data-nirva-wallpaper="none"] .nirva-wall-scene {
+  display: none;
+}
+
+:root[data-nirva-lite="true"] .nirva-wall-scene {
+  filter: none;
+}
+
+/* ---------- Sidebar ---------- */
+
+:root[nirva-sidebar][data-nirva-theme="true"]:not([data-nirva-look="paper"]) {
+  #sidebar-container {
+    background-image: var(--nirva-wallpaper-image, none);
+  }
+}
+
+/* Paper: a fine paper grain on the sidebar, matching the home page, over the chosen stock. */
+:root[nirva-sidebar][data-nirva-look="paper"] #sidebar-container {
+  background-image: url("chrome://browser/skin/nirva/paper-grain.svg"), var(--nirva-wallpaper-image, none);
+  background-size:
+    240px 240px,
+    auto,
+    auto,
+    auto,
+    auto;
+}
+
+:root[nirva-sidebar][data-nirva-look="paper"][data-nirva-mode="dark"] #sidebar-container {
+  background-image: url("chrome://browser/skin/nirva/paper-grain-light.svg"), var(--nirva-wallpaper-image, none);
+}

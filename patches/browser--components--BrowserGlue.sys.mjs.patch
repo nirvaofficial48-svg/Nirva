@@ -1,0 +1,46 @@
+diff --git a/browser/components/BrowserGlue.sys.mjs b/browser/components/BrowserGlue.sys.mjs
+index ea26e8ed36..d5cd7265d6 100644
+--- a/browser/components/BrowserGlue.sys.mjs
++++ b/browser/components/BrowserGlue.sys.mjs
+@@ -62,6 +62,8 @@ ChromeUtils.defineESModuleGetters(lazy, {
+   SearchService: "moz-src:///toolkit/components/search/SearchService.sys.mjs",
+   SearchSERPTelemetry:
+     "moz-src:///browser/components/search/SearchSERPTelemetry.sys.mjs",
++  // NIRVA: start-up hub for all Nirva features
++  NirvaStartup: "moz-src:///browser/components/nirva/NirvaStartup.sys.mjs",
+   SessionStartup:
+     "moz-src:///browser/components/sessionstore/SessionStartup.sys.mjs",
+   ShortcutUtils: "resource://gre/modules/ShortcutUtils.sys.mjs",
+@@ -394,6 +396,32 @@ BrowserGlue.prototype = {
+   // runs on startup, before the first command line handler is invoked
+   // (i.e. before the first window is opened)
+   _beforeUIStartup: function BG__beforeUIStartup() {
++    // NIRVA: Keep crash report uploads off before the first browser window.
++    if (AppConstants.MOZ_CRASHREPORTER) {
++      const crashReportsDir = Services.dirsvc.get("UAppData", Ci.nsIFile);
++      crashReportsDir.append("Crash Reports");
++      if (!crashReportsDir.exists()) {
++        crashReportsDir.create(Ci.nsIFile.DIRECTORY_TYPE, 0o700);
++      }
++      Services.appinfo.submitReports = false;
++    }
++
++    // NIRVA: Opt new profiles out of region-enabled sponsored suggestions.
++    if (
++      Services.prefs.getBoolPref("nirva.privacy.enabled", false) &&
++      !Services.prefs.prefHasUserValue(
++        "browser.urlbar.suggest.quicksuggest.sponsored"
++      )
++    ) {
++      Services.prefs.setBoolPref(
++        "browser.urlbar.suggest.quicksuggest.sponsored",
++        false
++      );
++    }
++
++    // NIRVA: start Nirva features before the first window is drawn.
++    lazy.NirvaStartup.beforeFirstWindow();
++
+     lazy.SessionStartup.init();
+ 
+     // check if we're in safe mode

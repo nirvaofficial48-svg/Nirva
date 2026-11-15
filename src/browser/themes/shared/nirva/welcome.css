@@ -1,0 +1,766 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/* Sizes, colours and weights here come from the approved design, not from Firefox's design
+ * system. */
+/* stylelint-disable stylelint-plugin-mozilla/use-design-tokens */
+
+/* First-launch chooser (S2). Reference: designs/Welcome.html.
+ * The chooser has its own neutral palette because no look has been chosen yet. The preview
+ * tiles use the colours of each look as drawn in the design. */
+
+@import url("chrome://browser/skin/nirva/fonts.css");
+
+:root {
+  --welcome-bg: #f2f1ee;
+  --welcome-text: #1c1c1a;
+  --welcome-text-2: #55534e;
+  --welcome-card: #ffffff;
+  --welcome-card-border: #d8d6d0;
+  --welcome-track: #e4e2dc;
+  --welcome-thumb-shadow: 0 1px 3px rgba(28, 28, 26, 0.16);
+
+  /* The browser's importer is drawn with the shared design tokens; give it this page's ink. */
+  --color-accent-primary: var(--welcome-text);
+  --color-accent-primary-hover: #000000;
+  --color-accent-primary-active: #000000;
+  --button-text-color-primary: var(--welcome-bg);
+  --focus-outline-color: var(--welcome-text);
+
+  height: 100%;
+  background-color: var(--welcome-bg);
+  color: var(--welcome-text);
+  font-family: "Hanken Grotesk", system-ui, sans-serif;
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+main {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1440px;
+  padding: 56px 120px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 1100px) {
+  main {
+    padding-inline: 48px;
+  }
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  margin: 32px 0 0;
+  font-size: 52px;
+  line-height: 1.05;
+  font-weight: 300;
+  letter-spacing: -0.025em;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+/* ---------- The three looks ---------- */
+
+#looks {
+  margin-top: 36px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+
+  > legend {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+}
+
+.look {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 12px 12px 16px;
+  border-radius: 18px;
+  background-color: var(--welcome-card);
+  box-shadow: 0 0 0 1px var(--welcome-card-border);
+  cursor: pointer;
+
+  &.selected {
+    box-shadow: 0 0 0 2px var(--welcome-text);
+  }
+
+  &:focus-within {
+    outline: 2px solid var(--welcome-text);
+    outline-offset: 4px;
+  }
+}
+
+.look-text {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 0 8px;
+
+  > input {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    margin: 3px 0 0;
+    accent-color: var(--welcome-text);
+  }
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+}
+
+.look-name {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.look-description {
+  font-size: 14px;
+  color: var(--welcome-text-2);
+}
+
+/* ---------- Preview tiles ---------- */
+
+.preview {
+  position: relative;
+  height: 232px;
+  border-radius: 10px;
+  overflow: hidden;
+
+  > * {
+    position: absolute;
+  }
+}
+
+.preview-clock {
+  font-size: 52px;
+  line-height: 1;
+  font-weight: 200;
+}
+
+.preview-widgets {
+  display: grid;
+  gap: 8px;
+}
+
+.preview-glass {
+  background-color: #e8ecef;
+
+  .glass-light {
+    border-radius: 50%;
+    filter: blur(30px);
+  }
+
+  .glass-light-1 {
+    left: -70px;
+    bottom: -110px;
+    width: 260px;
+    height: 260px;
+    background-color: #b4c8dc;
+  }
+
+  .glass-light-2 {
+    right: -60px;
+    top: -80px;
+    width: 210px;
+    height: 210px;
+    background-color: #edd3c4;
+  }
+
+  .glass-island {
+    left: 50%;
+    top: 12px;
+    translate: -50% 0;
+    width: 150px;
+    height: 14px;
+    border-radius: 7px;
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+
+  .preview-clock {
+    left: 28px;
+    top: 48px;
+    letter-spacing: -0.05em;
+    color: #18212b;
+  }
+
+  .preview-widgets {
+    left: 28px;
+    right: 28px;
+    bottom: 22px;
+    grid-template-columns: 5fr 3fr 4fr;
+
+    > span {
+      height: 68px;
+      box-sizing: border-box;
+      border-radius: 8px;
+      background-color: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+    }
+  }
+}
+
+.preview-cockpit {
+  background-color: #0b0e11;
+
+  .cockpit-rule {
+    left: 28px;
+    right: 28px;
+    height: 1px;
+  }
+
+  .cockpit-rule-top {
+    top: 24px;
+    background-color: #1d242c;
+  }
+
+  .cockpit-ribbon {
+    top: 128px;
+    background-color: #2a333d;
+  }
+
+  .cockpit-dot {
+    top: 124px;
+    width: 9px;
+    height: 9px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    background-color: #0b0e11;
+    border: 1px solid #93a0ad;
+  }
+
+  /* Past sessions sit 96 px apart on the ribbon; the last dot is Now. */
+  .cockpit-dot:nth-of-type(1) {
+    left: 28px;
+  }
+
+  .cockpit-dot:nth-of-type(2) {
+    left: 124px;
+  }
+
+  .cockpit-dot:nth-of-type(3) {
+    left: 220px;
+  }
+
+  .cockpit-dot:nth-of-type(4) {
+    left: 316px;
+  }
+
+  .cockpit-now {
+    border: 0;
+    background-color: #f5b25c;
+  }
+
+  .preview-clock {
+    left: 28px;
+    top: 44px;
+    font-family: "Manrope", system-ui, sans-serif;
+    letter-spacing: -0.04em;
+    color: #e6ebef;
+  }
+
+  .preview-widgets {
+    left: 28px;
+    right: 28px;
+    bottom: 26px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+
+    > span {
+      height: 44px;
+      border-top: 1px solid #2a333d;
+      border-bottom: 1px solid #1d242c;
+    }
+  }
+}
+
+.preview-paper {
+  background-color: #f5f0e6;
+
+  .paper-sidebar {
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 64px;
+    background-color: #ede6d9;
+    border-right: 1px solid #d9d0c0;
+  }
+
+  .preview-clock {
+    left: 88px;
+    top: 40px;
+    font-family: "Newsreader", Georgia, serif;
+    font-weight: 300;
+    color: #2a2826;
+  }
+
+  .paper-rule {
+    left: 88px;
+    right: 24px;
+    top: 108px;
+    height: 1px;
+    background-color: #2a2826;
+  }
+
+  .preview-widgets {
+    left: 88px;
+    right: 24px;
+    bottom: 22px;
+    grid-template-columns: 5fr 3fr 4fr;
+
+    > span {
+      height: 76px;
+      border-radius: 3px;
+    }
+
+    > span:nth-child(1) {
+      background-color: #d5e2d3;
+    }
+
+    > span:nth-child(2) {
+      background-color: #d3dfea;
+    }
+
+    > span:nth-child(3) {
+      background-color: #f1e7be;
+    }
+  }
+}
+
+/* ---------- Lite mode, offered on computers with little memory or few cores ---------- */
+
+#lite {
+  margin-top: 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-height: 44px;
+  padding: 12px 20px;
+  border-radius: 18px;
+  background-color: var(--welcome-card);
+  box-shadow: 0 0 0 1px var(--welcome-card-border);
+  cursor: pointer;
+
+  &[hidden] {
+    display: none;
+  }
+
+  &:focus-within {
+    outline: 2px solid var(--welcome-text);
+    outline-offset: 4px;
+  }
+
+  > input {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    margin: 3px 0 0;
+    accent-color: var(--welcome-text);
+  }
+
+  > span {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+}
+
+#lite-name {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+#lite-description {
+  font-size: 14px;
+  color: var(--welcome-text-2);
+}
+
+/* ---------- Appearance and Continue ---------- */
+
+#footer {
+  margin-top: 36px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+#modes {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  > legend {
+    float: left;
+    padding: 0;
+    margin-inline-end: 20px;
+    font-size: 14px;
+    color: var(--welcome-text-2);
+  }
+}
+
+#mode-choices {
+  display: flex;
+  padding: 4px;
+  border-radius: 26px;
+  background-color: var(--welcome-track);
+
+  &[hidden] {
+    display: none;
+  }
+
+  > label {
+    position: relative;
+    height: 44px;
+    padding: 0 22px;
+    border-radius: 22px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    cursor: pointer;
+
+    > input {
+      position: absolute;
+      opacity: 0;
+      width: 1px;
+      height: 1px;
+    }
+
+    &.selected {
+      background-color: var(--welcome-card);
+      box-shadow: var(--welcome-thumb-shadow);
+      font-weight: 500;
+    }
+
+    &:focus-within {
+      outline: 2px solid var(--welcome-text);
+      outline-offset: 2px;
+    }
+  }
+}
+
+#mode-fixed {
+  height: 52px;
+  padding: 0 26px;
+  border-radius: 26px;
+  display: flex;
+  align-items: center;
+  background-color: var(--welcome-track);
+  font-size: 14px;
+  color: var(--welcome-text-2);
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+#continue {
+  appearance: none;
+  height: 52px;
+  padding: 0 36px;
+  border: 0;
+  border-radius: 26px;
+  background-color: var(--welcome-text);
+  color: var(--welcome-bg);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid var(--welcome-text);
+    outline-offset: 3px;
+  }
+}
+
+/* ---------- The four-step guide ---------- */
+
+#progress {
+  display: flex;
+  gap: 8px;
+  margin: 36px 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+
+  > li {
+    flex: 1;
+    padding-top: 12px;
+    border-top: 3px solid var(--welcome-track);
+    color: var(--welcome-text-2);
+    font-size: 13px;
+    counter-increment: step;
+
+    &::before {
+      content: counter(step) ". ";
+    }
+
+    &.done {
+      border-top-color: var(--welcome-text-2);
+    }
+
+    &[aria-current="step"] {
+      border-top-color: var(--welcome-text);
+      color: var(--welcome-text);
+      font-weight: 500;
+    }
+  }
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  &[hidden] {
+    display: none;
+  }
+
+  > h1 {
+    outline: none;
+  }
+
+  > #looks {
+    margin-top: 32px;
+  }
+
+  > #modes {
+    margin-top: 28px;
+  }
+}
+
+.lede {
+  max-width: 720px;
+  margin: 12px 0 0;
+  color: var(--welcome-text-2);
+  line-height: 1.5;
+}
+
+.hint {
+  margin: 24px 0 0;
+  color: var(--welcome-text-2);
+  font-size: 14px;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin: 32px 0 0;
+  padding: 0;
+  list-style: none;
+
+  > li {
+    padding: 20px 22px;
+    border: 1px solid var(--welcome-card-border);
+    border-radius: 16px;
+    background-color: var(--welcome-card);
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  p {
+    margin: 8px 0 0;
+    color: var(--welcome-text-2);
+    font-size: 14px;
+    line-height: 1.45;
+  }
+}
+
+@media (max-width: 1100px) {
+  .features {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.choices {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  max-width: 880px;
+  margin-top: 32px;
+
+  > legend {
+    margin-bottom: 12px;
+    padding: 0;
+    color: var(--welcome-text-2);
+    font-size: 14px;
+  }
+}
+
+.choice,
+.switch-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 22px;
+  border: 1px solid var(--welcome-card-border);
+  border-radius: 16px;
+  background-color: var(--welcome-card);
+  cursor: pointer;
+
+  > input {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    accent-color: var(--welcome-text);
+  }
+
+  > span {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+  }
+
+  &:focus-within {
+    outline: 2px solid var(--welcome-text);
+    outline-offset: 2px;
+  }
+}
+
+.choice.selected {
+  border-color: var(--welcome-text);
+}
+
+.choice-name {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.choice-text {
+  color: var(--welcome-text-2);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.switches {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 880px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* A switch drawn from the checkbox: a 40 x 24 track with a sliding thumb. */
+.switch-row > input[type="checkbox"] {
+  appearance: none;
+  position: relative;
+  width: 40px;
+  height: 24px;
+  border-radius: 12px;
+  background-color: var(--welcome-track);
+  cursor: pointer;
+  transition: background-color 150ms ease;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    inset-inline-start: 3px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: var(--welcome-card);
+    box-shadow: var(--welcome-thumb-shadow);
+    transition: inset-inline-start 150ms ease;
+  }
+
+  &:checked {
+    background-color: var(--welcome-text);
+  }
+
+  &:checked::after {
+    inset-inline-start: 19px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .switch-row > input[type="checkbox"],
+  .switch-row > input[type="checkbox"]::after {
+    transition: none;
+  }
+}
+
+#importer-box {
+  max-width: 880px;
+  margin-top: 28px;
+  padding: 8px 28px;
+  border: 1px solid var(--welcome-card-border);
+  border-radius: 16px;
+  background-color: var(--welcome-card);
+}
+
+/* The buttons stay in view on short screens; the step scrolls under them. */
+#footer {
+  position: sticky;
+  bottom: 0;
+  margin-top: 32px;
+  padding-block: 16px 24px;
+  background-color: var(--welcome-bg);
+}
+
+#back {
+  appearance: none;
+  height: 52px;
+  padding: 0 28px;
+  border: 1px solid var(--welcome-card-border);
+  border-radius: 26px;
+  background-color: transparent;
+  color: var(--welcome-text);
+  font: inherit;
+  font-size: 15px;
+  cursor: pointer;
+
+  &[hidden] {
+    visibility: hidden;
+    display: block;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--welcome-text);
+    outline-offset: 3px;
+  }
+}
+
+#step-count {
+  color: var(--welcome-text-2);
+  font-size: 14px;
+}

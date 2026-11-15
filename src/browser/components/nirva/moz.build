@@ -1,0 +1,54 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+DIRS += [
+    "branding",
+    # NIRVA: Temporary tabs whose cookies and site data are erased on close.
+    "burner",
+    "commandbar",
+    # NIRVA: The home screen shown in new tabs and at start-up.
+    "home",
+    # NIRVA: See-through frames keep their transparent background on dark pages.
+    "frames",
+    # NIRVA: Imports bookmarks and history from Mozilla Firefox.
+    "importer",
+    "island",
+    # NIRVA: Saved page copies with highlights and notes, kept locally.
+    "library",
+    # NIRVA: Removes known tracking parameters from links between sites.
+    "linkcleaner",
+    # NIRVA: User-selected page regions with local and opt-in refresh.
+    "liveclips",
+    "looks",
+    # NIRVA: Saved lists of browser actions run in order.
+    "macros",
+    # NIRVA: Memory saver puts unused tabs to sleep.
+    "memory",
+    "motion",
+    "privacy",
+    # NIRVA: Several people or accounts, each in its own profile.
+    "profiles",
+    # NIRVA: Read-Everything Search stores page text locally.
+    "readsearch",
+    # NIRVA: Evidence-based privacy numbers for each page and the session.
+    "receipt",
+    # NIRVA: Intelligent Tab Rules match tabs and run actions on them.
+    "tabrules",
+    # NIRVA: Persistent per-site page adjustments chosen by the user.
+    "remix",
+    "sidebar",
+    # NIRVA: Split view of two to four tabs.
+    "split",
+    # NIRVA: Theme Studio is a browser startup component.
+    "theme",
+    # NIRVA: Time Travel records and restores local session snapshots.
+    "timetravel",
+    # NIRVA: Per-site protection steps built on the browser's own controls.
+    "trust",
+    "welcome",
+]
+
+MOZ_SRC_FILES += [
+    "NirvaStartup.sys.mjs",
+]

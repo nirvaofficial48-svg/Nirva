@@ -1,0 +1,60 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/* stylelint-disable stylelint-plugin-mozilla/use-design-tokens */
+
+/* Spring Physics (Launch Plan 14, SPEC A2, item 8.2).
+ * Dragged tabs have weight; neighbours flow aside and settle. */
+
+:root[data-nirva-spring-physics="true"] {
+  --panel-motion-easing: var(--nirva-ease-spring);
+
+  #tabbrowser-tabs {
+    --tab-dragover-transition: transform var(--nirva-move-base) var(--nirva-ease-spring);
+
+    .tabbrowser-tab {
+      transition:
+        transform var(--nirva-move-base) var(--nirva-ease-spring),
+        box-shadow var(--nirva-move-fast) var(--nirva-move-ease);
+      will-change: transform;
+    }
+
+    &[movingtab] .tabbrowser-tab:is([dragtarget], :active) {
+      transform: scale(calc(1 + 0.035 * var(--nirva-motion-move))) translateY(calc(-2px * var(--nirva-motion-move)));
+      box-shadow:
+        0 6px 20px rgba(0, 0, 0, 0.18),
+        var(--nirva-panel-shadow, 0 2px 8px rgba(0, 0, 0, 0.12));
+      z-index: 10;
+      cursor: grabbing !important;
+      will-change: transform, box-shadow;
+      transition:
+        transform var(--nirva-move-fast) var(--nirva-move-ease),
+        box-shadow var(--nirva-move-fast) var(--nirva-move-ease);
+    }
+  }
+}
+
+:root:is([data-nirva-motion="minimal"], [data-nirva-lite="true"])[data-nirva-spring-physics="true"] {
+  #tabbrowser-tabs {
+    --tab-dragover-transition: none;
+
+    &[movingtab] .tabbrowser-tab:is([dragtarget], :active) {
+      transform: none;
+      box-shadow: none;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-nirva-spring-physics="true"] {
+    #tabbrowser-tabs {
+      --tab-dragover-transition: none;
+
+      &[movingtab] .tabbrowser-tab:is([dragtarget], :active) {
+        transform: none;
+        box-shadow: none;
+      }
+    }
+  }
+}

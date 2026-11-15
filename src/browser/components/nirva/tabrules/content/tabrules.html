@@ -1,0 +1,94 @@
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src chrome:; object-src 'none'"
+    />
+    <meta name="color-scheme" content="light dark" />
+    <title data-l10n-id="nirva-tabrules-title"></title>
+    <link rel="localization" href="branding/brand.ftl" />
+    <link rel="localization" href="browser/nirva/tabrules.ftl" />
+    <link rel="stylesheet" href="chrome://browser/skin/nirva/tokens.css" />
+    <link rel="stylesheet" href="chrome://browser/skin/nirva/fonts.css" />
+    <link rel="stylesheet" href="chrome://browser/skin/nirva/theme.css" />
+    <link rel="stylesheet" href="chrome://browser/skin/nirva/tabrules.css" />
+    <script
+      type="module"
+      src="chrome://browser/content/nirva/tabrules.mjs"
+    ></script>
+  </head>
+  <body>
+    <main class="page">
+      <header class="page-heading">
+        <div class="heading-copy">
+          <p class="eyebrow" data-l10n-id="nirva-tabrules-eyebrow"></p>
+          <h1 data-l10n-id="nirva-tabrules-title"></h1>
+          <p class="intro" data-l10n-id="nirva-tabrules-intro"></p>
+        </div>
+        <button id="pause" class="primary-button" type="button"></button>
+      </header>
+
+      <p id="paused-note" class="status" role="status" hidden=""></p>
+
+      <section class="card" aria-labelledby="sites-heading">
+        <h2 id="sites-heading" data-l10n-id="nirva-tabrules-sites-title"></h2>
+        <p class="quiet" data-l10n-id="nirva-tabrules-sites-copy"></p>
+        <ul id="rules" class="rows"></ul>
+        <p
+          id="rules-empty"
+          class="quiet"
+          data-l10n-id="nirva-tabrules-sites-empty"
+        ></p>
+        <form id="add" class="add-row">
+          <input
+            id="add-site"
+            type="text"
+            autocomplete="off"
+            spellcheck="false"
+            data-l10n-id="nirva-tabrules-add-site"
+          />
+          <select
+            id="add-workspace"
+            data-l10n-id="nirva-tabrules-add-workspace"
+          ></select>
+          <button
+            class="quiet-button"
+            type="submit"
+            data-l10n-id="nirva-tabrules-add"
+          ></button>
+        </form>
+        <p id="add-error" class="status" role="alert" hidden=""></p>
+      </section>
+
+      <section class="card" aria-labelledby="sleep-heading">
+        <h2 id="sleep-heading" data-l10n-id="nirva-tabrules-sleep-title"></h2>
+        <p class="quiet" data-l10n-id="nirva-tabrules-sleep-copy"></p>
+        <div class="setting-row">
+          <label class="check">
+            <input id="suggest-sleep" type="checkbox" />
+            <span data-l10n-id="nirva-tabrules-sleep-enable"></span>
+          </label>
+          <select
+            id="sleep-minutes"
+            data-l10n-id="nirva-tabrules-sleep-minutes"
+          ></select>
+        </div>
+      </section>
+
+      <section class="card wide" aria-labelledby="log-heading">
+        <h2 id="log-heading" data-l10n-id="nirva-tabrules-log-title"></h2>
+        <ul id="log" class="rows"></ul>
+        <p
+          id="log-empty"
+          class="quiet"
+          data-l10n-id="nirva-tabrules-log-empty"
+        ></p>
+      </section>
+    </main>
+  </body>
+</html>

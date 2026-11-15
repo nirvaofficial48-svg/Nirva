@@ -1,0 +1,12 @@
+diff --git a/.prettierignore b/.prettierignore
+index 6b32109d27..c14758a4be 100644
+--- a/.prettierignore
++++ b/.prettierignore
+@@ -1014,6 +1014,7 @@ build/pgo/js-input/
+ 
+ # browser/ exclusions
+ browser/app/
++browser/components/nirva/**/00-nirva-*.js
+ browser/branding/**/firefox-branding.js
+ # Gzipped test file.
+ browser/base/content/test/browser-general/gZipOfflineChild.html

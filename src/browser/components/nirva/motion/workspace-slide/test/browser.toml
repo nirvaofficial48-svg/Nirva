@@ -1,0 +1,7 @@
+[DEFAULT]
+prefs = [
+  "dom.security.https_only_mode=false",
+  "nirva.workspaceslide.enabled=true",
+]
+
+["browser_nirva_workspace_slide.js"]

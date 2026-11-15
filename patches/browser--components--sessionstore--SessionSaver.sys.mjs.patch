@@ -1,0 +1,15 @@
+diff --git a/browser/components/sessionstore/SessionSaver.sys.mjs b/browser/components/sessionstore/SessionSaver.sys.mjs
+index 325bd818bd..4e42fee9a4 100644
+--- a/browser/components/sessionstore/SessionSaver.sys.mjs
++++ b/browser/components/sessionstore/SessionSaver.sys.mjs
+@@ -250,6 +250,10 @@ class _SessionSaver {
+     let timerId = Glean.sessionRestore.collectData.start();
+     let state = lazy.SessionStore.getCurrentState(forceUpdateAllWindows);
+     lazy.PrivacyFilter.filterPrivateWindowsAndTabs(state);
++    // NIRVA: Burner tabs are left out of the session file.
++    ChromeUtils.importESModule(
++      "moz-src:///browser/components/nirva/burner/NirvaBurner.sys.mjs"
++    ).NirvaBurner.filterSessionState(state);
+ 
+     // Make sure we only write worth saving tabs to disk.
+     lazy.SessionStore.keepOnlyWorthSavingTabs(state);

@@ -1,0 +1,10 @@
+[DEFAULT]
+# Keep the local session fixture reachable from the browser tests.
+prefs = [
+  "dom.security.https_only_mode=false",
+  "dom.security.https_only_mode_pbm=false",
+  "nirva.timetravel.enabled=false",
+]
+support-files = ["page.html"]
+
+["browser_nirva_timetravel.js"]

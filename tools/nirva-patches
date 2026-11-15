@@ -1,0 +1,153 @@
+#!/usr/bin/env python3
+"""Store Nirva's changes to Firefox outside the Firefox checkout, and re-apply them.
+
+  tools/nirva-patches export     firefox/ -> src/, patches/     (run after every finished item)
+  tools/nirva-patches import     src/, patches/ -> firefox/     (fresh checkout or new Firefox version)
+  tools/nirva-patches status     list what differs from the base commit
+
+Layout in the store (the ~/browser repository):
+  firefox-base.txt     the Firefox commit our changes sit on
+  src/<path>           files we added, at the same path they have inside firefox/
+  patches/<name>.patch one patch per existing Firefox file we edited
+  patches/deleted.txt  Firefox files we removed
+  configs/mozconfig    the build configuration
+"""
+import argparse
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+
+
+def git(ff, *args, check=True, binary=False):
+    r = subprocess.run(["git", "-C", str(ff), *args], capture_output=True)
+    if check and r.returncode != 0:
+        sys.exit(f"git {' '.join(args)} failed:\n{r.stderr.decode(errors='replace')}")
+    return r.stdout if binary else r.stdout.decode(errors="replace")
+
+
+def read_base(store):
+    f = store / "firefox-base.txt"
+    if not f.exists():
+        sys.exit(f"{f} is missing. It must hold the Firefox commit our changes sit on.")
+    return f.read_text().split()[0]
+
+
+def changes(ff, base):
+    """Return (added, modified, deleted) paths of the working tree relative to base."""
+    added, modified, deleted = [], [], []
+    out = git(ff, "diff", "--name-status", "--no-renames", "-z", base)
+    parts = out.split("\0")
+    for status, path in zip(parts[0::2], parts[1::2]):
+        {"A": added, "D": deleted}.get(status[0], modified).append(path)
+    untracked = git(ff, "ls-files", "--others", "--exclude-standard", "-z")
+    added += [p for p in untracked.split("\0") if p]
+    return sorted(set(added)), sorted(modified), sorted(deleted)
+
+
+def patch_name(path):
+    return path.replace("/", "--") + ".patch"
+
+
+def cmd_status(ff, store, _args):
+    added, modified, deleted = changes(ff, read_base(store))
+    for label, paths in (("added", added), ("modified", modified), ("deleted", deleted)):
+        for p in paths:
+            print(f"{label:9} {p}")
+    print(f"{len(added)} added, {len(modified)} modified, {len(deleted)} deleted")
+
+
+def cmd_export(ff, store, _args):
+    base = read_base(store)
+    added, modified, deleted = changes(ff, base)
+    src, patches = store / "src", store / "patches"
+    for d in (src, patches):
+        if d.exists():
+            shutil.rmtree(d)
+        d.mkdir(parents=True)
+    for p in added:
+        dest = src / p
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(ff / p, dest)
+    for p in modified:
+        diff = git(ff, "diff", "--no-renames", "--binary", base, "--", p, binary=True)
+        (patches / patch_name(p)).write_bytes(diff)
+    (patches / "deleted.txt").write_text("".join(p + "\n" for p in deleted))
+    if (ff / "mozconfig").exists():
+        (store / "configs").mkdir(exist_ok=True)
+        shutil.copy2(ff / "mozconfig", store / "configs" / "mozconfig")
+    print(f"exported {len(added)} added, {len(modified)} modified, {len(deleted)} deleted")
+
+
+def cmd_import(ff, store, args):
+    base = read_base(store)
+    if not args.force:
+        added, modified, deleted = changes(ff, "HEAD")
+        if added or modified or deleted:
+            sys.exit(
+                "The Firefox checkout has uncommitted changes. Importing on top of them could "
+                "lose work.\nRun 'tools/nirva-patches export' first, or pass --force."
+            )
+    head = git(ff, "rev-parse", "HEAD").strip()
+    if not head.startswith(base) and not base.startswith(head):
+        print(f"note: Firefox is at {head[:12]}, patches were made on {base[:12]}; using 3-way merge")
+    src, patches = store / "src", store / "patches"
+    n_added = 0
+    if src.exists():
+        for f in sorted(src.rglob("*")):
+            if f.is_file():
+                dest = ff / f.relative_to(src)
+                dest.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(f, dest)
+                n_added += 1
+    failed = []
+    patch_files = sorted(patches.glob("*.patch")) if patches.exists() else []
+    for pf in patch_files:
+        r = subprocess.run(
+            ["git", "-C", str(ff), "apply", "--whitespace=nowarn", str(pf)], capture_output=True
+        )
+        if r.returncode != 0:
+            r = subprocess.run(
+                ["git", "-C", str(ff), "apply", "--3way", "--whitespace=nowarn", str(pf)],
+                capture_output=True,
+            )
+            if r.returncode != 0:
+                failed.append((pf.name, r.stderr.decode(errors="replace").strip()))
+    n_deleted = 0
+    deleted_list = patches / "deleted.txt"
+    if deleted_list.exists():
+        for p in deleted_list.read_text().split("\n"):
+            if p and (ff / p).exists():
+                (ff / p).unlink()
+                n_deleted += 1
+    cfg = store / "configs" / "mozconfig"
+    if cfg.exists() and not (ff / "mozconfig").exists():
+        shutil.copy2(cfg, ff / "mozconfig")
+    print(
+        f"imported {n_added} added files, {len(patch_files) - len(failed)} of "
+        f"{len(patch_files)} patches, {n_deleted} deletions"
+    )
+    if failed:
+        print("\nThese patches did not apply cleanly. Files with conflict markers need fixing by hand:")
+        for name, err in failed:
+            print(f"  {name}\n    {err.splitlines()[-1] if err else ''}")
+        sys.exit(1)
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("command", choices=["export", "import", "status"])
+    ap.add_argument("--firefox", type=Path, default=ROOT / "firefox")
+    ap.add_argument("--store", type=Path, default=ROOT)
+    ap.add_argument("--force", action="store_true", help="import even if firefox/ has uncommitted changes")
+    args = ap.parse_args()
+    ff, store = args.firefox.resolve(), args.store.resolve()
+    if not (ff / ".git").exists():
+        sys.exit(f"{ff} is not a git checkout")
+    {"export": cmd_export, "import": cmd_import, "status": cmd_status}[args.command](ff, store, args)
+
+
+if __name__ == "__main__":
+    main()

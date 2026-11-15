@@ -1,0 +1,13 @@
+diff --git a/browser/locales/en-US/browser/migrationWizard.ftl b/browser/locales/en-US/browser/migrationWizard.ftl
+index a248f3964f..0567ef5376 100644
+--- a/browser/locales/en-US/browser/migrationWizard.ftl
++++ b/browser/locales/en-US/browser/migrationWizard.ftl
+@@ -36,6 +36,8 @@ migration-wizard-migrator-display-name-chromium-360se = 360 Secure Browser
+ migration-wizard-migrator-display-name-chromium-edge = Microsoft Edge
+ migration-wizard-migrator-display-name-chromium-edge-beta = Microsoft Edge Beta
+ migration-wizard-migrator-display-name-edge-legacy = Microsoft Edge Legacy
++# NIRVA: Mozilla Firefox as a source to import from.
++migration-wizard-migrator-display-name-firefox = Firefox
+ migration-wizard-migrator-display-name-self = { -brand-product-name }
+ migration-wizard-migrator-display-name-file-password-csv = Passwords from CSV file
+ migration-wizard-migrator-display-name-file-bookmarks = Bookmarks from HTML file
