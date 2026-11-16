@@ -45,13 +45,26 @@ jobs:
           Start-Process .\mb.exe -ArgumentList '/S' -Wait
       - name: Fetch Firefox and apply Nirva
         run: bash .github/fetch-and-patch.sh
-      - name: Build and package
+      - name: Build and package (Linux)
+        if: runner.os == 'Linux'
         working-directory: firefox
         run: |
           ./mach --no-interactive bootstrap --application-choice browser
           ./mach build
           ./mach package
-          if [ "$RUNNER_OS" = Windows ]; then ./mach build installer || true; fi
+      - name: Build and package (Windows)
+        if: runner.os == 'Windows'
+        working-directory: firefox
+        shell: pwsh
+        run: |
+          .\mach.ps1 --no-interactive bootstrap --application-choice browser
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          .\mach.ps1 build
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          .\mach.ps1 package
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          .\mach.ps1 build installer
+          exit 0
       - uses: actions/upload-artifact@v4
         with:
           name: nirva-${{ matrix.name }}
@@ -110,20 +123,22 @@ jobs:
         run: |
           set -euo pipefail
           v="${{ inputs.version }}"; mkdir out
-          for d in in/nirva-macos-*; do
-            [ -d "$d" ] || continue
+          shopt -s nullglob
+          for d in in/nirva-macos-*/; do
+            d="${d%/}"
             arch=$(basename "$d" | sed -e 's/^nirva-macos-//' -e 's/-unsigned$//')
             stage=$(mktemp -d)
             tar -xf "$d"/*.mac.tar -C "$stage"
-            app=$(find "$stage" -maxdepth 2 -name "*.app" -type d | head -1)
+            app=$(find "$stage" -maxdepth 2 -name "*.app" -type d -print -quit)
             [ "$(dirname "$app")" = "$stage" ] || mv "$app" "$stage/"
             find "$stage" -mindepth 1 -maxdepth 1 ! -name "*.app" -exec rm -rf {} +
             ln -s /Applications "$stage/Applications"
             hdiutil create -volname Nirva -srcfolder "$stage" -format UDZO "out/Nirva-$v-macOS-$arch.dmg"
           done
-          for f in in/nirva-linux/*.tar.xz; do [ -f "$f" ] && cp "$f" "out/Nirva-$v-linux-x86_64.tar.xz"; done
-          for f in in/nirva-windows/*.exe; do [ -f "$f" ] && cp "$f" "out/Nirva-$v-windows-setup.exe"; done
-          for f in in/nirva-windows/*.zip; do [ -f "$f" ] && cp "$f" "out/Nirva-$v-windows.zip"; done
+          shopt -s nullglob
+          for f in in/nirva-linux/*.tar.xz; do cp "$f" "out/Nirva-$v-linux-x86_64.tar.xz"; done
+          for f in in/nirva-windows/*.exe; do cp "$f" "out/Nirva-$v-windows-setup.exe"; done
+          for f in in/nirva-windows/*.zip; do cp "$f" "out/Nirva-$v-windows.zip"; done
           ls -la out
       - name: Publish
         env:
