@@ -1,0 +1,144 @@
+# Builds Nirva for macOS 12+, Windows and Linux and publishes them as one GitHub Release.
+# Actions tab -> "Release" -> "Run workflow". To reuse Mac builds from an earlier run
+# (they take hours), put that run's number in "mac_from_run".
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version number, for example 0.1.0"
+        required: true
+      mac_from_run:
+        description: "Optional: run number whose Mac builds to reuse"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  build:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 355
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { name: linux, os: ubuntu-24.04 }
+          - { name: windows, os: windows-2025 }
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - name: Free disk space
+        if: runner.os == 'Linux'
+        run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+      - name: Install MozillaBuild
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          Invoke-WebRequest https://ftp.mozilla.org/pub/mozilla/libraries/win32/MozillaBuildSetup-Latest.exe -OutFile mb.exe
+          Start-Process .\mb.exe -ArgumentList '/S' -Wait
+      - name: Fetch Firefox and apply Nirva
+        run: bash .github/fetch-and-patch.sh
+      - name: Build and package
+        working-directory: firefox
+        run: |
+          ./mach --no-interactive bootstrap --application-choice browser
+          ./mach build
+          ./mach package
+          if [ "$RUNNER_OS" = Windows ]; then ./mach build installer || true; fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nirva-${{ matrix.name }}
+          if-no-files-found: error
+          retention-days: 7
+          path: |
+            firefox/obj-nirva/dist/*.tar.xz
+            firefox/obj-nirva/dist/*.zip
+            firefox/obj-nirva/dist/install/sea/*.exe
+
+  build-mac:
+    name: ${{ matrix.name }}
+    if: inputs.mac_from_run == ''
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 355
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { name: macos-apple-silicon, os: macos-15 }
+          - { name: macos-intel, os: macos-15-intel }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch Firefox and apply Nirva
+        run: bash .github/fetch-and-patch.sh
+      - name: Build and package
+        working-directory: firefox
+        run: |
+          ./mach --no-interactive bootstrap --application-choice browser
+          ./mach build
+          ./mach package
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nirva-${{ matrix.name }}-unsigned
+          if-no-files-found: error
+          retention-days: 7
+          path: firefox/obj-nirva/dist/*.mac.tar
+
+  release:
+    needs: [build, build-mac]
+    if: ${{ !cancelled() }}
+    runs-on: macos-15
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: in
+      - name: Reuse Mac builds from an earlier run
+        if: inputs.mac_from_run != ''
+        uses: actions/download-artifact@v4
+        with:
+          path: in
+          pattern: nirva-macos-*
+          run-id: ${{ inputs.mac_from_run }}
+          github-token: ${{ github.token }}
+      - name: Name the files and make Mac disk images
+        run: |
+          set -euo pipefail
+          v="${{ inputs.version }}"; mkdir out
+          for d in in/nirva-macos-*; do
+            [ -d "$d" ] || continue
+            arch=$(basename "$d" | sed -e 's/^nirva-macos-//' -e 's/-unsigned$//')
+            stage=$(mktemp -d)
+            tar -xf "$d"/*.mac.tar -C "$stage"
+            app=$(find "$stage" -maxdepth 2 -name "*.app" -type d | head -1)
+            [ "$(dirname "$app")" = "$stage" ] || mv "$app" "$stage/"
+            find "$stage" -mindepth 1 -maxdepth 1 ! -name "*.app" -exec rm -rf {} +
+            ln -s /Applications "$stage/Applications"
+            hdiutil create -volname Nirva -srcfolder "$stage" -format UDZO "out/Nirva-$v-macOS-$arch.dmg"
+          done
+          for f in in/nirva-linux/*.tar.xz; do [ -f "$f" ] && cp "$f" "out/Nirva-$v-linux-x86_64.tar.xz"; done
+          for f in in/nirva-windows/*.exe; do [ -f "$f" ] && cp "$f" "out/Nirva-$v-windows-setup.exe"; done
+          for f in in/nirva-windows/*.zip; do [ -f "$f" ] && cp "$f" "out/Nirva-$v-windows.zip"; done
+          ls -la out
+      - name: Publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cat > notes.md <<'NOTES'
+          **Mac** (macOS 12 or newer): Apple Silicon or Intel `.dmg`. Drag Nirva to Applications.
+          If macOS says the app is damaged or cannot be checked, run
+          `xattr -cr /Applications/Nirva.app` in Terminal once, then open it.
+
+          **Windows**: run the setup `.exe` (or unzip the `.zip`). If SmartScreen warns, choose
+          More info, then Run anyway.
+
+          **Linux**: unpack the `.tar.xz` and run `nirva/nirva`.
+          NOTES
+          v="${{ inputs.version }}"; tag="v${v#v}"
+          gh release create "$tag" out/* --repo "$GITHUB_REPOSITORY" --title "Nirva $tag" \
+            --notes-file notes.md --target "$GITHUB_SHA"
