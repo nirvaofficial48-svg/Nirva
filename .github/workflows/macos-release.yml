@@ -68,18 +68,41 @@ jobs:
         working-directory: firefox
         run: ./mach package
 
+      - name: Keep the unsigned package
+        uses: actions/upload-artifact@v4
+        with:
+          name: nirva-macos-${{ matrix.arch }}-unsigned
+          path: |
+            firefox/obj-nirva/dist/*.mac.tar
+            firefox/obj-nirva/dist/*.dmg
+          if-no-files-found: error
+          retention-days: 3
+
       - name: Sign (ad-hoc) and make the disk image
         working-directory: firefox
         run: |
           set -euo pipefail
-          dmg=$(ls obj-nirva/dist/*.dmg | head -1)
-          mnt=$(mktemp -d)
-          hdiutil attach "$dmg" -mountpoint "$mnt" -nobrowse -quiet
           stage=$(mktemp -d)
-          cp -R "$mnt/Nirva.app" "$stage/"
-          hdiutil detach "$mnt" -quiet
-          ./mach macos-sign -a "$stage/Nirva.app"
-          codesign --verify --deep --strict "$stage/Nirva.app"
+          pkg=$(ls obj-nirva/dist/*.mac.tar obj-nirva/dist/*.dmg 2>/dev/null | head -1)
+          case "$pkg" in
+            *.tar)
+              tar -xf "$pkg" -C "$stage"
+              ;;
+            *.dmg)
+              mnt=$(mktemp -d)
+              hdiutil attach "$pkg" -mountpoint "$mnt" -nobrowse -quiet
+              cp -R "$mnt"/*.app "$stage/"
+              hdiutil detach "$mnt" -quiet
+              ;;
+          esac
+          app=$(find "$stage" -maxdepth 2 -name "*.app" -type d | head -1)
+          if [ "$(dirname "$app")" != "$stage" ]; then
+            mv "$app" "$stage/"
+            app="$stage/$(basename "$app")"
+          fi
+          find "$stage" -mindepth 1 -maxdepth 1 ! -name "*.app" -exec rm -rf {} +
+          ./mach macos-sign -a "$app"
+          codesign --verify --deep --strict "$app"
           ln -s /Applications "$stage/Applications"
           out="$GITHUB_WORKSPACE/Nirva-$VERSION-macOS-${{ matrix.arch }}.dmg"
           hdiutil create -volname "Nirva" -srcfolder "$stage" -format UDZO -ov "$out"
