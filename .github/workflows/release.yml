@@ -9,6 +9,10 @@ on:
       version:
         description: "Version number, for example 0.1.0"
         required: true
+      platforms:
+        description: "Which to build: all, or windows, or linux"
+        required: false
+        default: "all"
       mac_from_run:
         description: "Optional: run number whose Mac builds to reuse"
         required: false
@@ -26,13 +30,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - { name: linux, os: ubuntu-24.04 }
-          - { name: windows, os: windows-2025 }
+        include: ${{ fromJSON(inputs.platforms == 'windows' && '[{"name":"windows","os":"windows-2025"}]' || inputs.platforms == 'linux' && '[{"name":"linux","os":"ubuntu-24.04"}]' || '[{"name":"linux","os":"ubuntu-24.04"},{"name":"windows","os":"windows-2025"}]') }}
     defaults:
       run:
         shell: bash
     steps:
+      # Keep files exactly as stored, so Nirva's changes apply to Firefox on Windows too.
+      - run: git config --global core.autocrlf false
       - uses: actions/checkout@v4
       - name: Free disk space
         if: runner.os == 'Linux'
@@ -77,7 +81,7 @@ jobs:
 
   build-mac:
     name: ${{ matrix.name }}
-    if: inputs.mac_from_run == ''
+    if: inputs.mac_from_run == '' && inputs.platforms == 'all'
     runs-on: ${{ matrix.os }}
     timeout-minutes: 355
     strategy:
@@ -155,5 +159,9 @@ jobs:
           **Linux**: unpack the `.tar.xz` and run `nirva/nirva`.
           NOTES
           v="${{ inputs.version }}"; tag="v${v#v}"
-          gh release create "$tag" out/* --repo "$GITHUB_REPOSITORY" --title "Nirva $tag" \
-            --notes-file notes.md --target "$GITHUB_SHA"
+          if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$tag" out/* --repo "$GITHUB_REPOSITORY" --clobber
+          else
+            gh release create "$tag" out/* --repo "$GITHUB_REPOSITORY" --title "Nirva $tag" \
+              --notes-file notes.md --target "$GITHUB_SHA"
+          fi
