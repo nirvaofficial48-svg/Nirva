@@ -41,7 +41,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Free disk space
         if: runner.os == 'Linux'
-        run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache /usr/local/share/powershell /usr/local/.ghcup /usr/share/swift /opt/microsoft /opt/google /usr/local/share/chromium /usr/local/julia* /opt/az
+          sudo docker image prune --all --force >/dev/null 2>&1 || true
+          df -h /
       - name: Install MozillaBuild
         if: runner.os == 'Windows'
         shell: pwsh
