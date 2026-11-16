@@ -80,7 +80,8 @@ jobs:
         run: |
           set -euo pipefail
           v="${{ inputs.version }}"; mkdir out work
-          unzip -q in/*.zip -d work
+          ls -la in
+          unzip -q "$(ls in/*.win64.zip | head -1)" -d work
           rm -rf work/nirva/desktop-launcher
           bash .github/repack/add-prefs.sh work/nirva/browser/omni.ja
           makensis -V2 -DVERSION="$v" -DSRC="$PWD/work/nirva" \
