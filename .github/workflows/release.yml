@@ -22,6 +22,10 @@ permissions:
   contents: write
   actions: read
 
+env:
+  # No desktop notifications from the build tool: on build machines they can hang.
+  MOZ_NOSPAM: "1"
+
 jobs:
   build:
     name: ${{ matrix.name }}
