@@ -10,7 +10,7 @@ on:
         description: "Version number, for example 0.1.0"
         required: true
       platforms:
-        description: "Which to build: all, windows, linux, or mac (reuses Mac builds only)"
+        description: "Which to build: all, windows, linux, mac-build, or mac (reuses Mac builds only)"
         required: false
         default: "all"
       mac_from_run:
@@ -25,7 +25,7 @@ permissions:
 jobs:
   build:
     name: ${{ matrix.name }}
-    if: inputs.platforms != 'mac'
+    if: inputs.platforms != 'mac' && inputs.platforms != 'mac-build'
     runs-on: ${{ matrix.os }}
     timeout-minutes: 355
     strategy:
@@ -82,7 +82,7 @@ jobs:
 
   build-mac:
     name: ${{ matrix.name }}
-    if: inputs.mac_from_run == '' && inputs.platforms == 'all'
+    if: inputs.mac_from_run == '' && (inputs.platforms == 'all' || inputs.platforms == 'mac-build')
     runs-on: ${{ matrix.os }}
     timeout-minutes: 355
     strategy:

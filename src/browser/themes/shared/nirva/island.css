@@ -120,7 +120,8 @@
   #navigator-toolbox {
     position: fixed;
     z-index: 4;
-    top: var(--nirva-island-top);
+    /* In macOS full screen, move down with the menu bar and window buttons when they slide in. */
+    top: calc(var(--nirva-island-top) + var(--fullscreen-menubar-shift, 0px));
     left: var(--nirva-island-center, 50%);
     translate: -50% 0;
     box-sizing: border-box;

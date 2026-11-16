@@ -397,6 +397,11 @@
     inset-block: 0;
     inset-inline-start: 0;
     width: 6px;
+
+    /* macOS takes the outermost pixels of a window for resizing. */
+    @media (-moz-platform: macos) {
+      width: 12px;
+    }
   }
 }
 
