@@ -6,3 +6,5 @@ prefs = [
 support-files = ["page.html"]
 
 ["browser_nirva_trust.js"]
+
+["browser_nirva_trust_effect.js"]

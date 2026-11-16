@@ -1,0 +1,124 @@
+# Fixes already built Mac and Windows packages in minutes, without building again:
+# adds Nirva's preferences, removes Firefox's desktop launcher, makes the Windows installer
+# and the Mac disk images, and replaces the files on the release.
+# Actions tab -> "Repack" -> "Run workflow", with the run numbers holding the builds.
+name: Repack
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version, for example 0.1.0"
+        required: true
+      mac_from_run:
+        description: "Run number holding the Mac builds (empty: skip Mac)"
+        required: false
+        default: ""
+      win_from_run:
+        description: "Run number holding the Windows build (empty: skip Windows)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  mac:
+    if: inputs.mac_from_run != ''
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: in
+          pattern: nirva-macos-*
+          run-id: ${{ inputs.mac_from_run }}
+          github-token: ${{ github.token }}
+      - name: Add preferences and make disk images
+        run: |
+          set -euo pipefail
+          v="${{ inputs.version }}"; mkdir out
+          shopt -s nullglob
+          for d in in/nirva-macos-*/; do
+            d="${d%/}"
+            arch=$(basename "$d" | sed -e 's/^nirva-macos-//' -e 's/-unsigned$//')
+            stage=$(mktemp -d)
+            tar -xf "$d"/*.mac.tar -C "$stage"
+            app=$(find "$stage" -maxdepth 2 -name "*.app" -type d -print -quit)
+            [ "$(dirname "$app")" = "$stage" ] || mv "$app" "$stage/"
+            app="$stage/$(basename "$app")"
+            find "$stage" -mindepth 1 -maxdepth 1 ! -name "*.app" -exec rm -rf {} +
+            bash .github/repack/add-prefs.sh "$app/Contents/Resources/browser/omni.ja"
+            /usr/libexec/PlistBuddy -c "Delete :CFBundleIconName" "$app/Contents/Info.plist" || true
+            rm -f "$app/Contents/Resources/Assets.car"
+            xattr -cr "$app"
+            codesign --force --deep --sign - "$app" || echo "ad-hoc signature not applied"
+            ln -s /Applications "$stage/Applications"
+            hdiutil create -volname Nirva -srcfolder "$stage" -format UDZO "out/Nirva-$v-macOS-$arch.dmg"
+          done
+          ls -la out
+      - uses: actions/upload-artifact@v4
+        with:
+          name: repacked-mac
+          path: out/*
+          if-no-files-found: error
+
+  windows:
+    if: inputs.win_from_run != ''
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: in
+          name: nirva-windows
+          run-id: ${{ inputs.win_from_run }}
+          github-token: ${{ github.token }}
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq nsis zip unzip
+      - name: Add preferences, make the installer and the zip
+        run: |
+          set -euo pipefail
+          v="${{ inputs.version }}"; mkdir out work
+          unzip -q in/*.zip -d work
+          rm -rf work/nirva/desktop-launcher
+          bash .github/repack/add-prefs.sh work/nirva/browser/omni.ja
+          makensis -V2 -DVERSION="$v" -DSRC="$PWD/work/nirva" \
+            -DICON="$PWD/src/browser/branding/nirva/firefox.ico" \
+            -DOUT="$PWD/out/Nirva-$v-windows-setup.exe" .github/repack/nirva-setup.nsi
+          (cd work && zip -qr -X "../out/Nirva-$v-windows.zip" nirva)
+          ls -la out
+      - uses: actions/upload-artifact@v4
+        with:
+          name: repacked-windows
+          path: out/*
+          if-no-files-found: error
+
+  publish:
+    needs: [mac, windows]
+    if: ${{ !cancelled() && !contains(needs.*.result, 'failure') }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: out
+          pattern: repacked-*
+          merge-multiple: true
+      - name: Replace the release files
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          v="${{ inputs.version }}"; tag="v${v#v}"
+          cat > notes.md <<'NOTES'
+          **Windows**: download `Nirva-…-windows-setup.exe` and run it. It installs Nirva for you
+          (no administrator needed) with Start menu and desktop shortcuts. Windows may warn once,
+          when the installer runs: choose More info, then Run anyway. Nirva itself then opens
+          without warnings. The `.zip` is a portable copy.
+
+          **Mac** (macOS 12 or newer): Apple Silicon or Intel `.dmg`. Drag Nirva to Applications.
+          If macOS says the app is damaged or cannot be checked, run
+          `xattr -cr /Applications/Nirva.app` in Terminal once, then open it.
+          NOTES
+          gh release upload "$tag" out/* --repo "$GITHUB_REPOSITORY" --clobber
+          gh release edit "$tag" --repo "$GITHUB_REPOSITORY" --notes-file notes.md
