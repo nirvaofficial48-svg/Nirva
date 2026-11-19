@@ -12,4 +12,8 @@ echo 'ac_add_options --disable-debug-symbols' >> firefox/mozconfig
 if [ "$(uname)" = Darwin ]; then
   echo 'ac_add_options --enable-macos-target=12.0' >> firefox/mozconfig
 fi
+# Build for another processor than the build machine's (Apple Silicon on an Intel Mac).
+if [ -n "${NIRVA_TARGET:-}" ]; then
+  echo "ac_add_options --target=$NIRVA_TARGET" >> firefox/mozconfig
+fi
 python3 tools/nirva-patches import

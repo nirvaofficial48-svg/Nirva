@@ -95,15 +95,18 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include: ${{ fromJSON(inputs.platforms == 'mac-arm' && '[{"name":"macos-apple-silicon","os":"macos-15"}]' || '[{"name":"macos-apple-silicon","os":"macos-15"},{"name":"macos-intel","os":"macos-15-intel"}]') }}
+        include: ${{ fromJSON(inputs.platforms == 'mac-arm' && '[{"name":"macos-apple-silicon","os":"macos-15-intel","target":"aarch64-apple-darwin"}]' || '[{"name":"macos-apple-silicon","os":"macos-15-intel","target":"aarch64-apple-darwin"},{"name":"macos-intel","os":"macos-15-intel","target":""}]') }}
     steps:
       - uses: actions/checkout@v4
       - name: Fetch Firefox and apply Nirva
+        env:
+          NIRVA_TARGET: ${{ matrix.target }}
         run: bash .github/fetch-and-patch.sh
       - name: Build and package
         working-directory: firefox
         run: |
           ./mach --no-interactive bootstrap --application-choice browser
+          if [ -n "${{ matrix.target }}" ]; then rustup target add "${{ matrix.target }}"; fi
           ./mach build
           ./mach package
       - uses: actions/upload-artifact@v4
@@ -116,7 +119,7 @@ jobs:
   release:
     needs: [build, build-mac]
     if: ${{ !cancelled() }}
-    runs-on: macos-15
+    runs-on: macos-15-intel
     steps:
       - uses: actions/download-artifact@v4
         with:
